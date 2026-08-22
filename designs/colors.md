@@ -1,32 +1,40 @@
 # Colors
 
 All tokens are defined once in `resources/css/app.css` under Tailwind v4 `@theme`.
+Direction: **topographic survey**. Octavia maps and climbs the fitness landscape
+of prompts, so the ground is cold fog, structure is deep spruce ink, and exactly
+one international-orange signal accent marks identity, waypoints, and primary
+actions.
 
-## Ink — structure & text (cool dark gray-violet, never pure black)
+## Ink — structure & text (spruce-slate, never pure black)
 | Token | Value | Use |
 |-------|-------|-----|
-| ink-950 | #101018 | Headings, strongest text |
-| ink-900 | #1a1a26 | Body text |
-| ink-700 | #3d3d52 | Secondary text, labels |
-| ink-500 | #6b6b85 | Muted text |
-| ink-300 | #b3b3c7 | Placeholders, timestamps |
-| ink-200 | #d5d5e2 | Borders |
-| ink-100 | #e9e9f1 | Dividers, meter tracks |
+| ink-950 | #0e1a1d | Headings, strongest text, primary button fill |
+| ink-900 | #142529 | Body text |
+| ink-700 | #2f4449 | Secondary text, labels |
+| ink-500 | #5c7076 | Muted text |
+| ink-300 | #9fb2b6 | Placeholders, timestamps, eyebrows |
+| ink-200 | #c9d5d7 | Borders |
+| ink-100 | #e3ebec | Dividers, meter tracks |
 
-## Paper — surfaces (warm off-white, the workspace feel)
+## Paper — surfaces (cold survey fog)
 | Token | Value | Use |
 |-------|-------|-----|
-| paper-50 | #fbfbfa | App background |
-| paper-100 | #f5f5f2 | Panels, code blocks |
-| paper-200 | #ecece7 | Hover fills |
-| paper-300 | #dfdfd7 | Strong hover borders |
+| paper-50 | #fafbfb | App background |
+| paper-100 | #f1f4f4 | Sidebar legend surface, panels, code blocks |
+| paper-200 | #e7ecec | Hover fills |
+| paper-300 | #dbe2e3 | Strong hover borders |
 
-## Violet — the single brand accent
+## Accent — the single signal color (international orange)
 | Token | Value | Use |
 |-------|-------|-----|
-| violet-600 | #5f4bd8 | Primary buttons, active nav, logo tile |
-| violet-500 | #7563e8 | Focus rings, score bars below target |
-| violet-50/100 | #f3f1fe/#e7e3fd | Active nav background, badges |
+| accent-600 | #ea580c | Logo tile, waypoint markers, hero % sign, run CTA chip, active tab underline |
+| accent-500 | #fb6d1e | Focus rings, CTA hover |
+| accent-700 | #c2410c | Hover text on links |
+| accent-100/200 | #ffe6d3/#ffc7a3 | Badges, selection background |
+
+Orange is never paired with white text. Solid fills that carry a label use
+`bg-ink-950 text-white`; orange fills take `text-ink-950` (≥ 4.5:1).
 
 ## Signal colors — meaning, never decoration
 | Token | Use |
@@ -36,6 +44,7 @@ All tokens are defined once in `resources/css/app.css` under Tailwind v4 `@theme
 | rose-450 #e0526b | Failing scores (< 50%), destructive actions, errors |
 
 ## Rules
-- Never introduce new hues per feature. New categories reuse violet or neutral tones.
-- Dark surfaces (`ink-950`) are used exactly twice: the final CTA band on the landing page and the prompt-content block in run steps (code-instrument feel).
-- Contrast: all text/background pairs meet WCAG AA (ink-500 on paper-50 = 4.6:1 minimum).
+- Never introduce new hues per feature. New categories reuse accent or neutral tones.
+- Orange marks the route (identity, waypoints, the one primary CTA per view); it never floods large surfaces.
+- Dark surfaces (`ink-950`) are used for primary buttons/key fills and the prompt-content block in run steps (code-instrument feel).
+- Contrast: all text/background pairs meet WCAG AA; verified pairs: white on ink-950 ≈ 15:1, ink-950 on accent-600 ≈ 4.7:1, rose outline danger uses ink-900 label on tinted ground.

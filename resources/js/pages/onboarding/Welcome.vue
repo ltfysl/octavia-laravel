@@ -23,7 +23,7 @@ const finish = () => {
         <Head><title>Welcome</title><meta name="robots" content="noindex" /></Head>
 
         <div class="text-center">
-            <span class="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-600 font-display text-2xl font-bold text-white">O</span>
+            <span class="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-600 font-display text-2xl font-bold text-ink-950">O</span>
             <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">Welcome to your prompt lab</h1>
             <p class="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-ink-500">
                 Octavia benchmarks prompts against test suites and evolves them automatically. Two quick choices and you're in.
@@ -39,7 +39,7 @@ const finish = () => {
                         :key="lang.value"
                         type="button"
                         class="rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors"
-                        :class="selectedLocale === lang.value ? 'border-violet-500 bg-violet-50 text-violet-700' : 'border-ink-200 text-ink-700 hover:border-ink-300'"
+                        :class="selectedLocale === lang.value ? 'border-accent-500 bg-accent-50 text-accent-700' : 'border-ink-200 text-ink-700 hover:border-ink-300'"
                         :aria-pressed="selectedLocale === lang.value"
                         @click="selectedLocale = lang.value; locale = lang.value"
                     >
@@ -49,7 +49,7 @@ const finish = () => {
             </fieldset>
 
             <label class="flex cursor-pointer items-start gap-3 rounded-card border border-ink-100 bg-white p-4">
-                <input v-model="withSample" type="checkbox" class="mt-0.5 h-4 w-4 rounded border-ink-200 accent-violet-600" />
+                <input v-model="withSample" type="checkbox" class="mt-0.5 h-4 w-4 rounded border-ink-200 accent-accent-600" />
                 <span>
                     <span class="block text-sm font-medium text-ink-900">Add starter content</span>
                     <span class="mt-0.5 block text-xs leading-relaxed text-ink-500">Creates an example prompt and a runnable benchmark so you can start your first optimization run immediately.</span>

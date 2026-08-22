@@ -52,5 +52,6 @@
 - [x] Round 15: benchmark JSON export/import, global search across prompts/benchmarks, favicon.svg
 - [x] Round 16: branded error pages (403/404/419/429/500/503) + republish notification tests
 - [x] **95 Pest tests / 323 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
+- [x] Round 17: complete visual rework — "field station" direction (cold fog/spruce/intl-orange tokens, Archivo + IBM Plex Sans), contour-hero dashboard, prompts card date fix + i18n runsCount, run-panel hint, quarantined destructive delete, violet→accent rename, WCAG button contrast fixes, phpunit Unit-suite config fix
 - [x] Docs: README, AGENTS.md, DESIGNS.md + designs/*, docs/architecture, docs/features/engine, docs/operations, docs/decisions
 - [x] Rounds 1–16 documented in rounds/

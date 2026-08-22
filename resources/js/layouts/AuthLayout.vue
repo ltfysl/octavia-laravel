@@ -6,7 +6,7 @@ import { Link } from '@inertiajs/vue3';
     <div class="flex min-h-screen flex-col bg-paper-50">
         <header class="px-6 pt-6">
             <Link href="/" class="inline-flex items-center gap-2.5" aria-label="Octavia home">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-600 font-display text-lg font-bold text-white">O</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-accent-600 font-display text-lg font-bold text-ink-950">O</span>
                 <span class="font-display text-lg font-semibold tracking-tight text-ink-950">Octavia</span>
             </Link>
         </header>

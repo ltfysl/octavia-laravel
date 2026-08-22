@@ -81,10 +81,10 @@ const isActive = (href: string) => page.url.startsWith(href);
     <div class="min-h-screen lg:grid lg:grid-cols-[16rem_1fr]">
         <!-- Sidebar -->
 
-        <aside class="hidden lg:flex lg:h-screen lg:flex-col lg:border-r lg:border-ink-100 lg:bg-white">
+        <aside class="hidden lg:flex lg:h-screen lg:flex-col lg:border-r lg:border-ink-100 lg:bg-paper-100">
             <div class="px-5 pt-6 pb-4">
                 <Link href="/dashboard" class="flex items-center gap-2.5" aria-label="Octavia home">
-                    <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-600 font-display text-lg font-bold text-white">O</span>
+                    <span class="flex h-8 w-8 items-center justify-center rounded-md bg-accent-600 font-display text-lg font-bold text-ink-950">O</span>
                     <span class="font-display text-lg font-semibold tracking-tight text-ink-950">Octavia</span>
                 </Link>
             </div>
@@ -93,11 +93,11 @@ const isActive = (href: string) => page.url.startsWith(href);
                     v-for="item in nav"
                     :key="item.href"
                     :href="item.href"
-                    class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
-                    :class="isActive(item.href) ? 'bg-violet-50 text-violet-700' : 'text-ink-500 hover:bg-paper-100 hover:text-ink-900'"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors"
+                    :class="isActive(item.href) ? 'bg-white text-ink-950 shadow-panel' : 'text-ink-500 hover:bg-paper-200 hover:text-ink-900'"
                     :aria-current="isActive(item.href) ? 'page' : undefined"
                 >
-                    <span class="h-1.5 w-1.5 rounded-full" :class="isActive(item.href) ? 'bg-violet-600' : 'bg-ink-200'" />
+                    <span class="h-1.5 w-1.5 rotate-45" :class="isActive(item.href) ? 'bg-accent-600' : 'bg-ink-300'" />
                     {{ item.label }}
                 </Link>
             </nav>
@@ -106,16 +106,16 @@ const isActive = (href: string) => page.url.startsWith(href);
                     v-for="item in adminNav"
                     :key="item.href"
                     :href="item.href"
-                    class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
-                    :class="isActive(item.href) ? 'bg-violet-50 text-violet-700' : 'text-ink-500 hover:bg-paper-100 hover:text-ink-900'"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors"
+                    :class="isActive(item.href) ? 'bg-white text-ink-950 shadow-panel' : 'text-ink-500 hover:bg-paper-200 hover:text-ink-900'"
                     :aria-current="isActive(item.href) ? 'page' : undefined"
                 >
-                    <span class="h-1.5 w-1.5 rounded-full" :class="isActive(item.href) ? 'bg-violet-600' : 'bg-ink-200'" />
+                    <span class="h-1.5 w-1.5 rotate-45" :class="isActive(item.href) ? 'bg-accent-600' : 'bg-ink-300'" />
                     {{ item.label }}
                 </Link>
             </nav>
             <div class="border-t border-ink-100 px-3 py-3">
-                <Link href="/settings" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors" :class="isActive('/settings') ? 'bg-violet-50 text-violet-700' : 'text-ink-500 hover:bg-paper-100 hover:text-ink-900'">
+                <Link href="/settings/profile" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors" :class="isActive('/settings') ? 'bg-white text-ink-950 shadow-panel' : 'text-ink-500 hover:bg-paper-200 hover:text-ink-900'">
                     <span class="flex h-7 w-7 items-center justify-center rounded-full bg-ink-100 text-xs font-semibold text-ink-700">{{ user?.name?.charAt(0).toUpperCase() }}</span>
                     <span class="truncate">{{ user?.name }}</span>
                 </Link>
@@ -125,7 +125,7 @@ const isActive = (href: string) => page.url.startsWith(href);
         <!-- Mobile top bar -->
         <div class="sticky top-0 z-30 flex items-center justify-between border-b border-ink-100 bg-white/90 px-4 py-3 backdrop-blur lg:hidden">
             <Link href="/dashboard" class="flex items-center gap-2">
-                <span class="flex h-7 w-7 items-center justify-center rounded-md bg-violet-600 font-display text-sm font-bold text-white">O</span>
+                <span class="flex h-7 w-7 items-center justify-center rounded-md bg-accent-600 font-display text-sm font-bold text-ink-950">O</span>
                 <span class="font-display font-semibold text-ink-950">Octavia</span>
             </Link>
             <details class="relative">
@@ -133,9 +133,9 @@ const isActive = (href: string) => page.url.startsWith(href);
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
                 </summary>
                 <nav class="absolute right-0 z-40 mt-2 w-56 rounded-card border border-ink-100 bg-white p-2 shadow-pop" aria-label="Mobile">
-                    <Link v-for="item in nav" :key="item.href" :href="item.href" class="block rounded-lg px-3 py-2 text-sm" :class="isActive(item.href) ? 'bg-violet-50 text-violet-700' : 'text-ink-700'">{{ item.label }}</Link>
+                    <Link v-for="item in nav" :key="item.href" :href="item.href" class="block rounded-lg px-3 py-2 text-sm" :class="isActive(item.href) ? 'bg-paper-100 text-ink-950' : 'text-ink-700'">{{ item.label }}</Link>
                     <hr class="my-2 border-ink-100" />
-                    <Link href="/settings" class="block rounded-lg px-3 py-2 text-sm text-ink-700">{{ t('nav.settings') }}</Link>
+                    <Link href="/settings/profile" class="block rounded-lg px-3 py-2 text-sm text-ink-700">{{ t('nav.settings') }}</Link>
                     <Link href="/logout" method="post" as="button" class="block w-full rounded-lg px-3 py-2 text-left text-sm text-rose-450">{{ t('nav.logOut') }}</Link>
                 </nav>
             </details>
@@ -150,7 +150,7 @@ const isActive = (href: string) => page.url.startsWith(href);
                     role="status"
                 >
                     <p class="text-sm text-ink-900">{{ t('verification.banner') }}</p>
-                    <button type="button" class="text-sm font-medium text-violet-600 hover:text-violet-700" @click="resendVerification">
+                    <button type="button" class="text-sm font-medium text-accent-600 hover:text-accent-700" @click="resendVerification">
                         {{ t('verification.resend') }}
                     </button>
                 </div>
@@ -169,7 +169,7 @@ const isActive = (href: string) => page.url.startsWith(href);
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>
                             <span
                                 v-if="notifications.unread > 0"
-                                class="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-violet-600 px-1 text-[10px] font-semibold text-white"
+                                class="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent-600 px-1 text-[10px] font-semibold text-ink-950"
                             >{{ notifications.unread }}</span>
                         </summary>
                         <div class="absolute right-0 z-40 mt-2 w-80 rounded-card border border-ink-100 bg-white p-2 shadow-pop">
@@ -179,10 +179,10 @@ const isActive = (href: string) => page.url.startsWith(href);
                                 v-for="item in notifications.items"
                                 :key="item.id"
                                 class="-mx-1 flex items-start gap-2.5 rounded-lg px-3 py-2 transition-colors"
-                                :class="item.read ? '' : 'bg-violet-50/60'"
+                                :class="item.read ? '' : 'bg-accent-50/60'"
                             >
                                 <Link v-if="item.run_id" :href="`/runs/${item.run_id}`" class="flex min-w-0 flex-1 items-start gap-2.5">
-                                    <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full" :class="item.read ? 'bg-transparent' : 'bg-violet-500'" aria-hidden="true" />
+                                    <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full" :class="item.read ? 'bg-transparent' : 'bg-accent-500'" aria-hidden="true" />
                                     <span class="min-w-0 flex-1 truncate text-sm text-ink-900">{{ item.run_name }}</span>
                                 </Link>
                                 <span v-else class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-transparent" aria-hidden="true" />
@@ -196,7 +196,7 @@ const isActive = (href: string) => page.url.startsWith(href);
                                     <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
                                 </button>
                             </div>
-                            <Link href="/notifications" class="block px-3 pt-2 text-center text-xs font-medium text-violet-600 hover:text-violet-700">
+                            <Link href="/notifications" class="block px-3 pt-2 text-center text-xs font-medium text-accent-600 hover:text-accent-700">
                                 {{ t('nav.notifications') }} →
                             </Link>
                         </div>

@@ -39,7 +39,7 @@ const submit = () => form.post('/prompts');
                         id="description"
                         v-model="form.description"
                         rows="3"
-                        class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500"
+                        class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500"
                     />
                 </OField>
 
@@ -47,7 +47,7 @@ const submit = () => form.post('/prompts');
                     <select
                         id="visibility"
                         v-model="form.visibility"
-                        class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500"
+                        class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500"
                     >
                         <option value="private">{{ t('prompts.visibility.private') }}</option>
                         <option value="public">{{ t('prompts.visibility.public') }}</option>
@@ -62,7 +62,7 @@ const submit = () => form.post('/prompts');
                         v-model="form.content"
                         rows="18"
                         required
-                        class="w-full rounded-lg border border-ink-200 bg-white px-4 py-3 font-mono text-sm leading-relaxed focus:border-violet-500"
+                        class="w-full rounded-lg border border-ink-200 bg-white px-4 py-3 font-mono text-sm leading-relaxed focus:border-accent-500"
                     />
                 </OField>
                 <p v-if="form.errors.content" class="mt-1 text-xs text-rose-450">{{ form.errors.content }}</p>

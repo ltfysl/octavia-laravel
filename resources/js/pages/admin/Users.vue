@@ -44,7 +44,7 @@ const destroy = (id: number) => {
                     v-model="search"
                     type="search"
                     placeholder="Name or email…"
-                    class="w-56 rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500"
+                    class="w-56 rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500"
                 />
                 <button type="submit" class="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm hover:bg-paper-100">Search</button>
             </form>
@@ -70,10 +70,10 @@ const destroy = (id: number) => {
                             {{ user.prompts_count }}p · {{ user.benchmarks_count }}b · {{ user.runs_count }}r
                         </td>
                         <td class="px-5 py-3">
-                            <OBadge :tone="user.is_admin ? 'violet' : 'neutral'">{{ user.is_admin ? 'admin' : 'user' }}</OBadge>
+                            <OBadge :tone="user.is_admin ? 'accent' : 'neutral'">{{ user.is_admin ? 'admin' : 'user' }}</OBadge>
                         </td>
                         <td class="px-5 py-3 text-right">
-                            <button type="button" class="text-xs font-medium text-violet-600 hover:text-violet-700" @click="toggleAdmin(user.id)">
+                            <button type="button" class="text-xs font-medium text-accent-600 hover:text-accent-700" @click="toggleAdmin(user.id)">
                                 {{ user.is_admin ? 'Revoke admin' : 'Make admin' }}
                             </button>
                             <button type="button" class="ml-3 text-xs font-medium text-rose-450 hover:underline" @click="destroy(user.id)">Delete</button>
@@ -90,7 +90,7 @@ const destroy = (id: number) => {
                 :key="i"
                 :href="link.url ?? '#'"
                 class="rounded-lg px-3 py-1.5 text-sm"
-                :class="link.active ? 'bg-violet-600 text-white' : link.url ? 'text-ink-500 hover:bg-paper-200' : 'text-ink-200'"
+                :class="link.active ? 'bg-ink-950 text-white' : link.url ? 'text-ink-500 hover:bg-paper-200' : 'text-ink-200'"
                 v-html="link.label"
             />
         </nav>

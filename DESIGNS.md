@@ -3,14 +3,14 @@
 This is the index and rationale overview. Detailed specs live in `designs/`.
 
 ## The idea in one sentence
-Octavia looks like a **precision instrument on a warm desk**: calm paper surfaces, one electric violet accent, monospace prompt artifacts — scientific, confident, never loud.
+Octavia looks like a **survey instrument for the fitness landscape of prompts**: cold fog surfaces, spruce ink, one international-orange signal accent, contour lines and waypoint markers — scientific, confident, never loud.
 
 ## Documents
 | File | Scope |
 |------|-------|
 | [designs/brand.md](designs/brand.md) | Name, positioning, voice, logo rules |
-| [designs/colors.md](designs/colors.md) | Ink/Paper/Violet/Signal token system |
-| [designs/typography.md](designs/typography.md) | Space Grotesk + Inter + JetBrains Mono scale |
+| [designs/colors.md](designs/colors.md) | Ink/Fog/Signal-orange token system |
+| [designs/typography.md](designs/typography.md) | Archivo + IBM Plex Sans + JetBrains Mono scale |
 | [designs/layout.md](designs/layout.md) | App shell, density, key screens, responsive rules |
 | [designs/components.md](designs/components.md) | The `O*` component library contract |
 | [designs/interactions.md](designs/interactions.md) | Motion, feedback, keyboard, loading |
@@ -19,9 +19,9 @@ Octavia looks like a **precision instrument on a warm desk**: calm paper surface
 
 ## Why these decisions
 
-1. **Warm paper instead of white/gray.** Every competitor dashboard is cold gray. The warm off-white (`paper-50`) makes long reading sessions (prompt texts!) easier and gives the product a distinct identity that survives even without the logo.
+1. **Cold fog, not warm cream.** The survey-paper ground (`paper-50`) keeps long reading sessions (prompt texts!) easy while the spruce ink and signal orange give an identity that survives without the logo. Warm-cream-plus-serif is what every generated template looks like; this is the opposite bet.
 
-2. **Exactly one accent.** Violet-600 is reserved for identity + primary action. All meaning is carried by three signal colors with fixed semantics. A user can read any screen's health at a glance without reading a word.
+2. **Exactly one accent.** International orange is reserved for identity, waypoints, and the single primary CTA per view — never paired with white text. All meaning is carried by three signal colors with fixed semantics. A user can read any screen's health at a glance without reading a word.
 
 3. **Monospace for prompts is non-negotiable.** Prompts are the product's raw material; they must always look like artifacts being worked on, never like chat bubbles. This single rule separates Octavia from chat wrappers.
 

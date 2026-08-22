@@ -12,6 +12,10 @@ const i18n = createI18n({
     locale: document.documentElement.lang.startsWith('de') ? 'de' : 'en',
     fallbackLocale: 'en',
     messages: { en, de },
+    datetimeFormats: {
+        en: { short: { year: 'numeric', month: 'short', day: 'numeric' } },
+        de: { short: { year: 'numeric', month: 'short', day: 'numeric' } },
+    },
 });
 
 createInertiaApp({
@@ -21,17 +25,20 @@ createInertiaApp({
         return pages[`./pages/${name}.vue`];
     },
     setup({ el, App, props, plugin }) {
-        const app = createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(i18n)
-            .directive('reveal', vReveal)
-            .component('InertiaLink', Link)
-            .component('InertiaHead', Head);
-
+        const app = createApp({ render: () => h(App, props) });
+        // TEMP-DIAG: surface silent prod render errors (remove after debugging)
+        app.config.errorHandler = (err: unknown, _inst: unknown, info: string) => {
+            console.error('VUE-ERR [' + info + ']:', err);
+        };
+        app.use(plugin);
+        app.use(i18n);
+        app.directive('reveal', vReveal);
+        app.component('InertiaLink', Link);
+        app.component('InertiaHead', Head);
         app.mount(el);
     },
     progress: {
-        color: '#7563e8',
+        color: '#ea580c',
         showSpinner: false,
     },
 });

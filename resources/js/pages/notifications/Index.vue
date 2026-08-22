@@ -51,10 +51,10 @@ const remove = (id: string) => router.delete(`/notifications/${id}`, { preserveS
                     v-for="n in notifications.data"
                     :key="n.id"
                     class="flex items-center gap-3 px-5 py-3"
-                    :class="n.read ? '' : 'bg-violet-50/40'"
+                    :class="n.read ? '' : 'bg-accent-50/40'"
                 >
-                    <span class="h-2 w-2 shrink-0 rounded-full" :class="n.read ? 'bg-transparent' : 'bg-violet-500'" aria-hidden="true" />
-                    <Link v-if="n.run_id" :href="`/runs/${n.run_id}`" class="min-w-0 flex-1 truncate text-sm font-medium text-ink-900 hover:text-violet-700">
+                    <span class="h-2 w-2 shrink-0 rounded-full" :class="n.read ? 'bg-transparent' : 'bg-accent-500'" aria-hidden="true" />
+                    <Link v-if="n.run_id" :href="`/runs/${n.run_id}`" class="min-w-0 flex-1 truncate text-sm font-medium text-ink-900 hover:text-accent-700">
                         {{ n.run_name }}
                     </Link>
                     <span v-else class="min-w-0 flex-1 truncate text-sm text-ink-900">{{ n.run_name }}</span>
@@ -63,7 +63,7 @@ const remove = (id: string) => router.delete(`/notifications/${id}`, { preserveS
                     <span v-if="n.score !== null" class="shrink-0 font-mono text-xs tabular-nums text-mint-600">{{ Math.round(n.score * 100) }}%</span>
                     <button
                         type="button"
-                        class="shrink-0 text-xs text-ink-300 transition-colors hover:text-violet-600"
+                        class="shrink-0 text-xs text-ink-300 transition-colors hover:text-accent-600"
                         :title="t('notifications.markUnread')"
                         @click.stop="markUnread(n.id)"
                     >
@@ -88,7 +88,7 @@ const remove = (id: string) => router.delete(`/notifications/${id}`, { preserveS
                 :key="i"
                 :href="link.url ?? '#'"
                 class="rounded-lg px-3 py-1.5 text-sm"
-                :class="link.active ? 'bg-violet-600 text-white' : link.url ? 'text-ink-500 hover:bg-paper-200' : 'text-ink-200'"
+                :class="link.active ? 'bg-ink-950 text-white' : link.url ? 'text-ink-500 hover:bg-paper-200' : 'text-ink-200'"
                 v-html="link.label"
             />
         </nav>

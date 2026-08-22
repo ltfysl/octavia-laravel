@@ -36,10 +36,10 @@ const submit = () => form.post('/login');
                 </OField>
                 <div class="mt-1.5 flex items-center justify-between text-xs">
                     <label class="flex items-center gap-2 text-ink-500">
-                        <input v-model="form.remember" type="checkbox" class="h-3.5 w-3.5 rounded border-ink-200 accent-violet-600" />
+                        <input v-model="form.remember" type="checkbox" class="h-3.5 w-3.5 rounded border-ink-200 accent-accent-600" />
                         {{ t('auth.rememberMe') }}
                     </label>
-                    <Link href="/forgot-password" class="font-medium text-violet-600 hover:text-violet-700">{{ t('auth.forgotPassword') }}</Link>
+                    <Link href="/forgot-password" class="font-medium text-accent-600 hover:text-accent-700">{{ t('auth.forgotPassword') }}</Link>
                 </div>
                 <p v-if="form.errors.password" class="mt-1 text-xs text-rose-450">{{ form.errors.password }}</p>
             </div>
@@ -51,7 +51,7 @@ const submit = () => form.post('/login');
 
         <p class="mt-6 text-center text-sm text-ink-500">
             {{ t('auth.noAccount') }}
-            <Link href="/register" class="font-medium text-violet-600 hover:text-violet-700">{{ t('nav.signUp') }}</Link>
+            <Link href="/register" class="font-medium text-accent-600 hover:text-accent-700">{{ t('nav.signUp') }}</Link>
         </p>
     </AuthLayout>
 </template>

@@ -52,7 +52,7 @@ const removeMember = (id: number) => {
                         <span class="block truncate text-sm font-medium text-ink-900">{{ member.name }}</span>
                         <span class="text-xs text-ink-300">{{ member.email }}</span>
                     </div>
-                    <OBadge :tone="member.role === 'owner' ? 'violet' : member.role === 'admin' ? 'mint' : 'neutral'">
+                    <OBadge :tone="member.role === 'owner' ? 'accent' : member.role === 'admin' ? 'mint' : 'neutral'">
                         {{ member.role }}
                     </OBadge>
                     <button
@@ -76,7 +76,7 @@ const removeMember = (id: number) => {
                 </OField>
                 <p v-if="inviteForm.errors.email" class="-mt-2 text-xs text-rose-450">{{ inviteForm.errors.email }}</p>
                 <OField :label="t('teams.role')" for="invite-role">
-                    <select id="invite-role" v-model="inviteForm.role" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500">
+                    <select id="invite-role" v-model="inviteForm.role" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500">
                         <option value="member">{{ t('teams.member') }}</option>
                         <option value="admin">{{ t('teams.admin') }}</option>
                     </select>

@@ -66,6 +66,8 @@
     "current": "Current",
     "playground": "Playground",
     "runAgainst": "Run against benchmark",
+    "runHint": "Select a benchmark to enable runs.",
+    "runsCount": "{count} runs",
     "delete": "Delete prompt",
     "deleteConfirm": "Delete this prompt and all its versions? This cannot be undone.",
     "empty": "No prompts yet. Create your first prompt or install one from the marketplace.",

@@ -25,7 +25,12 @@ class NotificationController extends Controller
             ]);
 
         return Inertia::render('notifications/Index', [
-            'notifications' => $notifications,
+            // Explicit shape: a raw paginator serializes `links` as an object,
+            // but the page expects the link-collection array.
+            'notifications' => [
+                'data' => $notifications->items(),
+                'links' => $notifications->linkCollection()->toArray(),
+            ],
             'unreadCount' => $request->user()->unreadNotifications()->count(),
         ]);
     }

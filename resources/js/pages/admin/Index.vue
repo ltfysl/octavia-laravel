@@ -47,7 +47,7 @@ const props = defineProps<{
                 <ul class="divide-y divide-ink-100 text-sm">
                     <li v-for="user in recentUsers" :key="user.id" class="flex items-center gap-3 py-2">
                         <span class="min-w-0 flex-1 truncate">{{ user.name }}</span>
-                        <OBadge v-if="user.is_admin" tone="violet">admin</OBadge>
+                        <OBadge v-if="user.is_admin" tone="accent">admin</OBadge>
                         <span class="text-xs text-ink-300">{{ user.created_at?.slice(0, 10) }}</span>
                     </li>
                 </ul>

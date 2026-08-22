@@ -90,7 +90,7 @@ onBeforeUnmount(() => window.clearInterval(pollTimer));
             <div class="min-w-0">
                 <div class="flex flex-wrap items-center gap-3">
                     <h1 class="truncate font-display text-2xl font-bold tracking-tight text-ink-950">{{ run.name }}</h1>
-                    <OBadge :tone="run.status === 'completed' ? 'mint' : run.status === 'failed' ? 'rose' : run.status === 'running' ? 'violet' : 'neutral'">
+                    <OBadge :tone="run.status === 'completed' ? 'mint' : run.status === 'failed' ? 'rose' : run.status === 'running' ? 'accent' : 'neutral'">
                         {{ t(`runs.status.${run.status}`) }}
                     </OBadge>
                 </div>
@@ -135,7 +135,7 @@ onBeforeUnmount(() => window.clearInterval(pollTimer));
                     v-for="point in scoreTrend"
                     :key="point.n"
                     class="flex-1 rounded-t-sm transition-all"
-                    :class="point.score >= run.target_score ? 'bg-mint-500' : 'bg-violet-400'"
+                    :class="point.score >= run.target_score ? 'bg-mint-500' : 'bg-accent-400'"
                     :style="{ height: Math.max(4, point.score * 100) + '%' }"
                     :title="`Step ${point.n}: ${Math.round(point.score * 100)}%`"
                 />
@@ -149,7 +149,7 @@ onBeforeUnmount(() => window.clearInterval(pollTimer));
                     v-for="step in run.steps"
                     :key="step.id"
                     class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors"
-                    :class="selectedStep?.number === step.number ? 'bg-violet-50 text-violet-700' : 'text-ink-500 hover:bg-paper-100'"
+                    :class="selectedStep?.number === step.number ? 'bg-accent-50 text-accent-700' : 'text-ink-500 hover:bg-paper-100'"
                     @click="selectedStepNumber = step.number"
                 >
                     <span
@@ -194,7 +194,7 @@ onBeforeUnmount(() => window.clearInterval(pollTimer));
                             </ul>
 
                             <details class="mt-3">
-                                <summary class="cursor-pointer text-xs font-medium text-violet-600 hover:text-violet-700">{{ t('runs.output') }}</summary>
+                                <summary class="cursor-pointer text-xs font-medium text-accent-600 hover:text-accent-700">{{ t('runs.output') }}</summary>
                                 <pre class="mt-2 max-h-48 overflow-auto whitespace-pre-wrap rounded-lg bg-paper-100 p-3 font-mono text-xs leading-relaxed text-ink-700 scroll-thin">{{ c.output }}</pre>
                             </details>
                         </div>

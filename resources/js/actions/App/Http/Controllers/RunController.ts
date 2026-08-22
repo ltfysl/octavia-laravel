@@ -1,9 +1,9 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\RunController::index
- * @see app/Http/Controllers/RunController.php:17
- * @route '/runs'
- */
+* @see app/Http/Controllers/RunController.php:17
+* @route '/runs'
+*/
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
@@ -16,27 +16,28 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\RunController::index
- * @see app/Http/Controllers/RunController.php:17
- * @route '/runs'
- */
+* @see app/Http/Controllers/RunController.php:17
+* @route '/runs'
+*/
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\RunController::index
- * @see app/Http/Controllers/RunController.php:17
- * @route '/runs'
- */
+* @see app/Http/Controllers/RunController.php:17
+* @route '/runs'
+*/
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
 })
+
 /**
 * @see \App\Http\Controllers\RunController::index
- * @see app/Http/Controllers/RunController.php:17
- * @route '/runs'
- */
+* @see app/Http/Controllers/RunController.php:17
+* @route '/runs'
+*/
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
@@ -44,9 +45,9 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\RunController::create
- * @see app/Http/Controllers/RunController.php:38
- * @route '/runs/create'
- */
+* @see app/Http/Controllers/RunController.php:38
+* @route '/runs/create'
+*/
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: create.url(options),
     method: 'get',
@@ -59,27 +60,28 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\RunController::create
- * @see app/Http/Controllers/RunController.php:38
- * @route '/runs/create'
- */
+* @see app/Http/Controllers/RunController.php:38
+* @route '/runs/create'
+*/
 create.url = (options?: RouteQueryOptions) => {
     return create.definition.url + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\RunController::create
- * @see app/Http/Controllers/RunController.php:38
- * @route '/runs/create'
- */
+* @see app/Http/Controllers/RunController.php:38
+* @route '/runs/create'
+*/
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: create.url(options),
     method: 'get',
 })
+
 /**
 * @see \App\Http\Controllers\RunController::create
- * @see app/Http/Controllers/RunController.php:38
- * @route '/runs/create'
- */
+* @see app/Http/Controllers/RunController.php:38
+* @route '/runs/create'
+*/
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: create.url(options),
     method: 'head',
@@ -87,9 +89,9 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\RunController::show
- * @see app/Http/Controllers/RunController.php:100
- * @route '/runs/{run}'
- */
+* @see app/Http/Controllers/RunController.php:100
+* @route '/runs/{run}'
+*/
 export const show = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
@@ -102,31 +104,31 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\RunController::show
- * @see app/Http/Controllers/RunController.php:100
- * @route '/runs/{run}'
- */
+* @see app/Http/Controllers/RunController.php:100
+* @route '/runs/{run}'
+*/
 show.url = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { run: args }
     }
 
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { run: args.id }
-        }
-    
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { run: args.id }
+    }
+
     if (Array.isArray(args)) {
         args = {
-                    run: args[0],
-                }
+            run: args[0],
+        }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-                        run: typeof args.run === 'object'
-                ? args.run.id
-                : args.run,
-                }
+        run: typeof args.run === 'object'
+        ? args.run.id
+        : args.run,
+    }
 
     return show.definition.url
             .replace('{run}', parsedArgs.run.toString())
@@ -135,18 +137,19 @@ show.url = (args: { run: number | { id: number } } | [run: number | { id: number
 
 /**
 * @see \App\Http\Controllers\RunController::show
- * @see app/Http/Controllers/RunController.php:100
- * @route '/runs/{run}'
- */
+* @see app/Http/Controllers/RunController.php:100
+* @route '/runs/{run}'
+*/
 show.get = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
+
 /**
 * @see \App\Http\Controllers\RunController::show
- * @see app/Http/Controllers/RunController.php:100
- * @route '/runs/{run}'
- */
+* @see app/Http/Controllers/RunController.php:100
+* @route '/runs/{run}'
+*/
 show.head = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
@@ -154,9 +157,9 @@ show.head = (args: { run: number | { id: number } } | [run: number | { id: numbe
 
 /**
 * @see \App\Http\Controllers\RunController::store
- * @see app/Http/Controllers/RunController.php:55
- * @route '/runs'
- */
+* @see app/Http/Controllers/RunController.php:55
+* @route '/runs'
+*/
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
@@ -169,18 +172,18 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\RunController::store
- * @see app/Http/Controllers/RunController.php:55
- * @route '/runs'
- */
+* @see app/Http/Controllers/RunController.php:55
+* @route '/runs'
+*/
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\RunController::store
- * @see app/Http/Controllers/RunController.php:55
- * @route '/runs'
- */
+* @see app/Http/Controllers/RunController.php:55
+* @route '/runs'
+*/
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
@@ -188,9 +191,9 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\RunController::status
- * @see app/Http/Controllers/RunController.php:151
- * @route '/runs/{run}/status'
- */
+* @see app/Http/Controllers/RunController.php:151
+* @route '/runs/{run}/status'
+*/
 export const status = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: status.url(args, options),
     method: 'get',
@@ -203,31 +206,31 @@ status.definition = {
 
 /**
 * @see \App\Http\Controllers\RunController::status
- * @see app/Http/Controllers/RunController.php:151
- * @route '/runs/{run}/status'
- */
+* @see app/Http/Controllers/RunController.php:151
+* @route '/runs/{run}/status'
+*/
 status.url = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { run: args }
     }
 
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { run: args.id }
-        }
-    
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { run: args.id }
+    }
+
     if (Array.isArray(args)) {
         args = {
-                    run: args[0],
-                }
+            run: args[0],
+        }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-                        run: typeof args.run === 'object'
-                ? args.run.id
-                : args.run,
-                }
+        run: typeof args.run === 'object'
+        ? args.run.id
+        : args.run,
+    }
 
     return status.definition.url
             .replace('{run}', parsedArgs.run.toString())
@@ -236,18 +239,19 @@ status.url = (args: { run: number | { id: number } } | [run: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\RunController::status
- * @see app/Http/Controllers/RunController.php:151
- * @route '/runs/{run}/status'
- */
+* @see app/Http/Controllers/RunController.php:151
+* @route '/runs/{run}/status'
+*/
 status.get = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: status.url(args, options),
     method: 'get',
 })
+
 /**
 * @see \App\Http\Controllers\RunController::status
- * @see app/Http/Controllers/RunController.php:151
- * @route '/runs/{run}/status'
- */
+* @see app/Http/Controllers/RunController.php:151
+* @route '/runs/{run}/status'
+*/
 status.head = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: status.url(args, options),
     method: 'head',
@@ -255,9 +259,9 @@ status.head = (args: { run: number | { id: number } } | [run: number | { id: num
 
 /**
 * @see \App\Http\Controllers\RunController::cancel
- * @see app/Http/Controllers/RunController.php:162
- * @route '/runs/{run}/cancel'
- */
+* @see app/Http/Controllers/RunController.php:162
+* @route '/runs/{run}/cancel'
+*/
 export const cancel = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: cancel.url(args, options),
     method: 'post',
@@ -270,31 +274,31 @@ cancel.definition = {
 
 /**
 * @see \App\Http\Controllers\RunController::cancel
- * @see app/Http/Controllers/RunController.php:162
- * @route '/runs/{run}/cancel'
- */
+* @see app/Http/Controllers/RunController.php:162
+* @route '/runs/{run}/cancel'
+*/
 cancel.url = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { run: args }
     }
 
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { run: args.id }
-        }
-    
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { run: args.id }
+    }
+
     if (Array.isArray(args)) {
         args = {
-                    run: args[0],
-                }
+            run: args[0],
+        }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-                        run: typeof args.run === 'object'
-                ? args.run.id
-                : args.run,
-                }
+        run: typeof args.run === 'object'
+        ? args.run.id
+        : args.run,
+    }
 
     return cancel.definition.url
             .replace('{run}', parsedArgs.run.toString())
@@ -303,13 +307,14 @@ cancel.url = (args: { run: number | { id: number } } | [run: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\RunController::cancel
- * @see app/Http/Controllers/RunController.php:162
- * @route '/runs/{run}/cancel'
- */
+* @see app/Http/Controllers/RunController.php:162
+* @route '/runs/{run}/cancel'
+*/
 cancel.post = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: cancel.url(args, options),
     method: 'post',
 })
+
 const RunController = { index, create, show, store, status, cancel }
 
 export default RunController

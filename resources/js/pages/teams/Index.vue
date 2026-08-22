@@ -71,11 +71,11 @@ const removeTeam = (id: number) => {
                 <article class="flex h-full flex-col rounded-card border border-ink-100 bg-white p-5 shadow-panel">
                     <div class="flex items-center justify-between gap-2">
                         <h2 class="truncate font-display text-sm font-semibold text-ink-950">{{ team.name }}</h2>
-                        <OBadge v-if="team.is_owner" tone="violet">{{ t('teams.owner') }}</OBadge>
+                        <OBadge v-if="team.is_owner" tone="accent">{{ t('teams.owner') }}</OBadge>
                     </div>
                     <p class="mt-2 flex-1 text-sm text-ink-500">{{ t('teams.memberCount', { count: team.member_count }) }}</p>
                     <div class="mt-4 flex items-center justify-between border-t border-ink-100 pt-3">
-                        <Link :href="`/teams/${team.id}`" class="text-xs font-medium text-violet-600 hover:text-violet-700">
+                        <Link :href="`/teams/${team.id}`" class="text-xs font-medium text-accent-600 hover:text-accent-700">
                             {{ t('common.edit') }} →
                         </Link>
                         <button

@@ -1,9 +1,9 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\CollectionController::index
- * @see app/Http/Controllers/CollectionController.php:15
- * @route '/collections'
- */
+* @see app/Http/Controllers/CollectionController.php:15
+* @route '/collections'
+*/
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
@@ -16,27 +16,28 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\CollectionController::index
- * @see app/Http/Controllers/CollectionController.php:15
- * @route '/collections'
- */
+* @see app/Http/Controllers/CollectionController.php:15
+* @route '/collections'
+*/
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\CollectionController::index
- * @see app/Http/Controllers/CollectionController.php:15
- * @route '/collections'
- */
+* @see app/Http/Controllers/CollectionController.php:15
+* @route '/collections'
+*/
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
 })
+
 /**
 * @see \App\Http\Controllers\CollectionController::index
- * @see app/Http/Controllers/CollectionController.php:15
- * @route '/collections'
- */
+* @see app/Http/Controllers/CollectionController.php:15
+* @route '/collections'
+*/
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
@@ -44,9 +45,9 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\CollectionController::store
- * @see app/Http/Controllers/CollectionController.php:34
- * @route '/collections'
- */
+* @see app/Http/Controllers/CollectionController.php:34
+* @route '/collections'
+*/
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
@@ -59,18 +60,18 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\CollectionController::store
- * @see app/Http/Controllers/CollectionController.php:34
- * @route '/collections'
- */
+* @see app/Http/Controllers/CollectionController.php:34
+* @route '/collections'
+*/
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\CollectionController::store
- * @see app/Http/Controllers/CollectionController.php:34
- * @route '/collections'
- */
+* @see app/Http/Controllers/CollectionController.php:34
+* @route '/collections'
+*/
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
@@ -78,9 +79,9 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\CollectionController::update
- * @see app/Http/Controllers/CollectionController.php:51
- * @route '/collections/{collection}'
- */
+* @see app/Http/Controllers/CollectionController.php:51
+* @route '/collections/{collection}'
+*/
 export const update = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
@@ -93,31 +94,31 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\CollectionController::update
- * @see app/Http/Controllers/CollectionController.php:51
- * @route '/collections/{collection}'
- */
+* @see app/Http/Controllers/CollectionController.php:51
+* @route '/collections/{collection}'
+*/
 update.url = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { collection: args }
     }
 
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { collection: args.id }
-        }
-    
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { collection: args.id }
+    }
+
     if (Array.isArray(args)) {
         args = {
-                    collection: args[0],
-                }
+            collection: args[0],
+        }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-                        collection: typeof args.collection === 'object'
-                ? args.collection.id
-                : args.collection,
-                }
+        collection: typeof args.collection === 'object'
+        ? args.collection.id
+        : args.collection,
+    }
 
     return update.definition.url
             .replace('{collection}', parsedArgs.collection.toString())
@@ -126,18 +127,19 @@ update.url = (args: { collection: number | { id: number } } | [collection: numbe
 
 /**
 * @see \App\Http\Controllers\CollectionController::update
- * @see app/Http/Controllers/CollectionController.php:51
- * @route '/collections/{collection}'
- */
+* @see app/Http/Controllers/CollectionController.php:51
+* @route '/collections/{collection}'
+*/
 update.put = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
+
 /**
 * @see \App\Http\Controllers\CollectionController::update
- * @see app/Http/Controllers/CollectionController.php:51
- * @route '/collections/{collection}'
- */
+* @see app/Http/Controllers/CollectionController.php:51
+* @route '/collections/{collection}'
+*/
 update.patch = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
@@ -145,9 +147,9 @@ update.patch = (args: { collection: number | { id: number } } | [collection: num
 
 /**
 * @see \App\Http\Controllers\CollectionController::destroy
- * @see app/Http/Controllers/CollectionController.php:65
- * @route '/collections/{collection}'
- */
+* @see app/Http/Controllers/CollectionController.php:65
+* @route '/collections/{collection}'
+*/
 export const destroy = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
@@ -160,31 +162,31 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\CollectionController::destroy
- * @see app/Http/Controllers/CollectionController.php:65
- * @route '/collections/{collection}'
- */
+* @see app/Http/Controllers/CollectionController.php:65
+* @route '/collections/{collection}'
+*/
 destroy.url = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { collection: args }
     }
 
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { collection: args.id }
-        }
-    
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { collection: args.id }
+    }
+
     if (Array.isArray(args)) {
         args = {
-                    collection: args[0],
-                }
+            collection: args[0],
+        }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-                        collection: typeof args.collection === 'object'
-                ? args.collection.id
-                : args.collection,
-                }
+        collection: typeof args.collection === 'object'
+        ? args.collection.id
+        : args.collection,
+    }
 
     return destroy.definition.url
             .replace('{collection}', parsedArgs.collection.toString())
@@ -193,13 +195,14 @@ destroy.url = (args: { collection: number | { id: number } } | [collection: numb
 
 /**
 * @see \App\Http\Controllers\CollectionController::destroy
- * @see app/Http/Controllers/CollectionController.php:65
- * @route '/collections/{collection}'
- */
+* @see app/Http/Controllers/CollectionController.php:65
+* @route '/collections/{collection}'
+*/
 destroy.delete = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
+
 const CollectionController = { index, store, update, destroy }
 
 export default CollectionController

@@ -1,9 +1,9 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\UserController::index
- * @see app/Http/Controllers/Admin/UserController.php:14
- * @route '/admin/users'
- */
+* @see app/Http/Controllers/Admin/UserController.php:14
+* @route '/admin/users'
+*/
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
@@ -16,27 +16,28 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::index
- * @see app/Http/Controllers/Admin/UserController.php:14
- * @route '/admin/users'
- */
+* @see app/Http/Controllers/Admin/UserController.php:14
+* @route '/admin/users'
+*/
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::index
- * @see app/Http/Controllers/Admin/UserController.php:14
- * @route '/admin/users'
- */
+* @see app/Http/Controllers/Admin/UserController.php:14
+* @route '/admin/users'
+*/
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
 })
+
 /**
 * @see \App\Http\Controllers\Admin\UserController::index
- * @see app/Http/Controllers/Admin/UserController.php:14
- * @route '/admin/users'
- */
+* @see app/Http/Controllers/Admin/UserController.php:14
+* @route '/admin/users'
+*/
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
@@ -44,9 +45,9 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::toggleAdmin
- * @see app/Http/Controllers/Admin/UserController.php:43
- * @route '/admin/users/{user}/toggle-admin'
- */
+* @see app/Http/Controllers/Admin/UserController.php:43
+* @route '/admin/users/{user}/toggle-admin'
+*/
 export const toggleAdmin = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleAdmin.url(args, options),
     method: 'post',
@@ -59,31 +60,31 @@ toggleAdmin.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::toggleAdmin
- * @see app/Http/Controllers/Admin/UserController.php:43
- * @route '/admin/users/{user}/toggle-admin'
- */
+* @see app/Http/Controllers/Admin/UserController.php:43
+* @route '/admin/users/{user}/toggle-admin'
+*/
 toggleAdmin.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { user: args }
     }
 
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { user: args.id }
-        }
-    
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { user: args.id }
+    }
+
     if (Array.isArray(args)) {
         args = {
-                    user: args[0],
-                }
+            user: args[0],
+        }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-                        user: typeof args.user === 'object'
-                ? args.user.id
-                : args.user,
-                }
+        user: typeof args.user === 'object'
+        ? args.user.id
+        : args.user,
+    }
 
     return toggleAdmin.definition.url
             .replace('{user}', parsedArgs.user.toString())
@@ -92,9 +93,9 @@ toggleAdmin.url = (args: { user: number | { id: number } } | [user: number | { i
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::toggleAdmin
- * @see app/Http/Controllers/Admin/UserController.php:43
- * @route '/admin/users/{user}/toggle-admin'
- */
+* @see app/Http/Controllers/Admin/UserController.php:43
+* @route '/admin/users/{user}/toggle-admin'
+*/
 toggleAdmin.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleAdmin.url(args, options),
     method: 'post',
@@ -102,9 +103,9 @@ toggleAdmin.post = (args: { user: number | { id: number } } | [user: number | { 
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::destroy
- * @see app/Http/Controllers/Admin/UserController.php:54
- * @route '/admin/users/{user}'
- */
+* @see app/Http/Controllers/Admin/UserController.php:54
+* @route '/admin/users/{user}'
+*/
 export const destroy = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
@@ -117,31 +118,31 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::destroy
- * @see app/Http/Controllers/Admin/UserController.php:54
- * @route '/admin/users/{user}'
- */
+* @see app/Http/Controllers/Admin/UserController.php:54
+* @route '/admin/users/{user}'
+*/
 destroy.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { user: args }
     }
 
-            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-            args = { user: args.id }
-        }
-    
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { user: args.id }
+    }
+
     if (Array.isArray(args)) {
         args = {
-                    user: args[0],
-                }
+            user: args[0],
+        }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-                        user: typeof args.user === 'object'
-                ? args.user.id
-                : args.user,
-                }
+        user: typeof args.user === 'object'
+        ? args.user.id
+        : args.user,
+    }
 
     return destroy.definition.url
             .replace('{user}', parsedArgs.user.toString())
@@ -150,17 +151,18 @@ destroy.url = (args: { user: number | { id: number } } | [user: number | { id: n
 
 /**
 * @see \App\Http\Controllers\Admin\UserController::destroy
- * @see app/Http/Controllers/Admin/UserController.php:54
- * @route '/admin/users/{user}'
- */
+* @see app/Http/Controllers/Admin/UserController.php:54
+* @route '/admin/users/{user}'
+*/
 destroy.delete = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
+
 const users = {
     index: Object.assign(index, index),
-toggleAdmin: Object.assign(toggleAdmin, toggleAdmin),
-destroy: Object.assign(destroy, destroy),
+    toggleAdmin: Object.assign(toggleAdmin, toggleAdmin),
+    destroy: Object.assign(destroy, destroy),
 }
 
 export default users

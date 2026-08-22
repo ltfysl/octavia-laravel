@@ -25,9 +25,9 @@ defineProps<{
 
 const { t } = useI18n();
 
-const tone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral' | 'violet'> = {
+const tone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral' | 'accent'> = {
     completed: 'mint',
-    running: 'violet',
+    running: 'accent',
     pending: 'neutral',
     failed: 'rose',
     cancelled: 'neutral',
@@ -43,12 +43,12 @@ const tone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral' | 'violet'> = {
                 <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">{{ t('runs.title') }}</h1>
                 <p class="mt-1 text-sm text-ink-500">{{ t('runs.subtitle') }}</p>
             </div>
-            <Link href="/runs/create" class="rounded-lg bg-violet-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-violet-700">+ {{ t('runs.new') }}</Link>
+            <Link href="/runs/create" class="rounded-lg bg-ink-950 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-ink-700">+ {{ t('runs.new') }}</Link>
         </div>
 
         <OEmptyState v-if="runs.data.length === 0" class="mt-8" :title="t('runs.empty')">
             <template #action>
-                <Link href="/runs/create" class="rounded-lg bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700">{{ t('runs.new') }}</Link>
+                <Link href="/runs/create" class="rounded-lg bg-ink-950 px-4 py-2 text-sm font-medium text-white hover:bg-ink-700">{{ t('runs.new') }}</Link>
             </template>
         </OEmptyState>
 
@@ -65,7 +65,7 @@ const tone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral' | 'violet'> = {
                     <tr v-for="run in runs.data" :key="run.id" class="transition-colors hover:bg-paper-100/60">
                         <td class="px-5 py-3">
                             <Link :href="`/runs/${run.id}`" class="block">
-                                <span class="font-medium text-ink-950 hover:text-violet-700">{{ run.name }}</span>
+                                <span class="font-medium text-ink-950 hover:text-accent-700">{{ run.name }}</span>
                                 <span class="mt-0.5 flex items-center gap-2">
                                     <OBadge :tone="tone[run.status] ?? 'neutral'">{{ t(`runs.status.${run.status}`) }}</OBadge>
                                     <span class="text-xs text-ink-300">{{ run.mode === 'optimize' ? t('runs.mode.optimize') : t('runs.mode.evaluate') }}</span>
@@ -77,7 +77,7 @@ const tone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral' | 'violet'> = {
                             <span v-else class="text-xs text-ink-300">—</span>
                         </td>
                         <td class="px-5 py-3">
-                            <Link :href="`/runs/${run.id}`" class="text-xs font-medium text-violet-600 hover:text-violet-700">{{ t('runs.steps') }} →</Link>
+                            <Link :href="`/runs/${run.id}`" class="text-xs font-medium text-accent-600 hover:text-accent-700">{{ t('runs.steps') }} →</Link>
                         </td>
                     </tr>
                 </tbody>

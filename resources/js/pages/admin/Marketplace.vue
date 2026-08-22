@@ -61,7 +61,7 @@ const setListed = (id: number, listed: boolean) => {
                             <button
                                 type="button"
                                 class="text-xs font-medium"
-                                :class="item.listed ? 'text-rose-450 hover:underline' : 'text-violet-600 hover:text-violet-700'"
+                                :class="item.listed ? 'text-rose-450 hover:underline' : 'text-accent-600 hover:text-accent-700'"
                                 :disabled="busyId === item.id"
                                 @click="setListed(item.id, !item.listed)"
                             >

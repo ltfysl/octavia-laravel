@@ -114,7 +114,7 @@ const submit = () => {
             <li v-for="(label, i) in steps" :key="label" class="flex items-center gap-2">
                 <span
                     class="flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold"
-                    :class="step > i + 1 ? 'bg-mint-500 text-white' : step === i + 1 ? 'bg-violet-600 text-white' : 'bg-paper-200 text-ink-500'"
+                    :class="step > i + 1 ? 'bg-mint-500 text-white' : step === i + 1 ? 'bg-ink-950 text-white' : 'bg-paper-200 text-ink-500'"
                     :aria-current="step === i + 1 ? 'step' : undefined"
                 >
                     {{ step > i + 1 ? '✓' : i + 1 }}
@@ -130,10 +130,10 @@ const submit = () => {
                 <OInput id="bm-name" v-model="basics.name" placeholder="e.g. Marketing copy quality" required autofocus />
             </OField>
             <OField :label="t('benchmarks.wizard.description')" for="bm-desc">
-                <textarea id="bm-desc" v-model="basics.description" rows="3" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500" />
+                <textarea id="bm-desc" v-model="basics.description" rows="3" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500" />
             </OField>
             <OField :label="t('benchmarks.wizard.category')" for="bm-cat">
-                <select id="bm-cat" v-model="basics.category" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500">
+                <select id="bm-cat" v-model="basics.category" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500">
                     <option v-for="cat in props.categories" :key="cat.value" :value="cat.value">{{ cat.label }}</option>
                 </select>
             </OField>
@@ -145,7 +145,7 @@ const submit = () => {
                         :key="vis"
                         type="button"
                         class="rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
-                        :class="basics.visibility === vis ? 'border-violet-500 bg-violet-50 text-violet-700' : 'border-ink-200 text-ink-700'"
+                        :class="basics.visibility === vis ? 'border-accent-500 bg-accent-50 text-accent-700' : 'border-ink-200 text-ink-700'"
                         @click="basics.visibility = vis"
                     >
                         {{ t(`prompts.visibility.${vis}`) }}
@@ -168,7 +168,7 @@ const submit = () => {
                     <OField :label="t('benchmarks.wizard.criteria')" :hint="' '" />
                 </div>
                 <OField :label="t('benchmarks.wizard.caseInput')" required class="mt-0">
-                    <textarea v-model="c.input" rows="3" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500" />
+                    <textarea v-model="c.input" rows="3" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500" />
                 </OField>
 
                 <div class="mt-4 space-y-3 rounded-lg bg-paper-100/70 p-4">
@@ -177,7 +177,7 @@ const submit = () => {
                         <div class="flex items-start gap-3">
                             <select
                                 v-model="cr.type"
-                                class="w-44 shrink-0 rounded-lg border border-ink-200 bg-white px-2 py-1.5 text-sm focus:border-violet-500"
+                                class="w-44 shrink-0 rounded-lg border border-ink-200 bg-white px-2 py-1.5 text-sm focus:border-accent-500"
                                 :aria-label="t('benchmarks.wizard.criterionType')"
                             >
                                 <option value="contains">{{ t('benchmarks.wizard.contains') }}</option>
@@ -191,16 +191,16 @@ const submit = () => {
                         <div class="mt-2 pl-0 sm:pl-48">
                             <OInput v-if="cr.type === 'contains' || cr.type === 'not_contains'" v-model="cr.value" placeholder="keyword one, keyword two" />
                             <OInput v-else-if="cr.type === 'regex'" v-model="cr.pattern" placeholder="/pattern/i" class="font-mono" />
-                            <textarea v-else-if="cr.type === 'llm_judge'" v-model="cr.description" rows="2" class="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm focus:border-violet-500" placeholder="Describe what the output must achieve…" />
+                            <textarea v-else-if="cr.type === 'llm_judge'" v-model="cr.description" rows="2" class="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm focus:border-accent-500" placeholder="Describe what the output must achieve…" />
                         </div>
                     </div>
-                    <button type="button" class="text-xs font-medium text-violet-600 hover:text-violet-700" @click="addCriterion(c)">
+                    <button type="button" class="text-xs font-medium text-accent-600 hover:text-accent-700" @click="addCriterion(c)">
                         + {{ t('benchmarks.wizard.addCriterion') }}
                     </button>
                 </div>
             </div>
 
-            <button type="button" class="w-full rounded-card border border-dashed border-ink-200 py-3 text-sm font-medium text-ink-500 transition-colors hover:border-violet-300 hover:text-violet-600" @click="addCase">
+            <button type="button" class="w-full rounded-card border border-dashed border-ink-200 py-3 text-sm font-medium text-ink-500 transition-colors hover:border-accent-300 hover:text-accent-600" @click="addCase">
                 + {{ t('benchmarks.wizard.addCase') }}
             </button>
         </section>
@@ -211,7 +211,7 @@ const submit = () => {
             <div class="mt-4 rounded-card border border-ink-100 bg-white p-5 shadow-panel">
                 <div class="flex items-center gap-3">
                     <h2 class="font-display text-base font-semibold text-ink-950">{{ basics.name }}</h2>
-                    <OBadge tone="violet">{{ props.categories.find((c) => c.value === basics.category)?.label }}</OBadge>
+                    <OBadge tone="accent">{{ props.categories.find((c) => c.value === basics.category)?.label }}</OBadge>
                 </div>
                 <p v-if="basics.description" class="mt-1 text-sm text-ink-500">{{ basics.description }}</p>
                 <ul class="mt-4 space-y-3">
@@ -220,7 +220,7 @@ const submit = () => {
                         <p class="mt-1 line-clamp-2 text-xs text-ink-500">“{{ c.input }}”</p>
                         <ul class="mt-2 space-y-1">
                             <li v-for="(cr, cri) in c.criteria" :key="cri" class="flex items-center gap-2 text-xs text-ink-700">
-                                <span class="h-1.5 w-1.5 rounded-full bg-violet-400" aria-hidden="true" />
+                                <span class="h-1.5 w-1.5 rounded-full bg-accent-400" aria-hidden="true" />
                                 {{ cr.label }}
                                 <span class="ml-auto font-mono text-[10px] uppercase text-ink-300">{{ cr.type }}</span>
                             </li>

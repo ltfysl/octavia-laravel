@@ -11,7 +11,7 @@ it('shares the run quota prop with authenticated users', function () {
     $this->actingAs($user)->get('/dashboard')->assertInertia(fn ($page) => $page
         ->has('runQuota')
         ->where('runQuota.used', 0)
-        ->where('runQuota.limit', config('llm.run_quota_per_day', 50)));
+        ->where('runQuota.limit', (int) config('llm.run_quota_per_day', 50)));
 });
 
 it('reflects consumed quota in the shared prop', function () {

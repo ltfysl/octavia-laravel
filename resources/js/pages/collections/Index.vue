@@ -71,7 +71,7 @@ const destroy = (id: number) => {
                         <label v-for="benchmark in benchmarks" :key="benchmark.id" class="flex cursor-pointer items-center gap-2.5 rounded-lg border border-ink-100 px-3 py-2 text-sm hover:bg-paper-100">
                             <input
                                 type="checkbox"
-                                class="h-4 w-4 rounded border-ink-200 accent-violet-600"
+                                class="h-4 w-4 rounded border-ink-200 accent-accent-600"
                                 :checked="form.benchmark_ids.includes(benchmark.id)"
                                 @change="toggle(benchmark.id)"
                             />
@@ -100,7 +100,7 @@ const destroy = (id: number) => {
                         <span>{{ t('benchmarks.collections.count', { count: collection.benchmarks_count }) }}</span>
                         <button type="button" class="font-medium text-rose-450 hover:underline" @click="destroy(collection.id)">{{ t('common.delete') }}</button>
                     </div>
-                    <Link href="/runs/create" class="mt-3 text-xs font-medium text-violet-600 hover:text-violet-700">▶ {{ t('runs.new') }}</Link>
+                    <Link href="/runs/create" class="mt-3 text-xs font-medium text-accent-600 hover:text-accent-700">▶ {{ t('runs.new') }}</Link>
                 </article>
             </li>
         </ul>

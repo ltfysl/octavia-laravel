@@ -125,15 +125,17 @@ const saveAsVersion = () => {
             <div class="min-w-0">
                 <div class="flex items-center gap-3">
                     <h1 class="truncate font-display text-2xl font-bold tracking-tight text-ink-950">{{ prompt.name }}</h1>
-                    <OBadge :tone="prompt.visibility === 'public' ? 'violet' : 'neutral'">{{ t(`prompts.visibility.${prompt.visibility}`) }}</OBadge>
+                    <OBadge :tone="prompt.visibility === 'public' ? 'accent' : 'neutral'">{{ t(`prompts.visibility.${prompt.visibility}`) }}</OBadge>
                     <span v-if="prompt.current_version" class="font-mono text-xs text-ink-300">v{{ prompt.current_version }}</span>
                 </div>
                 <p v-if="prompt.description" class="mt-1 text-sm text-ink-500">{{ prompt.description }}</p>
             </div>
             <div class="flex items-center gap-2">
-                <OButton variant="secondary" :disabled="form.processing" @click="publish">{{ t('marketplace.publish') }}</OButton>
-                <OButton variant="ghost" @click="destroy">{{ t('prompts.delete') }}</OButton>
                 <Link href="/prompts" class="self-center text-sm text-ink-500 hover:text-ink-900">{{ t('common.back') }}</Link>
+                <span class="mx-1 h-5 w-px bg-ink-100" aria-hidden="true" />
+                <OButton variant="secondary" :disabled="form.processing" @click="publish">{{ t('marketplace.publish') }}</OButton>
+                <span class="mx-1 h-5 w-px bg-ink-100" aria-hidden="true" />
+                <OButton variant="danger" @click="destroy">{{ t('prompts.delete') }}</OButton>
             </div>
         </div>
 
@@ -145,7 +147,7 @@ const saveAsVersion = () => {
                 role="tab"
                 :aria-selected="tab === tb.id"
                 class="-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors"
-                :class="tab === tb.id ? 'border-violet-600 text-violet-700' : 'border-transparent text-ink-500 hover:text-ink-900'"
+                :class="tab === tb.id ? 'border-accent-600 text-accent-700' : 'border-transparent text-ink-500 hover:text-ink-900'"
                 @click="tab = tb.id as 'editor' | 'versions'"
             >
                 {{ tb.label }}
@@ -159,7 +161,7 @@ const saveAsVersion = () => {
                     v-model="form.content"
                     rows="20"
                     :aria-label="t('prompts.content')"
-                    class="w-full rounded-card border border-ink-200 bg-white px-4 py-3 font-mono text-sm leading-relaxed shadow-panel focus:border-violet-500"
+                    class="w-full rounded-card border border-ink-200 bg-white px-4 py-3 font-mono text-sm leading-relaxed shadow-panel focus:border-accent-500"
                 />
                 <div class="mt-3 flex items-center gap-3">
                     <OInput v-model="form.changelog" :placeholder="t('prompts.changelog')" class="max-w-xs flex-1" />
@@ -173,14 +175,13 @@ const saveAsVersion = () => {
                 <OPanel :title="t('prompts.runAgainst')">
                     <select
                         v-model="selectedBenchmarkId"
-                        class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500"
+                        class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500"
                         :aria-label="t('prompts.runAgainst')"
+                        aria-describedby="run-benchmark-hint"
                     >
                         <option value="" disabled>—</option>
-                        <option v-for="benchmark in benchmarks" :key="benchmark.id" :value="benchmark.id">
-                            {{ benchmark.name }} ({{ benchmark.cases_count }})
-                        </option>
                     </select>
+                    <p id="run-benchmark-hint" class="mt-2 text-xs text-ink-500">{{ t('prompts.runHint') }}</p>
                     <div class="mt-3 space-y-2">
                         <OButton class="w-full" :disabled="!selectedBenchmarkId" @click="startRun('optimize')">
                             {{ t('runs.mode.optimize') }}
@@ -189,7 +190,7 @@ const saveAsVersion = () => {
                             {{ t('runs.mode.evaluate') }}
                         </OButton>
                     </div>
-                    <Link v-if="benchmarks.length === 0" href="/benchmarks/wizard" class="mt-3 block text-center text-xs font-medium text-violet-600 hover:text-violet-700">
+                    <Link v-if="benchmarks.length === 0" href="/benchmarks/wizard" class="mt-3 block text-center text-xs font-medium text-accent-600 hover:text-accent-700">
                         {{ t('dashboard.createBenchmark') }} →
                     </Link>
                 </OPanel>
@@ -200,7 +201,7 @@ const saveAsVersion = () => {
                         v-model="playgroundInput"
                         rows="4"
                         :placeholder="t('benchmarks.wizard.caseInput')"
-                        class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500"
+                        class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500"
                     />
                     <OButton
                         variant="secondary"

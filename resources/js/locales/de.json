@@ -66,6 +66,8 @@
     "current": "Aktuell",
     "playground": "Playground",
     "runAgainst": "Gegen Benchmark laufen lassen",
+    "runHint": "Wähle einen Benchmark, um Runs zu starten.",
+    "runsCount": "{count} Runs",
     "delete": "Prompt löschen",
     "deleteConfirm": "Diesen Prompt mit allen Versionen löschen? Das kann nicht rückgängig gemacht werden.",
     "empty": "Noch keine Prompts. Erstelle deinen ersten Prompt oder installiere einen aus dem Marketplace.",

@@ -87,22 +87,24 @@ const faqs = [
             <meta property="og:description" :content="t('landing.heroSubtitle')" />
             <meta property="og:type" content="website" />
             <meta name="twitter:card" content="summary_large_image" />
-            <script type="application/ld+json">{{ JSON.stringify({
+            <!-- Literal <script> is stripped by the Vue template compiler; a dynamic
+                 component vnode renders through Inertia Head intact. -->
+            <component :is="'script'" type="application/ld+json">{{ JSON.stringify({
                 '@context': 'https://schema.org',
                 '@type': 'SoftwareApplication',
                 name: 'Octavia',
                 applicationCategory: 'DeveloperApplication',
                 description: 'Prompt laboratory: benchmark, evolve and fine-tune prompts against custom benchmarks.',
                 offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-            }) }}</script>
+            }) }}</component>
         </Head>
 
         <!-- Hero -->
         <section class="relative overflow-hidden">
             <div class="pointer-events-none absolute inset-x-0 -top-40 h-80 bg-[radial-gradient(60%_60%_at_50%_50%,rgba(117,99,232,0.12),transparent)]" aria-hidden="true" />
             <div class="mx-auto max-w-6xl px-4 pb-24 pt-24 text-center sm:px-6 sm:pb-28 sm:pt-32">
-                <p v-reveal class="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-xs font-medium text-violet-700">
-                    <span class="h-1.5 w-1.5 rounded-full bg-violet-500" aria-hidden="true" />
+                <p v-reveal class="mb-5 inline-flex items-center gap-2 rounded-full border border-accent-200 bg-accent-50 px-3 py-1 text-xs font-medium text-accent-700">
+                    <span class="h-1.5 w-1.5 rounded-full bg-accent-500" aria-hidden="true" />
                     Fine-tuning, but for prompts
                 </p>
                 <h1
@@ -115,7 +117,7 @@ const faqs = [
                     {{ t('landing.heroSubtitle') }}
                 </p>
                 <div v-reveal class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                    <a href="/register" class="w-full rounded-lg bg-violet-600 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-violet-700 sm:w-auto">
+                    <a href="/register" class="w-full rounded-lg bg-ink-950 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-ink-700 sm:w-auto">
                         {{ t('landing.cta') }}
                     </a>
                     <a href="#how" class="w-full rounded-lg border border-ink-200 bg-white px-6 py-3 text-base font-medium text-ink-900 transition-colors hover:border-ink-300 sm:w-auto">
@@ -144,7 +146,7 @@ const faqs = [
                 <h2 class="text-center font-display text-3xl font-bold tracking-tight text-ink-950">{{ t('landing.howTitle') }}</h2>
                 <div class="mt-12 grid gap-10 md:mt-16 md:grid-cols-3 md:gap-12">
                     <div v-for="(step, i) in steps" :key="step.n" v-reveal="{ delay: i * 120 }">
-                        <span class="font-mono text-sm font-semibold text-violet-600">{{ step.n }}</span>
+                        <span class="font-mono text-sm font-semibold text-accent-600">{{ step.n }}</span>
                         <h3 class="mt-3 font-display text-lg font-semibold text-ink-950">{{ step.title }}</h3>
                         <p class="mt-2 leading-relaxed text-ink-500">{{ step.body }}</p>
                     </div>
@@ -161,9 +163,9 @@ const faqs = [
                         v-for="(feature, i) in features"
                         :key="feature.title"
                         v-reveal="{ delay: (i % 3) * 100 }"
-                        class="group rounded-card border border-ink-100 bg-white p-6 shadow-panel transition-all duration-500 ease-out hover:-translate-y-1 hover:border-violet-200 hover:shadow-pop"
+                        class="group rounded-card border border-ink-100 bg-white p-6 shadow-panel transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent-200 hover:shadow-pop"
                     >
-                        <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 text-violet-600 transition-colors duration-500 group-hover:bg-violet-600 group-hover:text-white">
+                        <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-50 text-accent-600 transition-colors duration-500 group-hover:bg-accent-600 group-hover:text-ink-950">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" :d="feature.icon" /></svg>
                         </span>
                         <h3 class="mt-4 font-display text-base font-semibold text-ink-950">{{ feature.title }}</h3>
@@ -197,7 +199,7 @@ const faqs = [
                 <div v-reveal class="rounded-card bg-ink-950 px-8 py-14 text-center md:py-20">
                     <h2 class="font-display text-3xl font-bold tracking-tight text-white">Your next prompt deserves evidence.</h2>
                     <p class="mx-auto mt-3 max-w-xl text-ink-300">Create a free account, build your first benchmark in minutes and watch Octavia evolve your prompt step by step.</p>
-                    <a href="/register" class="mt-8 inline-block rounded-lg bg-violet-600 px-6 py-3 font-medium text-white transition-colors hover:bg-violet-500">
+                    <a href="/register" class="mt-8 inline-block rounded-lg bg-ink-950 px-6 py-3 font-medium text-white transition-colors hover:bg-ink-700">
                         {{ t('landing.cta') }}
                     </a>
                 </div>

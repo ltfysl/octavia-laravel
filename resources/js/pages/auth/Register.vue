@@ -52,7 +52,7 @@ const submit = () => form.post('/register');
 
         <p class="mt-6 text-center text-sm text-ink-500">
             {{ t('auth.hasAccount') }}
-            <Link href="/login" class="font-medium text-violet-600 hover:text-violet-700">{{ t('nav.logIn') }}</Link>
+            <Link href="/login" class="font-medium text-accent-600 hover:text-accent-700">{{ t('nav.logIn') }}</Link>
         </p>
     </AuthLayout>
 </template>

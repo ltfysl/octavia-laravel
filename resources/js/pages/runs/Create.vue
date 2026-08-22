@@ -49,21 +49,21 @@ const canSubmit = computed(() => !! form.value.prompt_id && (!! form.value.bench
             <OPanel>
                 <div class="space-y-5">
                     <OField :label="t('nav.prompts')" for="prompt" required>
-                        <select id="prompt" v-model="form.prompt_id" required class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500">
+                        <select id="prompt" v-model="form.prompt_id" required class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500">
                             <option value="" disabled>—</option>
                             <option v-for="prompt in prompts" :key="prompt.id" :value="prompt.id">{{ prompt.name }} (v{{ prompt.version }})</option>
                         </select>
                     </OField>
 
                     <OField :label="t('nav.benchmarks')" for="benchmark" :hint="form.collection_id ? '—' : undefined">
-                        <select id="benchmark" v-model="form.benchmark_id" :disabled="!!form.collection_id" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500 disabled:opacity-40">
+                        <select id="benchmark" v-model="form.benchmark_id" :disabled="!!form.collection_id" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500 disabled:opacity-40">
                             <option value="" disabled>—</option>
                             <option v-for="benchmark in benchmarks" :key="benchmark.id" :value="benchmark.id">{{ benchmark.name }} ({{ benchmark.cases_count }})</option>
                         </select>
                     </OField>
 
                     <OField v-if="collections && collections.length > 0" :label="t('benchmarks.collections.title')" for="collection">
-                        <select id="collection" v-model="form.collection_id" :disabled="!!form.benchmark_id" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-violet-500 disabled:opacity-40">
+                        <select id="collection" v-model="form.collection_id" :disabled="!!form.benchmark_id" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500 disabled:opacity-40">
                             <option value="" disabled>—</option>
                             <option v-for="collection in collections" :key="collection.id" :value="collection.id">{{ collection.name }} ({{ collection.benchmarks_count }})</option>
                         </select>
@@ -78,7 +78,7 @@ const canSubmit = computed(() => !! form.value.prompt_id && (!! form.value.bench
                         :key="mode"
                         type="button"
                         class="rounded-lg border px-4 py-3 text-left transition-colors"
-                        :class="form.mode === mode ? 'border-violet-500 bg-violet-50' : 'border-ink-200 hover:border-ink-300'"
+                        :class="form.mode === mode ? 'border-accent-500 bg-accent-50' : 'border-ink-200 hover:border-ink-300'"
                         :aria-pressed="form.mode === mode"
                         @click="form.mode = mode as 'optimize' | 'evaluate'"
                     >
@@ -88,10 +88,10 @@ const canSubmit = computed(() => !! form.value.prompt_id && (!! form.value.bench
 
                 <div v-if="form.mode === 'optimize'" class="mt-5 grid gap-4 sm:grid-cols-2">
                     <OField :label="t('runs.target')" for="target" :hint="'0.1 – 1.0'">
-                        <input id="target" v-model.number="form.target_score" type="number" min="0.1" max="1" step="0.05" class="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm focus:border-violet-500" />
+                        <input id="target" v-model.number="form.target_score" type="number" min="0.1" max="1" step="0.05" class="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm focus:border-accent-500" />
                     </OField>
                     <OField label="Max steps" for="steps" :hint="'1 – 20'">
-                        <input id="steps" v-model.number="form.max_steps" type="number" min="1" max="20" class="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm focus:border-violet-500" />
+                        <input id="steps" v-model.number="form.max_steps" type="number" min="1" max="20" class="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm focus:border-accent-500" />
                     </OField>
                 </div>
             </OPanel>

@@ -1,11 +1,11 @@
 # Tasks
 
 ## Now
-- [ ] Finer-grained token scopes (per-resource) with billing tiers
+- [ ] Stripe integration (account + keys required; see docs/operations/billing.md)
 
 ## Next
-- [ ] Stripe integration (account + keys required; see docs/operations/billing.md)
 - [ ] Welcome mail polish (optional)
+- [ ] Billing tiers tied to token scopes (prerequisite done in round 21)
 - [ ] "Update available" notification when publisher republishes at new version (email channel)
 
 ## Later
@@ -53,8 +53,7 @@
 - [x] Round 17: prompt JSON export/import, global search includes runs, error page tests
 - [x] Round 18: reporter resolution email (queueable, localized, opt-out aware), run-level team scoping (policy + scope + index owner attribution)
 - [x] Round 19: credits & billing foundation (ledger, atomic consume, run reservation + refund via RunObserver, /settings/billing, dedicated /pricing page, Stripe checklist)
-- [x] **113 Pest tests / 388 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
-- [x] Round 20: team invitation emails (queueable, localized EN/DE, mail + database channels)
-- [x] **114 Pest tests / 392 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
-- [x] Docs: README, AGENTS.md, DESIGNS.md + designs/*, docs/architecture, docs/features/engine, docs/operations (incl. billing), docs/decisions
-- [x] Rounds 1–20 documented in rounds/
+- [x] Round 21: fine-grained API token scopes (prompts:read/write, runs:read/write; scope middleware with implication rules, backward compatible)
+- [x] **119 Pest tests / 399 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
+- [x] Docs: README (incl. API scopes), AGENTS.md, DESIGNS.md + designs/*, docs/architecture, docs/features/engine, docs/operations (incl. billing), docs/decisions
+- [x] Rounds 1–21 documented in rounds/

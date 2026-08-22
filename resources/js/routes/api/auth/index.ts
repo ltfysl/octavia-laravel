@@ -35,7 +35,7 @@ token.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\AuthTokenController::logout
- * @see app/Http/Controllers/Api/AuthTokenController.php:48
+ * @see app/Http/Controllers/Api/AuthTokenController.php:54
  * @route '/api/v1/auth/token'
  */
 export const logout = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -50,7 +50,7 @@ logout.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\AuthTokenController::logout
- * @see app/Http/Controllers/Api/AuthTokenController.php:48
+ * @see app/Http/Controllers/Api/AuthTokenController.php:54
  * @route '/api/v1/auth/token'
  */
 logout.url = (options?: RouteQueryOptions) => {
@@ -59,7 +59,7 @@ logout.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\AuthTokenController::logout
- * @see app/Http/Controllers/Api/AuthTokenController.php:48
+ * @see app/Http/Controllers/Api/AuthTokenController.php:54
  * @route '/api/v1/auth/token'
  */
 logout.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({

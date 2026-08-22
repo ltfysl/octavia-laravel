@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\AuthTokenController::destroy
- * @see app/Http/Controllers/Api/AuthTokenController.php:48
+ * @see app/Http/Controllers/Api/AuthTokenController.php:54
  * @route '/api/v1/auth/token'
  */
 export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -50,7 +50,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\AuthTokenController::destroy
- * @see app/Http/Controllers/Api/AuthTokenController.php:48
+ * @see app/Http/Controllers/Api/AuthTokenController.php:54
  * @route '/api/v1/auth/token'
  */
 destroy.url = (options?: RouteQueryOptions) => {
@@ -59,7 +59,7 @@ destroy.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\AuthTokenController::destroy
- * @see app/Http/Controllers/Api/AuthTokenController.php:48
+ * @see app/Http/Controllers/Api/AuthTokenController.php:54
  * @route '/api/v1/auth/token'
  */
 destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({

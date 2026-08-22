@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\SettingsController::update
- * @see app/Http/Controllers/SettingsController.php:36
+ * @see app/Http/Controllers/SettingsController.php:52
  * @route '/settings/password'
  */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -16,7 +16,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\SettingsController::update
- * @see app/Http/Controllers/SettingsController.php:36
+ * @see app/Http/Controllers/SettingsController.php:52
  * @route '/settings/password'
  */
 update.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ update.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\SettingsController::update
- * @see app/Http/Controllers/SettingsController.php:36
+ * @see app/Http/Controllers/SettingsController.php:52
  * @route '/settings/password'
  */
 update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({

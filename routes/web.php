@@ -111,6 +111,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/{id}/unread', [NotificationController::class, 'markUnread'])
         ->name('notifications.unread');
     Route::get('/settings/profile', [SettingsController::class, 'profile'])->name('settings.profile');
+    Route::get('/settings/billing', [SettingsController::class, 'billing'])->name('settings.billing');
+    Route::get('/settings', fn () => redirect()->route('settings.profile'));
     Route::post('/notifications/mark-read', [NotificationController::class, 'markRead'])
         ->name('notifications.mark-read');
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])

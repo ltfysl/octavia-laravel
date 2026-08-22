@@ -271,5 +271,48 @@
   "search": {
     "subtitle": "Results across your prompts and benchmarks.",
     "noResults": "Nothing found for this query."
+  },
+  "billing": {
+    "title": "Billing",
+    "subtitle": "Credits cover one engine step each. Runs reserve credits up front; unused steps are refunded.",
+    "balance": "Credit balance",
+    "history": "Recent activity",
+    "empty": "No credit activity yet.",
+    "insufficient": "Not enough credits: balance {balance}, this run needs {needed}.",
+    "reserved": "Run reserved",
+    "refunded": "Unused steps refunded"
+  },
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Start free. Upgrade when your prompt lab grows.",
+    "free": {
+      "name": "Free",
+      "price": "$0",
+      "period": "forever",
+      "cta": "Get started",
+      "features": [
+        "100 starter credits",
+        "Unlimited prompts & benchmarks",
+        "Marketplace access",
+        "API access with token scopes"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "$19",
+      "period": "per month",
+      "cta": "Coming soon",
+      "features": [
+        "5,000 credits per month",
+        "Priority run queue",
+        "Team workspaces included",
+        "Email support"
+      ]
+    },
+    "note": "Pro billing launches with Stripe. Credits model already active in the app.",
+    "howTitle": "How credits work",
+    "how1": "One credit = one engine step.",
+    "how2": "Runs reserve credits up front and refund unused steps automatically.",
+    "how3": "New accounts start with 100 free credits."
   }
 }

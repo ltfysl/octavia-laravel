@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Run;
+use App\Observers\RunObserver;
 use App\Services\Llm\Contracts\LlmProvider;
 use App\Services\Llm\LlmManager;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -19,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // Settle reserved credits when a run reaches a terminal state.
+        Run::observe(RunObserver::class);
         // Brute-force protection on credential endpoints.
         RateLimiter::for('auth', fn (Request $request) => Limit::perMinute(5)->by(
             mb_strtolower((string) $request->input('email')).'|'.$request->ip(),

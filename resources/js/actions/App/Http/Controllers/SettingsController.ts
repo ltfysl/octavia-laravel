@@ -43,8 +43,51 @@ profile.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\SettingsController::updateProfile
+* @see \App\Http\Controllers\SettingsController::billing
  * @see app/Http/Controllers/SettingsController.php:23
+ * @route '/settings/billing'
+ */
+export const billing = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: billing.url(options),
+    method: 'get',
+})
+
+billing.definition = {
+    methods: ["get","head"],
+    url: '/settings/billing',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\SettingsController::billing
+ * @see app/Http/Controllers/SettingsController.php:23
+ * @route '/settings/billing'
+ */
+billing.url = (options?: RouteQueryOptions) => {
+    return billing.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\SettingsController::billing
+ * @see app/Http/Controllers/SettingsController.php:23
+ * @route '/settings/billing'
+ */
+billing.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: billing.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\SettingsController::billing
+ * @see app/Http/Controllers/SettingsController.php:23
+ * @route '/settings/billing'
+ */
+billing.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: billing.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\SettingsController::updateProfile
+ * @see app/Http/Controllers/SettingsController.php:39
  * @route '/settings/profile'
  */
 export const updateProfile = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -59,7 +102,7 @@ updateProfile.definition = {
 
 /**
 * @see \App\Http\Controllers\SettingsController::updateProfile
- * @see app/Http/Controllers/SettingsController.php:23
+ * @see app/Http/Controllers/SettingsController.php:39
  * @route '/settings/profile'
  */
 updateProfile.url = (options?: RouteQueryOptions) => {
@@ -68,7 +111,7 @@ updateProfile.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\SettingsController::updateProfile
- * @see app/Http/Controllers/SettingsController.php:23
+ * @see app/Http/Controllers/SettingsController.php:39
  * @route '/settings/profile'
  */
 updateProfile.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -78,7 +121,7 @@ updateProfile.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> =>
 
 /**
 * @see \App\Http\Controllers\SettingsController::updatePassword
- * @see app/Http/Controllers/SettingsController.php:36
+ * @see app/Http/Controllers/SettingsController.php:52
  * @route '/settings/password'
  */
 export const updatePassword = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -93,7 +136,7 @@ updatePassword.definition = {
 
 /**
 * @see \App\Http\Controllers\SettingsController::updatePassword
- * @see app/Http/Controllers/SettingsController.php:36
+ * @see app/Http/Controllers/SettingsController.php:52
  * @route '/settings/password'
  */
 updatePassword.url = (options?: RouteQueryOptions) => {
@@ -102,7 +145,7 @@ updatePassword.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\SettingsController::updatePassword
- * @see app/Http/Controllers/SettingsController.php:36
+ * @see app/Http/Controllers/SettingsController.php:52
  * @route '/settings/password'
  */
 updatePassword.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -112,7 +155,7 @@ updatePassword.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> =
 
 /**
 * @see \App\Http\Controllers\SettingsController::logoutOthers
- * @see app/Http/Controllers/SettingsController.php:48
+ * @see app/Http/Controllers/SettingsController.php:64
  * @route '/settings/logout-others'
  */
 export const logoutOthers = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -127,7 +170,7 @@ logoutOthers.definition = {
 
 /**
 * @see \App\Http\Controllers\SettingsController::logoutOthers
- * @see app/Http/Controllers/SettingsController.php:48
+ * @see app/Http/Controllers/SettingsController.php:64
  * @route '/settings/logout-others'
  */
 logoutOthers.url = (options?: RouteQueryOptions) => {
@@ -136,13 +179,13 @@ logoutOthers.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\SettingsController::logoutOthers
- * @see app/Http/Controllers/SettingsController.php:48
+ * @see app/Http/Controllers/SettingsController.php:64
  * @route '/settings/logout-others'
  */
 logoutOthers.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: logoutOthers.url(options),
     method: 'post',
 })
-const SettingsController = { profile, updateProfile, updatePassword, logoutOthers }
+const SettingsController = { profile, billing, updateProfile, updatePassword, logoutOthers }
 
 export default SettingsController

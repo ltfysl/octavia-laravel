@@ -20,6 +20,22 @@ class SettingsController extends Controller
         ]);
     }
 
+    public function billing(Request $request): Response
+    {
+        $user = $request->user();
+
+        return Inertia::render('settings/Billing', [
+            'balance' => $user->credits_balance,
+            'transactions' => $user->creditTransactions()->latest()->limit(20)->get()->map(fn ($t) => [
+                'id' => $t->id,
+                'delta' => $t->delta,
+                'reason' => $t->reason,
+                'meta' => $t->meta,
+                'created_at' => $t->created_at?->toIso8601String(),
+            ]),
+        ]);
+    }
+
     public function updateProfile(Request $request): RedirectResponse
     {
         $validated = $request->validate([

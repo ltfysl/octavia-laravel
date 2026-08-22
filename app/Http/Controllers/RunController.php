@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\InsufficientCreditsException;
 use App\Jobs\ProcessRunJob;
 use App\Models\Benchmark;
 use App\Models\Prompt;
 use App\Models\Run;
+use App\Services\CreditService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -79,6 +81,26 @@ class RunController extends Controller
             abort_if($benchmark->cases()->count() === 0, 422, 'Benchmark has no test cases.');
 
             $runName = "{$prompt->name} × {$benchmark->name}";
+        }
+
+        // Reserve one credit per planned step up front; unused steps are
+        // refunded by RunObserver when the run reaches a terminal state.
+        $reserved = $validated['mode'] === 'evaluate' ? 1 : (int) ($validated['max_steps'] ?? config('llm.evolution.max_steps'));
+
+        try {
+            app(CreditService::class)->consume(
+                $request->user(),
+                $reserved,
+                CreditService::REASON_RUN_RESERVED,
+                ['run_name' => $runName],
+            );
+        } catch (InsufficientCreditsException $e) {
+            return back()->withErrors([
+                'credits' => __('billing.insufficient', [
+                    'balance' => $e->balance,
+                    'needed' => $e->requested,
+                ]),
+            ]);
         }
 
         $run = $request->user()->runs()->create([

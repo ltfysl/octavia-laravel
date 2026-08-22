@@ -12,6 +12,10 @@ const i18n = createI18n({
     locale: document.documentElement.lang.startsWith('de') ? 'de' : 'en',
     fallbackLocale: 'en',
     messages: { en, de },
+    dateTimeFormats: {
+        en: { short: { year: 'numeric', month: 'short', day: 'numeric' } },
+        de: { short: { year: 'numeric', month: 'short', day: 'numeric' } },
+    },
 });
 
 createInertiaApp({

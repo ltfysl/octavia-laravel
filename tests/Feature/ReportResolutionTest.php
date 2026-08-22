@@ -5,7 +5,9 @@ use App\Models\MarketplaceItem;
 use App\Models\MarketplaceReport;
 use App\Models\Prompt;
 use App\Models\User;
+use App\Notifications\MarketplaceReportResolvedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 
 uses(RefreshDatabase::class);
 
@@ -39,6 +41,24 @@ it('notifies the reporter when their report is resolved', function () {
     $notification = $reporter->unreadNotifications->first();
     expect(data_get($notification, 'data.item_title'))->toBe($item->title)
         ->and(data_get($notification, 'data.outcome'))->toBe('unlisted');
+});
+
+it('emails the reporter when their report is resolved', function () {
+    Notification::fake();
+
+    $admin = User::factory()->create(['is_admin' => true]);
+    $publisher = User::factory()->create();
+    $reporter = User::factory()->create(['notify_run_completed_mail' => true]);
+    $item = publishedItem($publisher);
+
+    $this->actingAs($reporter)->post("/marketplace/{$item->id}/report", ['reason' => 'spam']);
+
+    $report = MarketplaceReport::first();
+    $this->actingAs($admin)->post("/admin/reports/{$report->id}/resolve/unlist");
+
+    Notification::assertSentTo($reporter, MarketplaceReportResolvedNotification::class, function ($notification, $channels) {
+        return in_array('mail', $channels);
+    });
 });
 
 it('records the resolver actor', function () {

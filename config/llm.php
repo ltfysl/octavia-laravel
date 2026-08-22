@@ -47,4 +47,7 @@ return [
     // Per-user daily run creation quota (cost control).
     'run_quota_per_day' => env('OCTAVIA_RUN_QUOTA_PER_DAY', 50),
 
+    // Credits: 1 credit = one engine step. Runs reserve max_steps up front.
+    'signup_credits' => env('OCTAVIA_SIGNUP_CREDITS', 100),
+
 ];

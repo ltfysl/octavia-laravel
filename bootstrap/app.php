@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureTokenHasScope;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetLocale;
@@ -30,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
+            'scope' => EnsureTokenHasScope::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

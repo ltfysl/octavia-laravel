@@ -5,6 +5,8 @@ import Auth from './Auth'
 import DashboardController from './DashboardController'
 import OnboardingController from './OnboardingController'
 import PromptController from './PromptController'
+import PromptExportController from './PromptExportController'
+import PromptImportController from './PromptImportController'
 import CollectionController from './CollectionController'
 import BenchmarkController from './BenchmarkController'
 import BenchmarkExportController from './BenchmarkExportController'
@@ -25,6 +27,8 @@ const Controllers = {
     DashboardController: Object.assign(DashboardController, DashboardController),
     OnboardingController: Object.assign(OnboardingController, OnboardingController),
     PromptController: Object.assign(PromptController, PromptController),
+    PromptExportController: Object.assign(PromptExportController, PromptExportController),
+    PromptImportController: Object.assign(PromptImportController, PromptImportController),
     CollectionController: Object.assign(CollectionController, CollectionController),
     BenchmarkController: Object.assign(BenchmarkController, BenchmarkController),
     BenchmarkExportController: Object.assign(BenchmarkExportController, BenchmarkExportController),

@@ -19,7 +19,7 @@ class LandingController extends Controller
 
     public function pricing(): Response
     {
-        return Inertia::render('Landing', ['page' => 'pricing']);
+        return Inertia::render('Pricing');
     }
 
     public function privacy(): Response

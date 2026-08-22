@@ -19,10 +19,16 @@ class AuthTokenController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
             'device_name' => ['nullable', 'string', 'max:255'],
-            // Subset of read/write; unknown abilities are rejected so
-            // tokens cannot silently gain future permissions.
+            // Fine-grained resource scopes plus the legacy coarse abilities.
+            // Unknown abilities are rejected so tokens cannot silently gain
+            // future permissions. `write` implies read; `res:write` implies
+            // `res:read` (enforced by the `scope` middleware).
             'abilities' => ['nullable', 'array'],
-            'abilities.*' => ['string', Rule::in(['read', 'write'])],
+            'abilities.*' => ['string', Rule::in([
+                'read', 'write',
+                'prompts:read', 'prompts:write',
+                'runs:read', 'runs:write',
+            ])],
         ]);
 
         /** @var User|null $user */

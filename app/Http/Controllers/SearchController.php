@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Benchmark;
 use App\Models\Prompt;
+use App\Models\Run;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -19,6 +20,7 @@ class SearchController extends Controller
 
         $prompts = collect();
         $benchmarks = collect();
+        $runs = collect();
 
         if ($q !== '') {
             $like = "%{$q}%";
@@ -49,11 +51,25 @@ class SearchController extends Controller
                     'subtitle' => $b->description,
                     'url' => "/benchmarks/{$b->id}",
                 ]);
+
+            $runs = Run::with(['prompt:id,name'])
+                ->where('user_id', $user->id)
+                ->where('name', 'like', $like)
+                ->latest()
+                ->limit(10)
+                ->get()
+                ->map(fn ($r) => [
+                    'type' => 'run',
+                    'id' => $r->id,
+                    'title' => $r->name,
+                    'subtitle' => $r->status->value,
+                    'url' => "/runs/{$r->id}",
+                ]);
         }
 
         return Inertia::render('SearchResults', [
             'query' => $q,
-            'results' => ['prompts' => $prompts, 'benchmarks' => $benchmarks],
+            'results' => ['prompts' => $prompts, 'benchmarks' => $benchmarks, 'runs' => $runs],
         ]);
     }
 }

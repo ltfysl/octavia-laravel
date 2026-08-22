@@ -30,6 +30,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            // Mirrors the registration signup grant so factory users can start runs.
+            'credits_balance' => (int) config('llm.signup_credits', 100),
         ];
     }
 

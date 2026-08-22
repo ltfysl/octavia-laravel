@@ -4,7 +4,9 @@ use App\Models\Benchmark;
 use App\Models\Prompt;
 use App\Models\Team;
 use App\Models\User;
+use App\Notifications\TeamInvitationNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 
 uses(RefreshDatabase::class);
 
@@ -40,6 +42,25 @@ it('validates invite email exists in users table', function () {
         'email' => 'ghost@example.com',
         'role' => 'member',
     ])->assertSessionHasErrors('email');
+});
+
+it('notifies the invitee by mail and database when added to a team', function () {
+    Notification::fake();
+
+    $owner = User::factory()->create();
+    $invitee = User::factory()->create();
+    $team = Team::create(['name' => 'T', 'owner_id' => $owner->id]);
+
+    $this->actingAs($owner)->post("/teams/{$team->id}/invite", [
+        'email' => $invitee->email,
+        'role' => 'member',
+    ])->assertSessionHas('success');
+
+    Notification::assertSentTo($invitee, TeamInvitationNotification::class, function ($notification, $channels) use ($owner) {
+        return in_array('mail', $channels)
+            && in_array('database', $channels)
+            && $notification->toArray($owner)['role'] === 'member';
+    });
 });
 
 it('allows only the owner to delete a team', function () {

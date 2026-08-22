@@ -268,10 +268,64 @@
     "inviteTitle": "Mitglied einladen",
     "invite": "Einladen",
     "deleteConfirm": "Dieses Team löschen? Mitglieder verlieren den Zugriff.",
-    "removeConfirm": "Dieses Mitglied entfernen?"
+    "removeConfirm": "Dieses Mitglied entfernen?",
+    "invitation": {
+      "subject": "Du wurdest zu :team hinzugefügt",
+      "greeting": "Hallo :name,",
+      "intro": ":inviter hat dich zum Team „:team“ als :role hinzugefügt.",
+      "benefit": "Team-Mitglieder sehen die privaten Prompts, Benchmarks und Läufe voneinander.",
+      "action": "Octavia öffnen"
+    },
+    "roles": {
+      "admin": "Admin",
+      "member": "Mitglied"
+    }
   },
   "search": {
     "subtitle": "Ergebnisse aus deinen Prompts und Benchmarks.",
     "noResults": "Nichts für diese Suchanfrage gefunden."
+  },
+  "billing": {
+    "title": "Guthaben",
+    "subtitle": "Credits decken je einen Engine-Schritt ab. Läufe reservieren Credits im Voraus; ungenutzte Schritte werden erstattet.",
+    "balance": "Credit-Guthaben",
+    "history": "Letzte Aktivität",
+    "empty": "Noch keine Credit-Aktivität.",
+    "insufficient": "Nicht genug Credits: Guthaben {balance}, dieser Lauf benötigt {needed}.",
+    "reserved": "Lauf reserviert",
+    "refunded": "Ungenutzte Schritte erstattet"
+  },
+  "pricing": {
+    "title": "Preise",
+    "subtitle": "Kostenlos starten. Upgraden, wenn dein Prompt-Labor wächst.",
+    "free": {
+      "name": "Free",
+      "price": "0 $",
+      "period": "für immer",
+      "cta": "Loslegen",
+      "features": [
+        "100 Starter-Credits",
+        "Unbegrenzte Prompts & Benchmarks",
+        "Marktplatz-Zugang",
+        "API-Zugang mit Token-Scopes"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "19 $",
+      "period": "pro Monat",
+      "cta": "Kommt bald",
+      "features": [
+        "5.000 Credits pro Monat",
+        "Priorisierte Lauf-Warteschlange",
+        "Team-Workspaces inklusive",
+        "E-Mail-Support"
+      ]
+    },
+    "note": "Pro-Abrechnung startet mit Stripe. Das Credit-Modell ist in der App bereits aktiv.",
+    "howTitle": "So funktionieren Credits",
+    "how1": "Ein Credit = ein Engine-Schritt.",
+    "how2": "Läufe reservieren Credits im Voraus und erstatten ungenutzte Schritte automatisch.",
+    "how3": "Neue Konten starten mit 100 kostenlosen Credits."
   }
 }

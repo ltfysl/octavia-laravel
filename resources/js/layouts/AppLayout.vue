@@ -119,6 +119,9 @@ const isActive = (href: string) => page.url.startsWith(href);
                     <span class="flex h-7 w-7 items-center justify-center rounded-full bg-ink-100 text-xs font-semibold text-ink-700">{{ user?.name?.charAt(0).toUpperCase() }}</span>
                     <span class="truncate">{{ user?.name }}</span>
                 </Link>
+                <Link href="/settings/billing" class="mt-1 flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors" :class="isActive('/settings/billing') ? 'bg-violet-50 text-violet-700' : 'text-ink-500 hover:bg-paper-100 hover:text-ink-900'">
+                    {{ t('billing.title') }}
+                </Link>
             </div>
         </aside>
 
@@ -136,6 +139,7 @@ const isActive = (href: string) => page.url.startsWith(href);
                     <Link v-for="item in nav" :key="item.href" :href="item.href" class="block rounded-lg px-3 py-2 text-sm" :class="isActive(item.href) ? 'bg-paper-100 text-ink-950' : 'text-ink-700'">{{ item.label }}</Link>
                     <hr class="my-2 border-ink-100" />
                     <Link href="/settings/profile" class="block rounded-lg px-3 py-2 text-sm text-ink-700">{{ t('nav.settings') }}</Link>
+                    <Link href="/settings/billing" class="block rounded-lg px-3 py-2 text-sm text-ink-700">{{ t('billing.title') }}</Link>
                     <Link href="/logout" method="post" as="button" class="block w-full rounded-lg px-3 py-2 text-left text-sm text-rose-450">{{ t('nav.logOut') }}</Link>
                 </nav>
             </details>

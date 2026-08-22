@@ -96,17 +96,21 @@ The evaluation engine scores criteria locally where possible (`contains`, `regex
 
 ## Public API (v1)
 
-Token-authenticated via Sanctum:
+Token-authenticated via Sanctum. Tokens accept **fine-grained scopes** —
+`prompts:read`, `prompts:write`, `runs:read`, `runs:write` — or the legacy
+coarse abilities (`read`, `write`; `write` implies read, `res:write` implies
+`res:read`). Unknown abilities are rejected at issuance:
 
 ```bash
-# obtain a token
+# obtain a scoped token
 curl -X POST http://localhost:8000/api/v1/auth/token \
   -H "Content-Type: application/json" \
-  -d '{"email":"you@example.com","password":"...","device_name":"cli"}'
+  -d '{"email":"you@example.com","password":"...","device_name":"cli","abilities":["runs:read","runs:write"]}'
 
 # use it
 curl -H "Authorization: Bearer <token>" http://localhost:8000/api/v1/prompts
 ```
+
 
 | Endpoint | Description |
 |----------|-------------|

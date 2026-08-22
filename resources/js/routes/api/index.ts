@@ -3,7 +3,7 @@ import auth from './auth'
 import prompts from './prompts'
 import runs from './runs'
 /**
-* @see routes/api.php:25
+* @see routes/api.php:29
 * @route '/api/v1/me'
 */
 export const me = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ me.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/api.php:25
+* @see routes/api.php:29
 * @route '/api/v1/me'
 */
 me.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ me.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/api.php:25
+* @see routes/api.php:29
 * @route '/api/v1/me'
 */
 me.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ me.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/api.php:25
+* @see routes/api.php:29
 * @route '/api/v1/me'
 */
 me.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({

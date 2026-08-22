@@ -1,17 +1,16 @@
 # Tasks
 
 ## Now
-- [ ] Billing (credits model fits usage-based LLM costs; Stripe integration)
-- [ ] Team workspaces: run-level scoping, invitation emails
+- [ ] Stripe integration (account + keys required; see docs/operations/billing.md)
 
 ## Next
-- [ ] Finer-grained token scopes (per-resource) with billing tiers
 - [ ] Welcome mail polish (optional)
-- [ ] Notify reporters when their report is resolved (email channel)
+- [ ] Billing tiers tied to token scopes (prerequisite done in round 21)
+- [ ] "Update available" notification when publisher republishes at new version (email channel)
 
 ## Later
-- [ ] Export/import prompts as JSON files (benchmarks done)
-- [ ] Search across runs (LIKE now, Meilisearch later)
+- [ ] Export/import prompts as JSON files — done
+- [ ] Search across runs — done
 - [ ] "Update available" notification when publisher republishes at new version (email channel)
 
 ## Human Action Required
@@ -36,7 +35,7 @@
 - [x] Live run-progress polling (2s interval, partial reload on terminal status)
 - [x] Prompt playground: ad-hoc evaluation of current or unsaved prompt content (`POST /prompts/{id}/playground` + UI)
 - [x] Benchmark collections: create/manage UI, owner-scoped membership validation, whole-collection runs
-- [x] Sanctum API v1: token auth, prompts CRUD-read + sync evaluate, runs start/show/cancel with ownership checks and rate limits
+- [x] Sanctum API v1: token auth with read/write abilities, prompts CRUD-read + sync evaluate, runs start/show/cancel with ownership checks and rate limits
 - [x] Admin panel: platform stats, newest users, latest runs, user search/promote/demote/delete with self-protection
 - [x] Round 3: word-level prompt version diff (ODiff + LCS util), localized run-completion mail, auth rate limiter, security headers middleware, landing polish
 - [x] Round 5: per-notification delete, diff API endpoint, full email verification flow
@@ -51,7 +50,11 @@
 - [x] Round 14: team workspaces (Team + TeamMember models with roles, CRUD + invite/remove UI, team-aware visibility scope)
 - [x] Round 15: benchmark JSON export/import, global search across prompts/benchmarks, favicon.svg
 - [x] Round 16: branded error pages (403/404/419/429/500/503) + republish notification tests
-- [x] **95 Pest tests / 323 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
+- [x] Round 17: prompt JSON export/import, global search includes runs, error page tests
 - [x] Round 17: complete visual rework — "field station" direction (cold fog/spruce/intl-orange tokens, Archivo + IBM Plex Sans), contour-hero dashboard, prompts card date fix + i18n runsCount, run-panel hint, quarantined destructive delete, violet→accent rename, WCAG button contrast fixes, phpunit Unit-suite config fix
-- [x] Docs: README, AGENTS.md, DESIGNS.md + designs/*, docs/architecture, docs/features/engine, docs/operations, docs/decisions
-- [x] Rounds 1–16 documented in rounds/
+- [x] Round 18: reporter resolution email (queueable, localized, opt-out aware), run-level team scoping (policy + scope + index owner attribution)
+- [x] Round 19: credits & billing foundation (ledger, atomic consume, run reservation + refund via RunObserver, /settings/billing, dedicated /pricing page, Stripe checklist)
+- [x] Round 21: fine-grained API token scopes (prompts:read/write, runs:read/write; scope middleware with implication rules, backward compatible)
+- [x] **119 Pest tests / 399 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
+- [x] Docs: README (incl. API scopes), AGENTS.md, DESIGNS.md + designs/*, docs/architecture, docs/features/engine, docs/operations (incl. billing), docs/decisions
+- [x] Rounds 1–21 documented in rounds/

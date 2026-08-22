@@ -428,6 +428,108 @@ restore.post = (args: { prompt: number | { id: number }, version: number | { id:
     method: 'post',
 })
 
+/**
+* @see \App\Http\Controllers\PromptExportController::__invoke
+* @see app/Http/Controllers/PromptExportController.php:12
+* @route '/prompts/{prompt}/export'
+*/
+export const exportMethod = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: exportMethod.url(args, options),
+    method: 'get',
+})
+
+exportMethod.definition = {
+    methods: ["get","head"],
+    url: '/prompts/{prompt}/export',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\PromptExportController::__invoke
+* @see app/Http/Controllers/PromptExportController.php:12
+* @route '/prompts/{prompt}/export'
+*/
+exportMethod.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { prompt: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { prompt: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            prompt: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        prompt: typeof args.prompt === 'object'
+        ? args.prompt.id
+        : args.prompt,
+    }
+
+    return exportMethod.definition.url
+            .replace('{prompt}', parsedArgs.prompt.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\PromptExportController::__invoke
+* @see app/Http/Controllers/PromptExportController.php:12
+* @route '/prompts/{prompt}/export'
+*/
+exportMethod.get = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: exportMethod.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\PromptExportController::__invoke
+* @see app/Http/Controllers/PromptExportController.php:12
+* @route '/prompts/{prompt}/export'
+*/
+exportMethod.head = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: exportMethod.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\PromptImportController::importMethod
+* @see app/Http/Controllers/PromptImportController.php:11
+* @route '/prompts/import'
+*/
+export const importMethod = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: importMethod.url(options),
+    method: 'post',
+})
+
+importMethod.definition = {
+    methods: ["post"],
+    url: '/prompts/import',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\PromptImportController::importMethod
+* @see app/Http/Controllers/PromptImportController.php:11
+* @route '/prompts/import'
+*/
+importMethod.url = (options?: RouteQueryOptions) => {
+    return importMethod.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\PromptImportController::importMethod
+* @see app/Http/Controllers/PromptImportController.php:11
+* @route '/prompts/import'
+*/
+importMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: importMethod.url(options),
+    method: 'post',
+})
+
 const prompts = {
     index: Object.assign(index, index),
     create: Object.assign(create, create),
@@ -437,6 +539,8 @@ const prompts = {
     destroy: Object.assign(destroy, destroy),
     playground: Object.assign(playground, playground),
     restore: Object.assign(restore, restore),
+    export: Object.assign(exportMethod, exportMethod),
+    import: Object.assign(importMethod, importMethod),
 }
 
 export default prompts

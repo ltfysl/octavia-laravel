@@ -265,7 +265,7 @@ terms.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:17
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:18
 * @route '/register'
 */
 export const register = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -280,7 +280,7 @@ register.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:17
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:18
 * @route '/register'
 */
 register.url = (options?: RouteQueryOptions) => {
@@ -289,7 +289,7 @@ register.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:17
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:18
 * @route '/register'
 */
 register.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -299,7 +299,7 @@ register.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\RegisteredUserController::register
-* @see app/Http/Controllers/Auth/RegisteredUserController.php:17
+* @see app/Http/Controllers/Auth/RegisteredUserController.php:18
 * @route '/register'
 */
 register.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -431,7 +431,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\SearchController::__invoke
-* @see app/Http/Controllers/SearchController.php:14
+* @see app/Http/Controllers/SearchController.php:15
 * @route '/search'
 */
 export const search = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -446,7 +446,7 @@ search.definition = {
 
 /**
 * @see \App\Http\Controllers\SearchController::__invoke
-* @see app/Http/Controllers/SearchController.php:14
+* @see app/Http/Controllers/SearchController.php:15
 * @route '/search'
 */
 search.url = (options?: RouteQueryOptions) => {
@@ -455,7 +455,7 @@ search.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\SearchController::__invoke
-* @see app/Http/Controllers/SearchController.php:14
+* @see app/Http/Controllers/SearchController.php:15
 * @route '/search'
 */
 search.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -465,7 +465,7 @@ search.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\SearchController::__invoke
-* @see app/Http/Controllers/SearchController.php:14
+* @see app/Http/Controllers/SearchController.php:15
 * @route '/search'
 */
 search.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({

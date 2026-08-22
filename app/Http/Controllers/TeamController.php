@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use App\Models\User;
+use App\Notifications\TeamInvitationNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -84,6 +85,8 @@ class TeamController extends Controller
             'user_id' => $invitee->id,
             'role' => $validated['role'],
         ]);
+
+        $invitee->notify(new TeamInvitationNotification($team, $request->user(), $validated['role']));
 
         return back()->with('success', __('Member added.'));
     }

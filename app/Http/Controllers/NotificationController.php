@@ -25,9 +25,9 @@ class NotificationController extends Controller
             ]);
 
         return Inertia::render('notifications/Index', [
-            // Explicit shape: a raw paginator serializes `links` as an object,
-            // but the page expects the link-collection array.
-            'notifications' => [
+            // `feed`, not `notifications`: the shared prop of that name is the
+            // app-shell bell payload ({unread, items}); a page prop would shadow it.
+            'feed' => [
                 'data' => $notifications->items(),
                 'links' => $notifications->linkCollection()->toArray(),
             ],

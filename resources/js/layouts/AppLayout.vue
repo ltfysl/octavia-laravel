@@ -35,10 +35,13 @@ interface NotificationItem {
     at: string | null;
 }
 
-const notifications = computed(
-    () => (page.props as unknown as { notifications: { unread: number; items: NotificationItem[] } }).notifications
-        ?? { unread: 0, items: [] },
+const sharedNotifications = computed(
+    () => (page.props as unknown as { notifications?: { unread?: number; items?: NotificationItem[] } }).notifications,
 );
+const notifications = computed(() => ({
+    unread: sharedNotifications.value?.unread ?? 0,
+    items: sharedNotifications.value?.items ?? [],
+}));
 
 const markRead = () => {
     if (notifications.value.unread > 0) {

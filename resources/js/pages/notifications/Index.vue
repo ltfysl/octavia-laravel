@@ -6,7 +6,7 @@ import OBadge from '../../components/ui/OBadge.vue';
 import OButton from '../../components/ui/OButton.vue';
 
 defineProps<{
-    notifications: {
+    feed: {
         data: Array<{
             id: string;
             read: boolean;
@@ -45,10 +45,10 @@ const remove = (id: string) => router.delete(`/notifications/${id}`, { preserveS
         </div>
 
         <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-white shadow-panel">
-            <p v-if="notifications.data.length === 0" class="px-5 py-8 text-center text-sm text-ink-300">—</p>
+            <p v-if="feed.data.length === 0" class="px-5 py-8 text-center text-sm text-ink-300">—</p>
             <ul v-else class="divide-y divide-ink-100">
                 <li
-                    v-for="n in notifications.data"
+                    v-for="n in feed.data"
                     :key="n.id"
                     class="flex items-center gap-3 px-5 py-3"
                     :class="n.read ? '' : 'bg-accent-50/40'"
@@ -81,10 +81,10 @@ const remove = (id: string) => router.delete(`/notifications/${id}`, { preserveS
             </ul>
         </div>
 
-        <nav v-if="notifications.links.length > 3" class="mt-6 flex justify-center gap-1" aria-label="Pagination">
+        <nav v-if="feed.links.length > 3" class="mt-6 flex justify-center gap-1" aria-label="Pagination">
             <component
                 :is="link.url ? Link : 'span'"
-                v-for="(link, i) in notifications.links"
+                v-for="(link, i) in feed.links"
                 :key="i"
                 :href="link.url ?? '#'"
                 class="rounded-lg px-3 py-1.5 text-sm"

@@ -266,7 +266,18 @@
     "inviteTitle": "Mitglied einladen",
     "invite": "Einladen",
     "deleteConfirm": "Dieses Team löschen? Mitglieder verlieren den Zugriff.",
-    "removeConfirm": "Dieses Mitglied entfernen?"
+    "removeConfirm": "Dieses Mitglied entfernen?",
+    "invitation": {
+      "subject": "Du wurdest zu :team hinzugefügt",
+      "greeting": "Hallo :name,",
+      "intro": ":inviter hat dich zum Team „:team“ als :role hinzugefügt.",
+      "benefit": "Team-Mitglieder sehen die privaten Prompts, Benchmarks und Läufe voneinander.",
+      "action": "Octavia öffnen"
+    },
+    "roles": {
+      "admin": "Admin",
+      "member": "Mitglied"
+    }
   },
   "search": {
     "subtitle": "Ergebnisse aus deinen Prompts und Benchmarks.",

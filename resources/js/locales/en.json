@@ -266,7 +266,18 @@
     "inviteTitle": "Invite a member",
     "invite": "Invite",
     "deleteConfirm": "Delete this team? Members will lose access.",
-    "removeConfirm": "Remove this member?"
+    "removeConfirm": "Remove this member?",
+    "invitation": {
+      "subject": "You have been added to :team",
+      "greeting": "Hi :name,",
+      "intro": ":inviter added you to the team „:team“ as :role.",
+      "benefit": "Team members can see each other's private prompts, benchmarks and runs.",
+      "action": "Open Octavia"
+    },
+    "roles": {
+      "admin": "admin",
+      "member": "member"
+    }
   },
   "search": {
     "subtitle": "Results across your prompts and benchmarks.",

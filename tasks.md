@@ -1,12 +1,12 @@
 # Tasks
 
 ## Now
-- [ ] Team workspaces: invitation emails
+- [ ] Finer-grained token scopes (per-resource) with billing tiers
 
 ## Next
 - [ ] Stripe integration (account + keys required; see docs/operations/billing.md)
-- [ ] Finer-grained token scopes (per-resource) with billing tiers
 - [ ] Welcome mail polish (optional)
+- [ ] "Update available" notification when publisher republishes at new version (email channel)
 
 ## Later
 - [ ] Export/import prompts as JSON files — done
@@ -54,5 +54,7 @@
 - [x] Round 18: reporter resolution email (queueable, localized, opt-out aware), run-level team scoping (policy + scope + index owner attribution)
 - [x] Round 19: credits & billing foundation (ledger, atomic consume, run reservation + refund via RunObserver, /settings/billing, dedicated /pricing page, Stripe checklist)
 - [x] **113 Pest tests / 388 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
+- [x] Round 20: team invitation emails (queueable, localized EN/DE, mail + database channels)
+- [x] **114 Pest tests / 392 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
 - [x] Docs: README, AGENTS.md, DESIGNS.md + designs/*, docs/architecture, docs/features/engine, docs/operations (incl. billing), docs/decisions
-- [x] Rounds 1–19 documented in rounds/
+- [x] Rounds 1–20 documented in rounds/

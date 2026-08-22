@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /prompts
+Disallow: /benchmarks
+Disallow: /runs
+Disallow: /marketplace
+Disallow: /settings
+Disallow: /welcome
+
+Sitemap: http://localhost:8000/sitemap.xml

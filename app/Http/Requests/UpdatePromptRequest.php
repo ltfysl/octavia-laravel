@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdatePromptRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => ['sometimes', 'string', 'max:255'],
+            'description' => ['sometimes', 'nullable', 'string', 'max:2000'],
+            'visibility' => ['sometimes', 'in:private,public'],
+            'content' => ['sometimes', 'nullable', 'string', 'max:100000'],
+            'changelog' => ['nullable', 'string', 'max:500'],
+        ];
+    }
+}

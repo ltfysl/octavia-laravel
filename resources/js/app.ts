@@ -1,0 +1,37 @@
+import { createInertiaApp, Link, Head } from '@inertiajs/vue3';
+import { createApp, h, type DefineComponent } from 'vue';
+import { createI18n } from 'vue-i18n';
+import { vReveal } from './directives/reveal';
+import '../css/app.css';
+import en from './locales/en.json';
+import de from './locales/de.json';
+
+const i18n = createI18n({
+    legacy: false,
+    globalInjection: true,
+    locale: document.documentElement.lang.startsWith('de') ? 'de' : 'en',
+    fallbackLocale: 'en',
+    messages: { en, de },
+});
+
+createInertiaApp({
+    title: (title) => (title ? `${title} — Octavia` : 'Octavia'),
+    resolve: (name) => {
+        const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue', { eager: true });
+        return pages[`./pages/${name}.vue`];
+    },
+    setup({ el, App, props, plugin }) {
+        const app = createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .use(i18n)
+            .directive('reveal', vReveal)
+            .component('InertiaLink', Link)
+            .component('InertiaHead', Head);
+
+        app.mount(el);
+    },
+    progress: {
+        color: '#7563e8',
+        showSpinner: false,
+    },
+});

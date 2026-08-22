@@ -16,8 +16,8 @@ class RunController extends Controller
 {
     public function index(Request $request): Response
     {
-        $runs = Run::with(['prompt:id,name', 'benchmark:id,name'])
-            ->where('user_id', $request->user()->id)
+        $runs = Run::with(['prompt:id,name', 'benchmark:id,name', 'user:id,name'])
+            ->visibleTo($request->user())
             ->latest()
             ->paginate(15)
             ->through(fn (Run $run) => [
@@ -29,6 +29,7 @@ class RunController extends Controller
                 'target' => $run->target_score,
                 'prompt' => $run->prompt?->only(['id', 'name']),
                 'benchmark' => $run->benchmark?->only(['id', 'name']),
+                'owner' => $run->user?->only(['id', 'name']),
                 'created_at' => $run->created_at->toIso8601String(),
             ]);
 

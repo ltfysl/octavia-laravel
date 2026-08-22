@@ -17,6 +17,7 @@ defineProps<{
             target: number;
             prompt?: { id: number; name: string } | null;
             benchmark?: { id: number; name: string } | null;
+            owner?: { id: number; name: string } | null;
             created_at: string;
         }>;
         links: Array<{ url: string | null; label: string; active: boolean }>;
@@ -68,6 +69,7 @@ const tone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral' | 'violet'> = {
                                 <span class="font-medium text-ink-950 hover:text-violet-700">{{ run.name }}</span>
                                 <span class="mt-0.5 flex items-center gap-2">
                                     <OBadge :tone="tone[run.status] ?? 'neutral'">{{ t(`runs.status.${run.status}`) }}</OBadge>
+                                    <span v-if="run.owner" class="text-xs text-ink-300">· {{ run.owner.name }}</span>
                                     <span class="text-xs text-ink-300">{{ run.mode === 'optimize' ? t('runs.mode.optimize') : t('runs.mode.evaluate') }}</span>
                                 </span>
                             </Link>

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Prompt;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PromptExportController extends Controller
 {
@@ -28,7 +29,7 @@ class PromptExportController extends Controller
             ]),
         ];
 
-        $filename = 'octavia-prompt-'.\Illuminate\Support\Str::slug($prompt->name).'.json';
+        $filename = 'octavia-prompt-'.Str::slug($prompt->name).'.json';
 
         return response()->json($payload)
             ->header('Content-Disposition', "attachment; filename=\"{$filename}\"");

@@ -20,4 +20,13 @@ return [
         'cta' => 'Ersten Lauf starten',
         'footer' => 'Viel Erfolg beim Optimieren,\nDein Octavia-Team',
     ],
+
+    'report_resolved' => [
+        'subject' => 'Meldung bearbeitet',
+        'greeting' => 'Hallo :name,',
+        'intro' => 'Danke, dass du den Octavia-Marktplatz sauber hältst. Wir haben deine Meldung zu „:title" geprüft.',
+        'kept' => 'Deine Meldung wurde geprüft, das Listing bleibt verfügbar.',
+        'unlisted' => 'Deine Meldung wurde geprüft, das Listing wurde deaktiviert.',
+        'action' => 'Zum Marktplatz',
+    ],
 ];

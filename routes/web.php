@@ -15,6 +15,8 @@ use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PromptController;
+use App\Http\Controllers\PromptExportController;
+use App\Http\Controllers\PromptImportController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
@@ -81,6 +83,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/prompts/{prompt}/playground', [PromptController::class, 'playground'])->name('prompts.playground');
     Route::post('/prompts/{prompt}/versions/{version}/restore', [PromptController::class, 'restoreVersion'])
         ->name('prompts.restore');
+    Route::get('/prompts/{prompt}/export', PromptExportController::class)->name('prompts.export');
+    Route::post('/prompts/import', [PromptImportController::class, '__invoke'])->name('prompts.import');
     Route::resource('collections', CollectionController::class)->only(['index', 'store', 'update', 'destroy']);
 
     Route::get('/benchmarks/wizard', [BenchmarkController::class, 'create'])->name('benchmarks.create');

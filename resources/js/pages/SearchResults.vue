@@ -2,12 +2,14 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import AppLayout from '../layouts/AppLayout.vue';
+import OEmptyState from '../components/ui/OEmptyState.vue';
 
 defineProps<{
     query: string;
     results: {
         prompts: Array<{ type: string; id: number; title: string; subtitle: string | null; url: string }>;
         benchmarks: Array<{ type: string; id: number; title: string; subtitle: string | null; url: string }>;
+        runs: Array<{ type: string; id: number; title: string; subtitle: string | null; url: string }>;
     };
 }>();
 
@@ -49,8 +51,21 @@ const hasResults = (results: unknown) => results !== null && Array.isArray(resul
             </ul>
         </section>
 
+        <!-- Runs -->
+        <section v-if="hasResults(results.runs)" class="mt-8">
+            <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-300">{{ t('runs.title') }}</h2>
+            <ul class="space-y-3">
+                <li v-for="item in results.runs" :key="'r' + item.id">
+                    <Link :href="item.url" class="block rounded-card border border-ink-100 bg-white p-4 shadow-panel transition-colors hover:border-violet-200">
+                        <span class="font-display text-sm font-semibold text-ink-950">{{ item.title }}</span>
+                        <span v-if="item.subtitle" class="mt-1 block text-xs text-ink-500">{{ item.subtitle }}</span>
+                    </Link>
+                </li>
+            </ul>
+        </section>
+
         <OEmptyState
-            v-if="!hasResults(results.prompts) && !hasResults(results.benchmarks)"
+            v-if="!hasResults(results.prompts) && !hasResults(results.benchmarks) && !hasResults(results.runs)"
             class="mt-8"
             :title="t('search.noResults')"
         />

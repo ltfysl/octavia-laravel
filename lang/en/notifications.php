@@ -20,4 +20,13 @@ return [
         'cta' => 'Start your first run',
         'footer' => 'Happy optimizing,\nThe Octavia team',
     ],
+
+    'report_resolved' => [
+        'subject' => 'Report resolved',
+        'greeting' => 'Hi :name,',
+        'intro' => 'Thanks for helping keep the Octavia marketplace healthy. We reviewed your report on ":title".',
+        'kept' => 'Your report was reviewed and the listing stays available.',
+        'unlisted' => 'Your report was reviewed and the listing has been unlisted.',
+        'action' => 'Browse marketplace',
+    ],
 ];

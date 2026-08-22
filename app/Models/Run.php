@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\RunMode;
 use App\Enums\RunStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -38,6 +39,15 @@ class Run extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Team-aware visibility: owner plus team mates sharing a team with
+     * the owner — mirrors Prompt::scopeVisibleTo / Benchmark::scopeVisibleTo.
+     */
+    public function scopeVisibleTo(Builder $query, User $user): Builder
+    {
+        return $query->whereIn('user_id', $user->teamMateIds());
     }
 
     public function prompt(): BelongsTo

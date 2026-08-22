@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Prompt;
-use App\Models\PromptVersion;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

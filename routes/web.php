@@ -12,6 +12,7 @@ use App\Http\Controllers\BenchmarkExportController;
 use App\Http\Controllers\BenchmarkImportController;
 use App\Http\Controllers\BenchmarkInsightController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\ConfigPresetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MarketplaceController;
@@ -139,6 +140,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/profile', [SettingsController::class, 'profile'])->name('settings.profile');
     Route::get('/settings/billing', [SettingsController::class, 'billing'])->name('settings.billing');
     Route::get('/settings', fn () => redirect()->route('settings.profile'));
+    Route::get('/settings/presets', [ConfigPresetController::class, 'index'])->name('settings.presets');
+    Route::post('/settings/presets', [ConfigPresetController::class, 'store'])->name('settings.presets.store');
+    Route::patch('/settings/presets/{preset}', [ConfigPresetController::class, 'update'])->name('settings.presets.update');
+    Route::delete('/settings/presets/{preset}', [ConfigPresetController::class, 'destroy'])->name('settings.presets.destroy');
     Route::post('/notifications/mark-read', [NotificationController::class, 'markRead'])
         ->name('notifications.mark-read');
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])

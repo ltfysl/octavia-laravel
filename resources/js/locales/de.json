@@ -246,7 +246,30 @@
         "logOutOtherSessions": "Andere Browser-Sitzungen abmelden",
         "activeSessions": "Aktive Sitzungen",
         "notifyRunCompleted": "Abschluss-Mails",
-        "notifyRunCompletedHint": "Schick mir eine E-Mail, wenn ein Optimierungslauf abgeschlossen ist."
+        "notifyRunCompletedHint": "Schick mir eine E-Mail, wenn ein Optimierungslauf abgeschlossen ist.",
+        "presets": {
+            "title": "Presets",
+            "subtitle": "Wiederverwendbare Laufparameterprofile.",
+            "new": "Neues Preset",
+            "edit": "Preset bearbeiten",
+            "save": "Änderungen speichern",
+            "create": "Preset anlegen",
+            "name": "Name",
+            "description": "Beschreibung",
+            "mode": "Modus",
+            "provider": "Provider",
+            "model": "Modell",
+            "temperature": "Temperatur",
+            "maxSteps": "Max. Schritte",
+            "targetScore": "Ziel-Score",
+            "isDefault": "Als Standard verwenden",
+            "default": "Standard",
+            "modes": {
+                "evaluate": "Evaluieren",
+                "optimize": "Optimieren"
+            },
+            "confirmDelete": "Preset \"{name}\" löschen?"
+        }
     },
     "landing": {
         "cta": "Kostenlos optimieren",

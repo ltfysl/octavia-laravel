@@ -22,6 +22,7 @@ import TournamentController from './TournamentController'
 import MarketplaceController from './MarketplaceController'
 import NotificationController from './NotificationController'
 import SettingsController from './SettingsController'
+import ConfigPresetController from './ConfigPresetController'
 import SearchController from './SearchController'
 import TeamController from './TeamController'
 import Admin from './Admin'
@@ -51,6 +52,7 @@ const Controllers = {
     MarketplaceController: Object.assign(MarketplaceController, MarketplaceController),
     NotificationController: Object.assign(NotificationController, NotificationController),
     SettingsController: Object.assign(SettingsController, SettingsController),
+    ConfigPresetController: Object.assign(ConfigPresetController, ConfigPresetController),
     SearchController: Object.assign(SearchController, SearchController),
     TeamController: Object.assign(TeamController, TeamController),
     Admin: Object.assign(Admin, Admin),

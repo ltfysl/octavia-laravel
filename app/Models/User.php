@@ -88,6 +88,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Team::class, 'owner_id');
     }
 
+    public function configPresets(): HasMany
+    {
+        return $this->hasMany(ConfigPreset::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->is_admin;

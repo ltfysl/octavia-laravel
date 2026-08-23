@@ -1,6 +1,7 @@
 # Tasks
 
 ## Now
+- [ ] Config presets: saveable run parameter profiles with CRUD + settings UI + tests
 - [ ] Stripe integration (account + keys required; see docs/operations/billing.md)
 
 ## Next

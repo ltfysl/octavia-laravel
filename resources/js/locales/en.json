@@ -246,7 +246,30 @@
         "logOutOtherSessions": "Log out other browser sessions",
         "activeSessions": "Active sessions",
         "notifyRunCompleted": "Completion emails",
-        "notifyRunCompletedHint": "Send me an email when an optimization run finishes."
+        "notifyRunCompletedHint": "Send me an email when an optimization run finishes.",
+        "presets": {
+            "title": "Presets",
+            "subtitle": "Reusable run parameter profiles.",
+            "new": "New preset",
+            "edit": "Edit preset",
+            "save": "Save changes",
+            "create": "Create preset",
+            "name": "Name",
+            "description": "Description",
+            "mode": "Mode",
+            "provider": "Provider",
+            "model": "Model",
+            "temperature": "Temperature",
+            "maxSteps": "Max steps",
+            "targetScore": "Target score",
+            "isDefault": "Use as default",
+            "default": "Default",
+            "modes": {
+                "evaluate": "Evaluate",
+                "optimize": "Optimize"
+            },
+            "confirmDelete": "Delete preset \"{name}\"?"
+        }
     },
     "landing": {
         "cta": "Start optimizing — free",

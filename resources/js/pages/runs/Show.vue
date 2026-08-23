@@ -88,44 +88,69 @@ onBeforeUnmount(() => window.clearInterval(pollTimer));
 
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div class="min-w-0">
-                <div class="flex flex-wrap items-center gap-3">
-                    <h1 class="truncate font-display text-2xl font-bold tracking-tight text-ink-950">{{ run.name }}</h1>
+                <div class="flex items-center gap-2">
+                    <span class="h-2 w-2 rotate-45 bg-accent-600" aria-hidden="true" />
+                    <p class="eyebrow">Expedition · {{ t(`runs.mode.${run.mode}`) }}</p>
+                    <span class="rounded-full bg-ink-950 px-2 py-0.5 font-mono text-xs text-white">#{{ run.id }}</span>
+                </div>
+                <div class="mt-2 flex flex-wrap items-center gap-3">
+                    <h1 class="display-hero text-2xl tracking-tight text-ink-950 sm:text-3xl">{{ run.name }}</h1>
                     <OBadge :tone="run.status === 'completed' ? 'mint' : run.status === 'failed' ? 'rose' : run.status === 'running' ? 'accent' : 'neutral'">
                         {{ t(`runs.status.${run.status}`) }}
                     </OBadge>
                 </div>
-                <p class="mt-1 text-sm text-ink-500">
-                    {{ t(`runs.mode.${run.mode}`) }}
-                    <template v-if="run.benchmark"> · {{ run.benchmark.name }}</template>
+                <p v-if="run.benchmark" class="mt-1 flex items-center gap-1.5 text-sm text-ink-500">
+                    <span class="h-1 w-1 rounded-full bg-ink-300" aria-hidden="true" />
+                    {{ run.benchmark.name }} <template v-if="run.prompt">· {{ run.prompt.name }}</template>
                 </p>
             </div>
-            <div class="flex gap-2">
+            <div class="flex items-center gap-2">
                 <OButton v-if="isRunning" variant="secondary" @click="cancel">{{ t('runs.cancel') }}</OButton>
-                <Link href="/runs" class="self-center text-sm text-ink-500 hover:text-ink-900">{{ t('common.back') }}</Link>
+                <Link href="/runs" class="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-900">{{ t('common.back') }} <span aria-hidden="true">→</span></Link>
             </div>
         </div>
 
-        <p v-if="run.error" class="mt-4 rounded-card border border-rose-450/30 bg-rose-50 px-4 py-3 text-sm text-rose-450">{{ run.error }}</p>
-
-        <!-- Score summary -->
-        <OPanel class="mt-6">
-            <div class="grid gap-6 sm:grid-cols-3">
-                <div>
-                    <p class="text-xs font-medium uppercase tracking-wide text-ink-300">{{ t('runs.bestScore') }}</p>
-                    <p class="mt-1 font-display text-3xl font-bold tabular-nums text-ink-950">
-                        {{ run.best_score !== null ? Math.round(run.best_score * 100) + '%' : '—' }}
-                    </p>
-                </div>
-                <div>
-                    <p class="text-xs font-medium uppercase tracking-wide text-ink-300">{{ t('runs.target') }}</p>
-                    <p class="mt-1 font-display text-3xl font-bold tabular-nums text-ink-950">{{ Math.round(run.target_score * 100) }}%</p>
-                </div>
-                <div>
-                    <p class="text-xs font-medium uppercase tracking-wide text-ink-300">{{ t('runs.steps') }}</p>
-                    <p class="mt-1 font-display text-3xl font-bold tabular-nums text-ink-950">{{ evalSteps.length }}</p>
+        <!-- Live Evolution Progress — glass + shimmer, WebSocket-ready (polling fallback) -->
+        <div v-if="isRunning" class="mt-6 flex items-center gap-4 rounded-card border border-emerald-200 bg-white p-4 shadow-sm glass">
+            <span class="relative flex h-3 w-3 shrink-0">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-30" />
+                <span class="relative inline-flex h-3 w-3 rounded-full bg-emerald-500 icon-pulse" />
+            </span>
+            <div class="min-w-0 flex-1">
+                <p class="text-sm font-medium text-ink-900">Evolution running — live updates</p>
+                <p class="font-mono text-xs text-ink-500">Polling every 2s · WebSocket ready (mini-service/ evolution-ws)</p>
+                <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-ink-100">
+                    <div class="h-full w-2/3 shimmer rounded-full bg-emerald-500" style="background-size: 600px 100%;" />
                 </div>
             </div>
-            <div class="mt-5">
+            <span class="hidden sm:inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 font-mono text-xs font-medium text-emerald-700">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" /> LIVE
+            </span>
+        </div>
+
+        <!-- Score summary — editorial -->
+        <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-white bg-field-grid">
+            <div class="rule-accent" aria-hidden="true" />
+            <div class="grid gap-6 p-6 sm:grid-cols-[1.4fr_1fr_1fr]">
+                <div class="relative">
+                    <p class="eyebrow">{{ t('runs.bestScore') }}</p>
+                    <p class="display-hero mt-1 text-5xl font-extrabold tracking-tighter text-ink-950">
+                        {{ run.best_score !== null ? Math.round(run.best_score * 100) : '—' }}<span v-if="run.best_score !== null" class="text-accent-600">%</span>
+                    </p>
+                    <p class="mt-1 font-mono text-xs text-ink-400">elevation · peak</p>
+                </div>
+                <div class="border-l border-ink-100 pl-6 max-sm:border-l-0 max-sm:border-t max-sm:pl-0 max-sm:pt-4">
+                    <p class="eyebrow">{{ t('runs.target') }}</p>
+                    <p class="display-hero mt-1 text-3xl font-bold tracking-tight text-ink-950">{{ Math.round(run.target_score * 100) }}<span class="text-accent-600">%</span></p>
+                    <p class="mt-1 font-mono text-xs text-ink-400">datum</p>
+                </div>
+                <div class="border-l border-ink-100 pl-6 max-sm:border-l-0 max-sm:border-t max-sm:pl-0 max-sm:pt-4">
+                    <p class="eyebrow">{{ t('runs.steps') }}</p>
+                    <p class="display-hero mt-1 text-3xl font-bold tracking-tight text-ink-950">{{ evalSteps.length }}</p>
+                    <p class="mt-1 font-mono text-xs text-ink-400">evaluations</p>
+                </div>
+            </div>
+            <div class="border-t border-ink-100 bg-white px-6 py-4">
                 <OScoreBar :score="run.best_score ?? 0" :target="run.target_score" />
             </div>
 
@@ -140,7 +165,7 @@ onBeforeUnmount(() => window.clearInterval(pollTimer));
                     :title="`Step ${point.n}: ${Math.round(point.score * 100)}%`"
                 />
             </div>
-        </OPanel>
+        </div>
 
         <!-- Step timeline -->
         <section v-if="run.steps.length > 0" class="mt-8 grid gap-6 lg:grid-cols-[16rem_1fr]">

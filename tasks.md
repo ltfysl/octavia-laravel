@@ -51,7 +51,7 @@
 - [x] Round 15: benchmark JSON export/import, global search across prompts/benchmarks, favicon.svg
 - [x] Round 16: branded error pages (403/404/419/429/500/503) + republish notification tests
 - [x] Round 17: prompt JSON export/import, global search includes runs, error page tests
-- [x] Round 17: complete visual rework — "field station" direction (cold fog/spruce/intl-orange tokens, Archivo + IBM Plex Sans), contour-hero dashboard, prompts card date fix + i18n runsCount, run-panel hint, quarantined destructive delete, violet→accent rename, WCAG button contrast fixes, phpunit Unit-suite config fix
+- [x] Round 17: complete visual rework — "field station" direction (cold fog/spruce/intl-orange tokens, Archivo + IBM Plex Sans), contour-hero dashboard, prompts card date fix + i18n runsCount, run-panel hint, quarantined destructive delete (prompts+benchmarks), violet→accent rename, WCAG button contrast fixes, shell settings href fix, notifications prop shadowing fix (feed + shell guard), error pages field-station, OScoreBar graticule + target datum, OEmptyState waypoint, Landing JSON-LD + title dedup, global vue errorHandler, phpunit Unit-suite config fix
 - [x] Round 18: reporter resolution email (queueable, localized, opt-out aware), run-level team scoping (policy + scope + index owner attribution)
 - [x] Round 19: credits & billing foundation (ledger, atomic consume, run reservation + refund via RunObserver, /settings/billing, dedicated /pricing page, Stripe checklist)
 - [x] Round 21: fine-grained API token scopes (prompts:read/write, runs:read/write; scope middleware with implication rules, backward compatible)

@@ -26,9 +26,9 @@ createInertiaApp({
     },
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) });
-        // TEMP-DIAG: surface silent prod render errors (remove after debugging)
+        // Surface silent prod render errors to the console for the next agent.
         app.config.errorHandler = (err: unknown, _inst: unknown, info: string) => {
-            console.error('VUE-ERR [' + info + ']:', err);
+            console.error(`[vue:${info}]`, err);
         };
         app.use(plugin);
         app.use(i18n);

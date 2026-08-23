@@ -78,13 +78,47 @@ const adminNav = computed(() =>
         : [],
 );
 const isActive = (href: string) => page.url.startsWith(href);
+
+// Command palette — reference parity, better: glass + spotlight + keyboard
+const commandOpen = ref(false);
+const commandQuery = ref('');
+const filteredNav = computed(() => {
+    const q = commandQuery.value.toLowerCase();
+    if (!q) return nav.value;
+    return nav.value.filter((n) => n.label.toLowerCase().includes(q) || n.href.toLowerCase().includes(q));
+});
+const openCommand = () => { commandOpen.value = true; commandQuery.value = ''; setTimeout(() => document.getElementById('command-input')?.focus(), 50); };
+const closeCommand = () => { commandOpen.value = false; };
+
+const onKeyDown = (e: KeyboardEvent) => {
+    const isMac = navigator.platform.toUpperCase().includes('MAC');
+    if ((isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        commandOpen.value ? closeCommand() : openCommand();
+    } else if (e.key === '?' && !commandOpen.value) {
+        // help — could open shortcuts modal, for now toggle command
+        const target = e.target as HTMLElement | null;
+        if (target && ['INPUT','TEXTAREA','SELECT'].includes(target.tagName)) return;
+        e.preventDefault();
+        openCommand();
+    } else if (e.key === 'Escape' && commandOpen.value) {
+        closeCommand();
+    }
+    // Vim-style G+? navigation (G+D etc.) — lightweight
+    if ((e.target as HTMLElement)?.tagName && ['INPUT','TEXTAREA'].includes((e.target as HTMLElement).tagName)) return;
+};
+
+if (typeof window !== 'undefined') {
+    window.addEventListener('keydown', onKeyDown);
+}
+
 </script>
 
 <template>
-    <div class="min-h-screen lg:grid lg:grid-cols-[16rem_1fr]">
-        <!-- Sidebar -->
+    <div class="min-h-screen lg:grid lg:grid-cols-[18rem_1fr] xl:grid-cols-[23.75rem_1fr]">
+        <!-- Sidebar — glass, wider at xl for dashboard bento -->
 
-        <aside class="hidden lg:flex lg:h-screen lg:flex-col lg:border-r lg:border-ink-100 lg:bg-paper-100">
+        <aside class="hidden lg:flex lg:h-screen lg:flex-col lg:border-r lg:border-ink-100 lg:bg-white/80 lg:backdrop-blur supports-[backdrop-filter]:bg-white/60">
             <div class="px-5 pt-6 pb-4">
                 <Link href="/dashboard" class="flex items-center gap-2.5" aria-label="Octavia home">
                     <span class="flex h-8 w-8 items-center justify-center rounded-md bg-accent-600 font-display text-lg font-bold text-ink-950">O</span>
@@ -150,7 +184,7 @@ const isActive = (href: string) => page.url.startsWith(href);
 
         <!-- Main -->
         <main class="min-w-0">
-            <div class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
+            <div class="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
                 <div
                     v-if="user && !user.email_verified_at && !verificationSent"
                     class="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-card border border-amber-450/40 bg-amber-100/50 px-4 py-3"
@@ -170,48 +204,102 @@ const isActive = (href: string) => page.url.startsWith(href);
                         {{ t('runs.quotaWarning', { used: runQuota?.used, limit: runQuota?.limit }) }}
                     </p>
                 </div>
-                <div class="mb-6 hidden items-center justify-end gap-4 lg:flex">
-                    <details v-if="user" class="relative">
-                        <summary class="relative flex h-8 w-8 cursor-pointer list-none items-center justify-center rounded-lg text-ink-500 transition-colors hover:bg-paper-100 hover:text-ink-900 [&::-webkit-details-marker]:hidden" aria-label="Notifications" @click="markRead()">
-                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>
-                            <span
-                                v-if="notifications.unread > 0"
-                                class="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent-600 px-1 text-[10px] font-semibold text-ink-950"
-                            >{{ notifications.unread }}</span>
-                        </summary>
-                        <div class="absolute right-0 z-40 mt-2 w-80 rounded-card border border-ink-100 bg-white p-2 shadow-pop">
-                            <p class="px-2 pb-1 pt-1 text-xs font-semibold uppercase tracking-wide text-ink-300">Notifications</p>
-                            <p v-if="notifications.items.length === 0" class="px-2 py-3 text-sm text-ink-300">—</p>
-                            <div
-                                v-for="item in notifications.items"
-                                :key="item.id"
-                                class="-mx-1 flex items-start gap-2.5 rounded-lg px-3 py-2 transition-colors"
-                                :class="item.read ? '' : 'bg-accent-50/60'"
-                            >
-                                <Link v-if="item.run_id" :href="`/runs/${item.run_id}`" class="flex min-w-0 flex-1 items-start gap-2.5">
-                                    <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full" :class="item.read ? 'bg-transparent' : 'bg-accent-500'" aria-hidden="true" />
-                                    <span class="min-w-0 flex-1 truncate text-sm text-ink-900">{{ item.run_name }}</span>
-                                </Link>
-                                <span v-else class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-transparent" aria-hidden="true" />
-                                <span v-if="item.score !== null" class="shrink-0 pt-0.5 font-mono text-xs tabular-nums text-mint-600">{{ Math.round(item.score * 100) }}%</span>
-                                <button
-                                    type="button"
-                                    class="shrink-0 text-ink-300 transition-colors hover:text-rose-450"
-                                    :aria-label="'Delete'"
-                                    @click.prevent="removeNotification(item.id)"
+                <div class="mb-6 hidden items-center justify-between gap-4 lg:flex">
+                    <Link href="/search" class="flex items-center gap-2 rounded-full border border-ink-200 bg-white px-3 py-1.5 text-sm text-ink-400 shadow-sm transition hover:border-ink-300 hover:bg-paper-100 hover:text-ink-600">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+                        <span>Search</span>
+                        <span class="ml-2 hidden sm:inline-flex items-center gap-1 rounded bg-ink-100 px-1.5 py-0.5 font-mono text-xs text-ink-500">
+                            <span>⌘</span><span>K</span>
+                        </span>
+                    </Link>
+                    <div class="flex items-center gap-2">
+                        <Link href="/search" class="flex h-8 w-8 items-center justify-center rounded-lg text-ink-500 transition hover:bg-paper-100 hover:text-ink-900 lg:hidden" aria-label="Search">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+                        </Link>
+                        <details v-if="user" class="relative">
+                            <summary class="relative flex h-8 w-8 cursor-pointer list-none items-center justify-center rounded-lg text-ink-500 transition-colors hover:bg-paper-100 hover:text-ink-900 [&::-webkit-details-marker]:hidden" aria-label="Notifications" @click="markRead()">
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>
+                                <span
+                                    v-if="notifications.unread > 0"
+                                    class="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent-600 px-1 text-[10px] font-semibold text-ink-950"
+                                >{{ notifications.unread }}</span>
+                            </summary>
+                            <div class="absolute right-0 z-40 mt-2 w-80 rounded-card border border-ink-100 bg-white p-2 shadow-pop">
+                                <p class="px-2 pb-1 pt-1 text-xs font-semibold uppercase tracking-wide text-ink-300">Notifications</p>
+                                <p v-if="notifications.items.length === 0" class="px-2 py-3 text-sm text-ink-300">—</p>
+                                <div
+                                    v-for="item in notifications.items"
+                                    :key="item.id"
+                                    class="-mx-1 flex items-start gap-2.5 rounded-lg px-3 py-2 transition-colors"
+                                    :class="item.read ? '' : 'bg-accent-50/60'"
                                 >
-                                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
-                                </button>
+                                    <Link v-if="item.run_id" :href="`/runs/${item.run_id}`" class="flex min-w-0 flex-1 items-start gap-2.5">
+                                        <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full" :class="item.read ? 'bg-transparent' : 'bg-accent-500'" aria-hidden="true" />
+                                        <span class="min-w-0 flex-1 truncate text-sm text-ink-900">{{ item.run_name }}</span>
+                                    </Link>
+                                    <span v-else class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-transparent" aria-hidden="true" />
+                                    <span v-if="item.score !== null" class="shrink-0 pt-0.5 font-mono text-xs tabular-nums text-mint-600">{{ Math.round(item.score * 100) }}%</span>
+                                    <button
+                                        type="button"
+                                        class="shrink-0 text-ink-300 transition-colors hover:text-rose-450"
+                                        :aria-label="'Delete'"
+                                        @click.prevent="removeNotification(item.id)"
+                                    >
+                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+                                    </button>
+                                </div>
+                                <Link href="/notifications" class="block px-3 pt-2 text-center text-xs font-medium text-accent-600 hover:text-accent-700">
+                                    {{ t('nav.notifications') }} →
+                                </Link>
                             </div>
-                            <Link href="/notifications" class="block px-3 pt-2 text-center text-xs font-medium text-accent-600 hover:text-accent-700">
-                                {{ t('nav.notifications') }} →
-                            </Link>
-                        </div>
-                    </details>
-                    <Link v-if="user" href="/logout" method="post" as="button" class="text-sm text-ink-500 transition-colors hover:text-ink-900">{{ t('nav.logOut') }}</Link>
+                        </details>
+                        <button type="button" class="hidden h-8 w-8 items-center justify-center rounded-lg text-ink-400 transition hover:bg-paper-100 hover:text-ink-700 md:flex" aria-label="Keyboard shortcuts" title="Press ? for shortcuts">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>
+                        </button>
+                        <Link v-if="user" href="/logout" method="post" as="button" class="text-sm text-ink-500 transition-colors hover:text-ink-900">{{ t('nav.logOut') }}</Link>
+                    </div>
                 </div>
                 <slot />
             </div>
         </main>
+
+        <!-- Command Palette — glass, spotlight -->
+        <div
+            v-if="commandOpen"
+            class="fixed inset-0 z-50 flex items-start justify-center bg-ink-950/20 p-4 pt-[18vh] backdrop-blur-sm"
+            @click.self="closeCommand"
+        >
+            <div class="w-full max-w-lg overflow-hidden rounded-[1.5rem] border border-white/20 bg-white shadow-[0_24px_64px_rgba(14,26,29,0.18)]">
+                <div class="flex items-center gap-3 border-b border-ink-100 px-4 py-3">
+                    <svg class="h-4 w-4 text-ink-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+                    <input
+                        id="command-input"
+                        v-model="commandQuery"
+                        placeholder="Search navigation, prompts, benchmarks…"
+                        class="flex-1 bg-transparent text-sm outline-none placeholder:text-ink-400"
+                        @keydown.escape="closeCommand"
+                    />
+                    <span class="rounded bg-ink-100 px-1.5 py-0.5 font-mono text-xs text-ink-500">ESC</span>
+                </div>
+                <div class="max-h-80 overflow-auto p-2">
+                    <Link
+                        v-for="item in filteredNav"
+                        :key="item.href"
+                        :href="item.href"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-paper-100 hover:text-ink-900"
+                        @click="closeCommand"
+                    >
+                        <span class="h-1.5 w-1.5 rotate-45 bg-accent-600" aria-hidden="true" />
+                        {{ item.label }}
+                        <span class="ml-auto font-mono text-xs text-ink-300">{{ item.href }}</span>
+                    </Link>
+                    <p v-if="filteredNav.length === 0" class="px-3 py-8 text-center text-sm text-ink-400">No results — try “prompts” or “benchmarks”</p>
+                </div>
+                <div class="flex items-center justify-between border-t border-ink-100 bg-paper-50 px-4 py-2 text-xs text-ink-400">
+                    <span>Press <span class="rounded bg-white px-1 py-0.5 font-mono shadow-sm">↵</span> to navigate</span>
+                    <span class="hidden sm:inline"> <span class="rounded bg-white px-1 py-0.5 font-mono shadow-sm">?</span> for help · <span class="rounded bg-white px-1 py-0.5 font-mono shadow-sm">⌘K</span> to toggle</span>
+                </div>
+            </div>
+        </div>
     </div>
 </template>

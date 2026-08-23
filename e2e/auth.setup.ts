@@ -29,7 +29,8 @@ test('authenticate and onboard', async ({ page }) => {
     await page.click('button:has-text("Weiter")');
 
     await page.waitForURL('**/dashboard');
-    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+    // WOW hero replaced the plain "Dashboard" h1 — assert on the hero text
+    await expect(page.getByRole('heading', { name: /laboratory/i })).toBeVisible();
 
     // Persist the session for dependent tests
     await page.context().storageState({ path: 'e2e/.auth/user.json' });

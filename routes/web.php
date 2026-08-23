@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TournamentController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -100,6 +102,11 @@ Route::middleware('auth')->group(function () {
         ->name('runs.store');
     Route::get('/runs/{run}/status', [RunController::class, 'status'])->name('runs.status');
     Route::post('/runs/{run}/cancel', [RunController::class, 'cancel'])->name('runs.cancel');
+
+    Route::get('/audit', [AuditLogController::class, 'index'])->name('audit.index');
+    Route::post('/audit', [AuditLogController::class, 'store'])->name('audit.store');
+    Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournaments.index');
+    Route::post('/tournaments', [TournamentController::class, 'store'])->name('tournaments.store');
     Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marketplace.index');
     Route::post('/marketplace/{item}/install', [MarketplaceController::class, 'install'])->name('marketplace.install');
     Route::post('/marketplace/publish', [MarketplaceController::class, 'publish'])->name('marketplace.publish');

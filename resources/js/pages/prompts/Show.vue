@@ -84,6 +84,9 @@ const runPlayground = async () => {
         playgroundLoading.value = false;
     }
 };
+const copyOutput = () => {
+    if (playgroundOutput.value) window.navigator.clipboard.writeText(playgroundOutput.value);
+};
 
 const selectedBenchmarkId = ref<number | ''>('');
 
@@ -180,6 +183,9 @@ const saveAsVersion = () => {
                         aria-describedby="run-benchmark-hint"
                     >
                         <option value="" disabled>—</option>
+                        <option v-for="benchmark in benchmarks" :key="benchmark.id" :value="benchmark.id">
+                            {{ benchmark.name }} ({{ benchmark.cases_count }})
+                        </option>
                     </select>
                     <p id="run-benchmark-hint" class="mt-2 text-xs text-ink-500">{{ t('prompts.runHint') }}</p>
                     <div class="mt-3 space-y-2">
@@ -195,31 +201,40 @@ const saveAsVersion = () => {
                     </Link>
                 </OPanel>
 
-                <!-- Playground: test the (possibly unsaved) prompt on one input -->
-                <OPanel :title="t('prompts.playground')">
+                <!-- Playground: test the (possibly unsaved) prompt on one input — glass + shimmer -->
+                <OPanel :title="t('prompts.playground')" class="glass">
+                    <p class="mb-3 text-xs leading-relaxed text-ink-500">Test your current draft against a single input before committing a version.</p>
                     <textarea
                         v-model="playgroundInput"
                         rows="4"
                         :placeholder="t('benchmarks.wizard.caseInput')"
-                        class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500"
+                        class="w-full rounded-xl border border-ink-200 bg-white px-3 py-2.5 text-sm shadow-sm transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
                     />
                     <OButton
                         variant="secondary"
                         size="sm"
-                        class="mt-2 w-full"
+                        class="mt-3 w-full hover-glow-emerald"
+                        :class="playgroundLoading ? 'shimmer' : ''"
                         :disabled="playgroundLoading || playgroundInput.trim() === ''"
                         @click="runPlayground"
                     >
-                        ▶ {{ playgroundLoading ? t('common.loading') : t('prompts.playground') }}
+                        <span v-if="playgroundLoading" class="icon-pulse">●</span>
+                        <span v-else>▶</span> {{ playgroundLoading ? t('common.loading') : t('prompts.playground') }}
                     </OButton>
-                    <pre
-                        v-if="playgroundOutput !== null"
-                        class="mt-3 max-h-56 overflow-auto whitespace-pre-wrap rounded-lg bg-paper-100 p-3 font-mono text-xs leading-relaxed text-ink-700 scroll-thin"
-                    >{{ playgroundOutput }}</pre>
-                    <p v-if="playgroundError" class="mt-2 text-xs text-rose-450">{{ playgroundError }}</p>
+                    <div v-if="playgroundLoading" class="mt-3 space-y-2">
+                        <div class="h-3 w-full rounded bg-ink-100 shimmer" />
+                        <div class="h-3 w-5/6 rounded bg-ink-100 shimmer" />
+                        <div class="h-3 w-3/4 rounded bg-ink-100 shimmer" />
+                    </div>
+                    <div v-else-if="playgroundOutput !== null" class="relative mt-3">
+                        <pre class="max-h-56 overflow-auto whitespace-pre-wrap rounded-xl bg-ink-950 p-4 font-mono text-xs leading-relaxed text-emerald-50 shadow-inner">{{ playgroundOutput }}</pre>
+                        <button type="button" class="absolute right-2 top-2 rounded-md bg-white/10 px-2 py-1 font-mono text-xs text-white backdrop-blur hover:bg-white/20" @click="copyOutput">Copy</button>
+                    </div>
+                    <p v-if="playgroundError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ playgroundError }}</p>
                 </OPanel>
-            </div>
         </div>
+        </div>
+
 
         <!-- Versions tab -->
         <div v-else class="mt-6 space-y-4">

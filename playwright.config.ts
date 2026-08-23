@@ -1,6 +1,6 @@
 import { defineConfig } from '@playwright/test';
 
-const PORT = 8021;
+const PORT = Number(process.env.E2E_PORT ?? 8021);
 const baseURL = `http://127.0.0.1:${PORT}`;
 
 // E2E runs against a dedicated MySQL database so it never touches dev data.

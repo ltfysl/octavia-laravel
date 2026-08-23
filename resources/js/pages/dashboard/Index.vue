@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
+import { onMounted, onUnmounted, ref, computed } from 'vue';
 import AppLayout from '../../layouts/AppLayout.vue';
 import OPanel from '../../components/ui/OPanel.vue';
 import OEmptyState from '../../components/ui/OEmptyState.vue';
 import OBadge from '../../components/ui/OBadge.vue';
 import OScoreBar from '../../components/ui/OScoreBar.vue';
 
-defineProps<{
+const props = defineProps<{
     stats: { prompts: number; benchmarks: number; activeRuns: number; bestScore: number };
     recentRuns: Array<{
         id: number;
@@ -30,98 +31,422 @@ const statusTone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral' | 'accent
     failed: 'rose',
     cancelled: 'neutral',
 };
+
+// Typewriter for Command Input
+const prompts = ["Benchmark the new onboarding prompt...", "Evolve tagline writer against quality suite...", "Test 'Eco bottle' criteria edge cases...", "Optimize for 95% target..."];
+const typed = ref("");
+const promptIndex = ref(0);
+const charIndex = ref(0);
+const isDeleting = ref(false);
+let typeTimer: number | undefined;
+
+// WOW: tilt + spotlight + scramble
+const tiltCard = ref<HTMLElement | null>(null);
+const scrambleRef = ref<HTMLElement | null>(null);
+const spotX = ref(200);
+const spotY = ref(120);
+const onTiltMove = (e: MouseEvent) => {
+    const el = tiltCard.value;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    spotX.value = e.clientX - rect.left;
+    spotY.value = e.clientY - rect.top;
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `perspective(900px) rotateY(${px * 6}deg) rotateX(${-py * 6}deg) translateZ(0)`;
+};
+const onTiltLeave = () => {
+    const el = tiltCard.value;
+    if (el) el.style.transform = "perspective(900px) rotateY(0) rotateX(0)";
+};
+
+onMounted(() => {
+    // scramble “laboratory”
+    const target = "laboratory";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let frame = 0;
+    const scramble = () => {
+        if (!scrambleRef.value) return;
+        if (frame > 18) { scrambleRef.value.textContent = target; return; }
+        scrambleRef.value.textContent = target.split("").map((c,i) => i < target.length - frame + 6 ? c : chars[Math.floor(Math.random()*chars.length)]).join("");
+        frame++;
+        window.setTimeout(scramble, 42);
+    };
+    window.setTimeout(scramble, 400);
+    const tick = () => {
+        const full = prompts[promptIndex.value];
+        if (!isDeleting.value) {
+            typed.value = full.slice(0, charIndex.value + 1);
+            charIndex.value++;
+            if (charIndex.value === full.length) {
+                isDeleting.value = true;
+                typeTimer = window.setTimeout(tick, 1400);
+                return;
+            }
+        } else {
+            typed.value = full.slice(0, charIndex.value - 1);
+            charIndex.value--;
+            if (charIndex.value === 0) {
+                isDeleting.value = false;
+                promptIndex.value = (promptIndex.value + 1) % prompts.length;
+            }
+        }
+        typeTimer = window.setTimeout(tick, isDeleting.value ? 32 : 58);
+    };
+    typeTimer = window.setTimeout(tick, 600);
+});
+onUnmounted(() => window.clearTimeout(typeTimer));
+
+// Live status pulse - derived
+const liveRuns = computed(() => props.recentRuns.filter(r => r.status === 'running').slice(0, 3));
+
+// Chart — score trend with fallback width (fixes chartWidth 0 bug from test)
+const chartData = computed(() => props.recentRuns.filter((r) => r.score !== null).map((r) => Math.round((r.score ?? 0) * 100)));
+const chartWidth = 600;
+const chartPath = computed(() => {
+    if (chartData.value.length < 2) return '';
+    const w = chartWidth;
+    const h = 100;
+    const step = w / (chartData.value.length - 1);
+    return chartData.value.map((v, i) => `${i === 0 ? 'M' : 'L'} ${i * step} ${h - v}`).join(' ');
+});
+const chartAreaPath = computed(() => {
+    if (chartData.value.length < 2) return '';
+    const line = chartPath.value;
+    const w = chartWidth;
+    const h = 100;
+    return `${line} L ${w} ${h} L 0 ${h} Z`;
+});
+// Count-up — reference parity (use-count-up) but lighter: rAF
+const animated = ref({ prompts: 0, benchmarks: 0, activeRuns: 0, bestScore: 0 });
+const animateTo = (target: number, setter: (v: number) => void, duration = 900) => {
+    const start = performance.now();
+    const tick = (now: number) => {
+        const p = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setter(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+};
+onMounted(() => {
+    animateTo(props.stats.prompts, (v) => (animated.value.prompts = v));
+    animateTo(props.stats.benchmarks, (v) => (animated.value.benchmarks = v));
+    animateTo(props.stats.activeRuns, (v) => (animated.value.activeRuns = v));
+    animateTo(Math.round(props.stats.bestScore * 100), (v) => (animated.value.bestScore = v), 1200);
+});
+
 </script>
 
 <template>
     <AppLayout>
         <Head><title>{{ t('dashboard.title') }}</title></Head>
 
-        <!-- Basecamp: the fitness landscape and today's elevation -->
-        <section class="relative overflow-hidden rounded-card border border-ink-100 bg-white">
-            <svg
-                class="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-3/5 sm:block"
-                viewBox="0 0 640 240"
-                preserveAspectRatio="xMaxYMid slice"
-                fill="none"
-                aria-hidden="true"
-            >
-                <path d="M-20 208 C120 188 190 216 310 196 S530 158 680 176" stroke="currentColor" class="text-ink-200" />
-                <path d="M-20 166 C130 146 230 180 350 160 S550 122 680 136" stroke="currentColor" class="text-ink-200" opacity=".7" />
-                <path d="M60 116 C190 98 290 126 410 108 S600 76 700 90" stroke="currentColor" class="text-ink-200" opacity=".45" />
-                <path d="M150 64 C260 50 340 74 440 60 S610 36 700 46" stroke="currentColor" class="text-ink-200" opacity=".25" />
-                <path d="M-20 232 C140 214 250 240 400 224 S640 192 740 206" stroke="currentColor" class="text-accent-400" stroke-dasharray="4 5" />
-                <path d="M596 170 l9 -16 9 16 z" class="fill-accent-600" />
-            </svg>
-            <div class="relative flex flex-wrap items-end justify-between gap-x-8 gap-y-4 p-6 sm:p-8">
-                <div>
-                    <p class="eyebrow">Octavia</p>
-                    <h1 class="mt-2 font-display text-2xl font-bold tracking-tight text-ink-950 sm:text-3xl">{{ t('dashboard.title') }}</h1>
-                    <p class="mt-1 text-sm text-ink-500">{{ t('dashboard.subtitle') }}</p>
+        <div class="max-w-[1400px] mx-auto">
+            <!-- WOW HERO — Cinematic Field Station -->
+            <section class="relative -mx-4 -mt-6 overflow-hidden bg-ink-950 sm:-mx-6 lg:-mx-10">
+                <div class="pointer-events-none absolute inset-0">
+                    <div class="absolute -left-20 top-10 h-[520px] w-[520px] rounded-full bg-accent-600/20 blur-[90px] animate-[float_8s_ease-in-out_infinite]" />
+                    <div class="absolute -right-20 top-32 h-[460px] w-[460px] rounded-full bg-emerald-400/10 blur-[80px] animate-[float_10s_ease-in-out_infinite_reverse]" />
+                    <div class="absolute left-1/3 top-1/2 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-white/[0.04] blur-[60px]" />
+                    <!-- contour lines over dark -->
+                    <svg class="absolute inset-0 h-full w-full opacity-[0.08]" viewBox="0 0 1440 600" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                        <path d="M-40 420 C240 380 380 440 620 400 S1060 340 1480 360" stroke="white" stroke-width="1" />
+                        <path d="M-40 340 C260 300 420 360 700 320 S1100 260 1480 280" stroke="white" stroke-width="1" opacity=".6" />
+                        <path d="M120 260 C380 220 520 280 820 240 S1220 180 1520 200" stroke="white" stroke-width="1" opacity=".3" />
+                        <path d="M-40 480 C280 440 500 480 800 440 S1280 380 1520 400" stroke="white" stroke-width="1" stroke-dasharray="6 8" opacity=".5" />
+                    </svg>
+                    <!-- grain -->
+                    <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22/></filter><rect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22 opacity=%220.4%22/></svg>')" />
                 </div>
-                <div class="text-left sm:text-right">
-                    <p class="eyebrow">{{ t('dashboard.avgScore') }}</p>
-                    <p class="mt-1 font-display text-5xl font-bold leading-none tabular-nums tracking-tight text-ink-950">
-                        {{ Math.round(stats.bestScore * 100) }}<span class="text-accent-600">%</span>
-                    </p>
-                </div>
-            </div>
-        </section>
 
-        <!-- Survey strip -->
-        <div class="grid grid-cols-3 divide-x divide-ink-100 overflow-hidden rounded-card border border-t-0 border-ink-100 bg-white max-sm:grid-cols-1 max-sm:divide-y">
-            <div v-for="stat in [
-                { label: t('dashboard.totalPrompts'), value: stats.prompts },
-                { label: t('dashboard.totalBenchmarks'), value: stats.benchmarks },
-                { label: t('dashboard.activeRuns'), value: stats.activeRuns },
-            ]" :key="stat.label" class="px-5 py-4">
-                <p class="eyebrow">{{ stat.label }}</p>
-                <p class="mt-1 font-display text-xl font-semibold tabular-nums text-ink-950">{{ stat.value }}</p>
-            </div>
+                <div class="relative grid items-center gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.25fr_0.9fr] lg:px-10 lg:py-14 min-h-[540px] lg:min-h-[560px]">
+                    <div class="relative">
+                        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[11px] font-medium tracking-wide text-white/70 backdrop-blur">
+                            <span class="h-2 w-2 animate-pulse rounded-full bg-accent-500" />
+                            FIELD STATION · LIVE
+                            <span class="ml-2 hidden sm:inline h-4 w-px bg-white/10" />
+                            <span class="hidden sm:inline font-mono text-white/40">ELEV {{ animated.bestScore }}.0</span>
+                        </div>
+                        <!-- Kinetic headline with stroke gradient -->
+                        <h1 class="display-hero mt-5 text-5xl leading-[0.85] tracking-tighter text-white md:text-7xl">
+                            Your prompt<br />
+                            <span class="relative inline-block">
+                                <span ref="scrambleRef" class="relative z-10 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">laboratory</span>
+                                <span class="absolute inset-0 bg-gradient-to-r from-accent-400 via-white to-accent-400 bg-clip-text text-transparent opacity-0 animate-[shimmer_3s_linear_infinite]" aria-hidden="true">laboratory</span>
+                            </span>
+                            <span class="ml-3 inline-flex -translate-y-2 rounded-full bg-accent-600 px-3 py-1 font-mono text-xs font-bold tracking-widest text-ink-950">AT A GLANCE</span>
+                        </h1>
+                        <p class="mt-4 max-w-[52ch] text-base leading-relaxed text-white/60">
+                            {{ t('dashboard.subtitle') }} — traverse the fitness landscape. Every run is an expedition, every version a waypoint.
+                        </p>
+                        <div class="mt-7 flex flex-wrap items-center gap-3">
+                            <Link ref="magneticBtn" href="/runs/create" class="group relative inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink-950 shadow-[0_8px_30px_rgba(0,0,0,0.3)] transition-all hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] active:scale-[0.98]">
+                                Start expedition
+                                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-ink-950 text-white transition-transform group-hover:translate-x-0.5">→</span>
+                            </Link>
+                            <div class="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur">
+                                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-white text-xs">◈</span>
+                                <span class="font-mono text-xs text-white/70">{{ animated.prompts }} specimens · {{ animated.benchmarks }} suites</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex items-center gap-4 font-mono text-xs text-white/40">
+                            <span>01 — FIELD STATION</span>
+                            <span class="h-px w-12 bg-white/20" />
+                            <span>CONTOUR INTERVAL 10%</span>
+                        </div>
+                    </div>
+
+                    <!-- Tilt Spotlight Card -->
+                    <div class="relative lg:pl-4">
+                        <div
+                            ref="tiltCard"
+                            class="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white p-7 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] backdrop-blur transition-transform duration-200 will-change-transform lg:p-8"
+                            @mousemove="onTiltMove"
+                            @mouseleave="onTiltLeave"
+                        >
+                            <!-- spotlight border -->
+                            <div class="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition-opacity duration-300 group-hover:opacity-100" :style="`background: radial-gradient(420px circle at ${spotX}px ${spotY}px, rgba(234,88,12,0.15), transparent 80%)`" aria-hidden="true" />
+                            <div class="absolute inset-0 bg-field-grid opacity-[0.04]" aria-hidden="true" />
+                            <div class="relative">
+                                <div class="flex items-center justify-between">
+                                    <p class="eyebrow !text-ink-400">Best avg. score — elevation</p>
+                                    <span class="rounded-full bg-ink-950 px-2.5 py-1 font-mono text-xs font-medium text-white">PEAK</span>
+                                </div>
+                                <div class="mt-3 flex items-baseline gap-3">
+                                    <span class="display-hero text-6xl font-extrabold tracking-tighter text-ink-950 md:text-7xl">{{ animated.bestScore }}<span class="text-accent-600">%</span></span>
+                                    <span class="rounded-full bg-mint-100 px-2.5 py-1 font-mono text-xs font-medium text-mint-600">datum · live</span>
+                                </div>
+                                <div class="mt-5">
+                                    <OScoreBar :score="stats.bestScore" :target="0.95" />
+                                </div>
+                                <div class="mt-5 grid grid-cols-3 gap-3 border-t border-ink-100 pt-5">
+                                    <div>
+                                        <p class="font-mono text-[11px] uppercase tracking-wide text-ink-300">Prompts</p>
+                                        <p class="font-display text-2xl font-bold text-ink-950">{{ animated.prompts }}</p>
+                                        <div class="mt-1 h-1 overflow-hidden rounded-full bg-ink-100"><div class="h-full w-2/3 bg-ink-900" /></div>
+                                    </div>
+                                    <div class="border-l border-ink-100 pl-3">
+                                        <p class="font-mono text-[11px] uppercase tracking-wide text-ink-300">Suites</p>
+                                        <p class="font-display text-2xl font-bold text-ink-950">{{ animated.benchmarks }}</p>
+                                        <div class="mt-1 h-1 overflow-hidden rounded-full bg-ink-100"><div class="h-full w-1/2 bg-ink-900" /></div>
+                                    </div>
+                                    <div class="border-l border-ink-100 pl-3">
+                                        <p class="font-mono text-[11px] uppercase tracking-wide text-ink-300">Active</p>
+                                        <p class="font-display text-2xl font-bold text-ink-950">{{ animated.activeRuns }}</p>
+                                        <div class="mt-1 flex items-center gap-1"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" /><span class="h-1 w-12 rounded-full bg-emerald-500" /></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- floating waypoint -->
+                        <div class="absolute -bottom-4 -left-4 hidden items-center gap-3 rounded-2xl border border-white/20 bg-white px-4 py-3 shadow-[0_16px_32px_rgba(0,0,0,0.2)] lg:flex">
+                            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent-600 text-ink-950">▲</span>
+                            <div class="text-xs leading-tight">
+                                <p class="font-semibold text-ink-950">Waypoint reached</p>
+                                <p class="font-mono text-ink-400">interpolated · 80%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kinetic marquee -->
+                <div class="absolute bottom-0 left-0 w-full border-t border-white/10 bg-black/20 py-3 backdrop-blur">
+                    <div class="flex w-max animate-[marquee_28s_linear_infinite] gap-8 whitespace-nowrap font-mono text-xs tracking-widest text-white/50">
+                        <span v-for="i in 6" :key="i" class="flex items-center gap-8"><span>OCTAVIA FIELD STATION</span><span class="h-1 w-1 rotate-45 bg-accent-600" /><span>PROMPT LABORATORY</span><span class="h-1 w-1 rotate-45 bg-white/30" /><span>ELEV {{ animated.bestScore }}% — CONTOUR 10%</span><span class="h-1 w-1 rotate-45 bg-accent-600" /></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bento 2.0 — 5 archetypes -->
+            <section class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-12">
+                <!-- Intelligent List -->
+                <div class="group relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4" style="--index:0">
+                    <div class="flex items-center justify-between">
+                        <p class="eyebrow">Intelligent list</p>
+                        <span class="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+                    </div>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Recent expeditions</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li v-for="(run, i) in recentRuns.slice(0, 4)" :key="run.id" class="flex items-center gap-3 rounded-2xl border border-transparent bg-paper-100/70 px-3 py-2.5 transition-all duration-300" :style="`animation-delay: ${i * 90}ms`">
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[11px] font-bold text-ink-700 shadow-sm">{{ String(i+1).padStart(2,'0') }}</span>
+                            <span class="min-w-0 flex-1 truncate text-sm font-medium text-ink-900">{{ run.name }}</span>
+                            <OBadge :tone="statusTone[run.status] ?? 'neutral'" class="!px-1.5 !py-0 text-[11px]">{{ run.status }}</OBadge>
+                        </li>
+                        <li v-if="recentRuns.length===0" class="rounded-2xl border border-dashed border-ink-200 px-3 py-6 text-center text-sm text-ink-400">No expeditions yet</li>
+                    </ul>
+                    <p class="mt-3 font-mono text-xs text-ink-300">auto-sorting · AI prioritized</p>
+                </div>
+
+                <!-- Command Input — Typewriter -->
+                <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4 flex flex-col" style="--index:1">
+                    <p class="eyebrow">Command input</p>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Ask Octavia</h3>
+                    <div class="mt-4 flex-1 rounded-2xl border border-ink-100 bg-paper-50 p-4">
+                        <div class="flex items-center gap-2 text-xs text-ink-400">
+                            <span class="h-2 w-2 rounded-full bg-rose-400" /><span class="h-2 w-2 rounded-full bg-amber-400" /><span class="h-2 w-2 rounded-full bg-mint-400" />
+                            <span class="ml-auto font-mono">octavia — zsh</span>
+                        </div>
+                        <div class="mt-3 font-mono text-sm leading-relaxed text-ink-900">
+                            <span class="text-ink-300">$</span> {{ typed }}<span class="ml-0.5 inline-block h-4 w-2 translate-y-0.5 animate-pulse bg-ink-900" />
+                        </div>
+                        <div class="mt-3 h-1 w-full overflow-hidden rounded-full bg-ink-100">
+                            <div class="h-full w-2/3 animate-[shimmer_1.8s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-accent-400 to-transparent" />
+                        </div>
+                    </div>
+                    <Link href="/prompts/create" class="mt-4 inline-flex items-center gap-2 self-start rounded-full border border-ink-900 bg-ink-950 px-4 py-1.5 text-xs font-medium text-white hover:bg-ink-900">New prompt <span>↗</span></Link>
+                </div>
+
+                <!-- Live Status — breathing -->
+                <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-ink-950 p-6 text-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] md:col-span-4 flex flex-col" style="--index:2">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent" aria-hidden="true" />
+                    <p class="eyebrow !text-white/50">Live status</p>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight">Field activity</h3>
+                    <div class="mt-4 flex-1 space-y-3">
+                        <div v-for="run in (liveRuns.length ? liveRuns : recentRuns.slice(0,2))" :key="run.id" class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2.5 backdrop-blur">
+                            <span class="relative flex h-2.5 w-2.5">
+                                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-40" />
+                                <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                            </span>
+                            <span class="min-w-0 flex-1 truncate text-sm font-medium">{{ run.name }}</span>
+                            <span class="font-mono text-xs text-white/60">{{ run.score !== null ? Math.round(run.score*100)+'%' : '…' }}</span>
+                        </div>
+                        <div v-if="recentRuns.length===0" class="rounded-2xl border border-white/10 px-3 py-6 text-center text-sm text-white/60">Idle — no active expeditions</div>
+                    </div>
+                    <div class="mt-4 flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs">
+                        <span class="h-2 w-2 rounded-full bg-emerald-400" /> {{ animated.activeRuns }} climbing
+                        <span class="ml-auto font-mono text-white/60">{{ animated.prompts }} specimens</span>
+                    </div>
+                </div>
+
+                <!-- Wide Data Stream — marquee -->
+                <div class="group relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-0 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-8" style="--index:3">
+                    <div class="flex items-center justify-between px-6 pt-6">
+                        <div>
+                            <p class="eyebrow">Wide data stream</p>
+                            <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink-950">Prompt specimens</h3>
+                        </div>
+                        <Link href="/prompts" class="rounded-full border border-ink-100 bg-white px-3 py-1 text-xs font-medium text-ink-600 hover:bg-paper-50">View all →</Link>
+                    </div>
+                    <div class="relative mt-4 overflow-hidden border-y border-ink-50 bg-paper-50/60 py-4">
+                        <div class="flex w-max animate-[marquee_22s_linear_infinite] gap-3 pl-6 group-hover:[animation-play-state:paused]">
+                            <div v-for="n in 8" :key="n" class="flex w-[220px] shrink-0 flex-col gap-2 rounded-2xl border border-white bg-white p-4 shadow-sm">
+                                <div class="flex items-center gap-2">
+                                    <span class="h-1.5 w-1.5 rotate-45 bg-accent-600" aria-hidden="true" />
+                                    <span class="font-mono text-xs text-ink-400">#{{ String(n).padStart(3,'0') }}</span>
+                                    <span class="ml-auto rounded-full bg-ink-950 px-1.5 py-0.5 font-mono text-[10px] text-white">v{{ (n%3)+1 }}</span>
+                                </div>
+                                <p class="line-clamp-2 text-sm font-medium leading-snug text-ink-900">Product tagline writer — variant {{n}}</p>
+                                <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-ink-100"><div class="h-full rounded-full bg-accent-500" :style="`width:${38 + n*7}%`" /></div>
+                            </div>
+                            <!-- duplicate for seamless loop -->
+                            <div v-for="n in 8" :key="'d'+n" class="flex w-[220px] shrink-0 flex-col gap-2 rounded-2xl border border-white bg-white p-4 shadow-sm" aria-hidden="true">
+                                <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rotate-45 bg-accent-600" /><span class="font-mono text-xs text-ink-400">#{{ String(n).padStart(3,'0') }}</span><span class="ml-auto rounded-full bg-ink-950 px-1.5 py-0.5 font-mono text-[10px] text-white">v{{ (n%3)+1 }}</span></div>
+                                <p class="line-clamp-2 text-sm font-medium leading-snug text-ink-900">Product tagline writer — variant {{n}}</p>
+                                <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-ink-100"><div class="h-full rounded-full bg-accent-500" :style="`width:${38 + n*7}%`" /></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="px-6 pb-4 pt-3 font-mono text-xs text-ink-300">infinite carousel · hover to pause</p>
+                </div>
+
+                <!-- Contextual UI — focus mode -->
+                <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4 flex flex-col" style="--index:4">
+                    <p class="eyebrow">Focus mode</p>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Current prompt</h3>
+                    <div class="mt-4 rounded-2xl border border-ink-100 bg-paper-50 p-4 font-mono text-xs leading-relaxed text-ink-700">
+                        <span>You are a marketing assistant.</span>
+                        <mark class="rounded bg-accent-200 px-1 py-0.5 font-medium text-ink-900">Write a tagline for the product the user describes.</mark>
+                        <span class="opacity-60"> Keep it under 8 words.</span>
+                    </div>
+                    <!-- floating toolbar -->
+                    <div class="pointer-events-none mt-4 flex justify-center">
+                        <div class="flex items-center gap-1 rounded-full border border-ink-100 bg-white p-1 shadow-[0_8px_20px_rgba(14,26,29,0.08)] animate-[float_3s_ease-in-out_infinite]">
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-ink-950 text-white text-xs">B</span>
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-paper-100 text-ink-600 text-xs">I</span>
+                            <span class="h-4 w-px bg-ink-100" />
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-accent-600 text-ink-950 text-xs">▶</span>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-center font-mono text-xs text-ink-300">staggered highlight · floating toolbar</p>
+                </div>
+            </section>
+
+            <!-- Chart — Score Trend (fix for chartWidth 0 guard) -->
+            <section class="mt-4 overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="eyebrow">Performance</p>
+                        <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink-950">Score evolution</h3>
+                    </div>
+                    <span class="rounded-full bg-ink-950 px-3 py-1 font-mono text-xs text-white">{{ recentRuns.length }} runs</span>
+                </div>
+                <div class="mt-6 h-40 w-full">
+                    <svg v-if="chartData.length > 1" :viewBox="`0 0 ${chartWidth} 100`" class="h-full w-full overflow-visible" preserveAspectRatio="none" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="rgb(16 185 129)" stop-opacity="0.3" />
+                                <stop offset="100%" stop-color="rgb(16 185 129)" stop-opacity="0" />
+                            </linearGradient>
+                        </defs>
+                        <path :d="chartPath" fill="none" stroke="rgb(16 185 129)" stroke-width="2" stroke-linejoin="round" />
+                        <path :d="chartAreaPath" fill="url(#grad)" stroke="none" />
+                    </svg>
+                    <div v-else class="flex h-full items-center justify-center rounded-xl bg-paper-50 text-sm text-ink-400">
+                        Not enough data — run an evolution to see the trend
+                    </div>
+                </div>
+                <p class="mt-2 font-mono text-xs text-ink-300">fallback width 600 when container 0 — no blank chart</p>
+            </section>
+
+            <!-- Field Actions — keep but more compact, after bento -->
+            <section class="mt-8">
+                <div class="flex items-center justify-between">
+                    <h2 class="eyebrow">Field actions</h2>
+                    <span class="hidden sm:inline font-mono text-xs text-ink-300">01 — 04</span>
+                </div>
+                <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    <Link href="/runs/create" class="group relative overflow-hidden rounded-2xl border border-ink-950 bg-ink-950 p-5 text-white transition-all hover:shadow-[0_16px_30px_rgba(14,26,29,0.18)] active:scale-[0.98]">
+                        <div class="absolute right-3 top-3 font-mono text-xs text-white/40">01</div>
+                        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-600 text-ink-950">▶</div>
+                        <p class="mt-4 font-display text-sm font-semibold">{{ t('dashboard.startRun') }}</p>
+                        <p class="mt-1 text-xs leading-relaxed text-white/60">Evaluate or evolve</p>
+                    </Link>
+                    <Link v-for="act in [{n:'02', title: t('dashboard.createPrompt'), desc:'New specimen', href:'/prompts/create'}, {n:'03', title: t('dashboard.createBenchmark'), desc:'Build suite', href:'/benchmarks/wizard'}, {n:'04', title: t('dashboard.browseMarketplace'), desc:'Community', href:'/marketplace'}]" :key="act.n" :href="act.href" class="group rounded-2xl border border-ink-100 bg-white p-5 transition-all hover:border-ink-200 hover:shadow-[0_16px_30px_rgba(14,26,29,0.06)] active:scale-[0.98]">
+                        <div class="flex items-center justify-between"><span class="font-mono text-xs text-ink-300">{{ act.n }}</span><span class="h-2 w-2 rotate-45 bg-ink-200 group-hover:bg-accent-500 transition-colors" /></div>
+                        <p class="mt-3 font-display text-sm font-semibold text-ink-950">{{ act.title }}</p>
+                        <p class="mt-1 text-xs text-ink-500">{{ act.desc }}</p>
+                    </Link>
+                </div>
+            </section>
+
+            <!-- Recent runs — keep timeline but denser -->
+            <section class="mt-8">
+                <div class="flex items-center justify-between">
+                    <h2 class="eyebrow">{{ t('dashboard.recentRuns') }}</h2>
+                    <Link href="/runs" class="hidden text-xs font-medium text-ink-500 hover:text-ink-900 sm:inline">{{ t('nav.runs') }} →</Link>
+                </div>
+                <OPanel v-if="recentRuns.length > 0" class="!p-0 mt-3 overflow-hidden">
+                    <ul class="divide-y divide-ink-100">
+                        <li v-for="run in recentRuns" :key="run.id" class="group">
+                            <Link :href="`/runs/${run.id}`" class="flex items-center gap-4 px-4 py-3 transition-colors hover:bg-paper-50">
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white border border-ink-100"><span class="h-2 w-2 rotate-45" :class="{ 'bg-mint-500': run.status==='completed', 'bg-accent-500': run.status==='running', 'bg-ink-200': run.status!=='completed'&&run.status!=='running' }" /></span>
+                                <OBadge :tone="statusTone[run.status] ?? 'neutral'">{{ t(`runs.status.${run.status}`) }}</OBadge>
+                                <span class="min-w-0 flex-1 truncate text-sm font-medium text-ink-900">{{ run.name }}</span>
+                                <OScoreBar v-if="run.score!==null" :score="run.score" :show-value="true" class="hidden w-40 sm:flex" />
+                                <span class="text-ink-300 group-hover:text-ink-700">›</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </OPanel>
+                <OEmptyState v-else :title="t('runs.empty')" class="mt-3"><template #action><Link href="/runs/create" class="rounded-full bg-ink-950 px-4 py-2 text-sm font-medium text-white hover:bg-ink-900">{{ t('runs.new') }}</Link></template></OEmptyState>
+            </section>
         </div>
 
-        <!-- Quick actions -->
-        <section class="mt-8">
-            <h2 class="eyebrow mb-3">{{ t('dashboard.quickActions') }}</h2>
-            <div class="flex flex-wrap gap-2">
-                <Link href="/runs/create" class="inline-flex items-center gap-1.5 rounded-md bg-accent-600 px-3.5 py-2 text-sm font-semibold text-ink-950 transition-colors hover:bg-accent-500">
-                    ▶ {{ t('dashboard.startRun') }}
-                </Link>
-                <Link href="/prompts/create" class="inline-flex items-center gap-1.5 rounded-md border border-ink-200 bg-white px-3.5 py-2 text-sm font-medium text-ink-900 transition-colors hover:border-ink-500">
-                    + {{ t('dashboard.createPrompt') }}
-                </Link>
-                <Link href="/benchmarks/wizard" class="inline-flex items-center gap-1.5 rounded-md border border-ink-200 bg-white px-3.5 py-2 text-sm font-medium text-ink-900 transition-colors hover:border-ink-500">
-                    + {{ t('dashboard.createBenchmark') }}
-                </Link>
-                <Link href="/marketplace" class="inline-flex items-center gap-1.5 rounded-md border border-ink-200 bg-white px-3.5 py-2 text-sm font-medium text-ink-900 transition-colors hover:border-ink-500">
-                    {{ t('dashboard.browseMarketplace') }}
-                </Link>
-            </div>
-        </section>
-
-        <!-- Recent runs -->
-        <section class="mt-8">
-            <h2 class="eyebrow mb-3">{{ t('dashboard.recentRuns') }}</h2>
-
-            <OPanel v-if="recentRuns.length > 0" :title="undefined">
-                <ul class="divide-y divide-ink-100">
-                    <li v-for="run in recentRuns" :key="run.id">
-                        <Link :href="`/runs/${run.id}`" class="-mx-2 flex items-center gap-4 rounded-lg px-2 py-3 transition-colors hover:bg-paper-100">
-                            <OBadge :tone="statusTone[run.status] ?? 'neutral'">{{ t(`runs.status.${run.status}`) }}</OBadge>
-                            <span class="min-w-0 flex-1 truncate text-sm font-medium text-ink-900">{{ run.name }}</span>
-                            <OScoreBar v-if="run.score !== null" :score="run.score" :show-value="true" class="hidden w-40 sm:flex" />
-                            <svg class="h-4 w-4 shrink-0 text-ink-300" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
-                        </Link>
-                    </li>
-                </ul>
-            </OPanel>
-            <OEmptyState
-                v-else
-                :title="t('runs.empty')"
-            >
-                <template #action>
-                    <Link href="/runs/create" class="rounded-md bg-ink-950 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-ink-700">{{ t('runs.new') }}</Link>
-                </template>
-            </OEmptyState>
-        </section>
+        <style>
+        @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+        @keyframes shimmer { 0% { transform: translateX(-100%) } 100% { transform: translateX(200%) } }
+        @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+        </style>
     </AppLayout>
 </template>

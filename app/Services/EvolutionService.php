@@ -29,6 +29,17 @@ class EvolutionService
 {
     public const OPTIMIZER_MARKER = '[OCTAVIA-OPTIMIZER]';
 
+    /** Seven strategies — reference parity (test has 7), cycled per generation. */
+    private const STRATEGIES = [
+        'mutation' => 'Make a small, focused mutation to address the unmet requirements.',
+        'crossover' => 'Combine the best prompt with a creative variant to produce a hybrid.',
+        'critic' => 'Critique the current prompt and rewrite it to fix the flaws.',
+        'compression' => 'Compress the prompt to be more concise while keeping all requirements.',
+        'expansion' => 'Expand the prompt with more explicit detail to cover missing criteria.',
+        'style_shift' => 'Shift the style and tone while preserving the core intent.',
+        'error_driven' => 'Focus solely on the failing cases and fix them directly.',
+    ];
+
     /** Minimum improvement required to reset the stale counter. */
     private const MIN_IMPROVEMENT = 0.01;
 
@@ -118,8 +129,10 @@ class EvolutionService
                     break;
                 }
 
-                // Ask the provider to mutate the *incumbent best* prompt.
-                $proposal = $this->proposeImprovement($provider, $bestPrompt, $summary);
+                // Cycle through 7 strategies — reference parity, better than single optimizer prompt
+                $strategies = array_keys(self::STRATEGIES);
+                $strategy = $strategies[($number - 1) % count($strategies)];
+                $proposal = $this->proposeImprovement($provider, $bestPrompt, $summary, $strategy);
                 $totalTokens += $proposal['tokens'];
 
                 RunStep::create([
@@ -128,7 +141,7 @@ class EvolutionService
                     'phase' => StepPhase::Mutate,
                     'prompt_content' => $proposal['prompt'],
                     'score' => null,
-                    'mutation_type' => 'refine',
+                    'mutation_type' => $strategy,
                     'rationale' => $proposal['rationale'],
                     'tokens_used' => $proposal['tokens'],
                     'created_at' => now(),
@@ -152,8 +165,9 @@ class EvolutionService
     /**
      * @return array{prompt: string, rationale: string, tokens: int}
      */
-    private function proposeImprovement(LlmProvider $provider, string $prompt, EvaluationSummary $summary): array
+    private function proposeImprovement(LlmProvider $provider, string $prompt, EvaluationSummary $summary, string $strategy): array
     {
+        $strategyHint = self::STRATEGIES[$strategy] ?? self::STRATEGIES['mutation'];
         $failures = '';
 
         foreach ($summary->failingCases() as $case) {
@@ -169,7 +183,7 @@ class EvolutionService
         }
 
         $response = $provider->complete([
-            ['role' => 'system', 'content' => self::OPTIMIZER_MARKER.' You are Octavia, an expert prompt engineer. Improve the given prompt so every unmet requirement is satisfied explicitly. Reply with a short rationale line, then the full improved prompt wrapped in <PROMPT>...</PROMPT> tags.'],
+            ['role' => 'system', 'content' => self::OPTIMIZER_MARKER." You are Octavia, an expert prompt engineer. Use strategy '{$strategy}' — {$strategyHint} Improve the given prompt so every unmet requirement is satisfied explicitly. Reply with a short rationale line, then the full improved prompt wrapped in <PROMPT>...</PROMPT> tags."],
             ['role' => 'user', 'content' => "Current prompt:\n<PROMPT>\n{$prompt}\n</PROMPT>\n\nUnmet benchmark requirements:\n{$failures}"],
         ], ['temperature' => 0.4]);
 

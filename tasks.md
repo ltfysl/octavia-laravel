@@ -59,3 +59,5 @@
 - [x] **119 Pest tests / 399 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
 - [x] Docs: README (incl. API scopes), AGENTS.md, DESIGNS.md + designs/*, docs/architecture, docs/features/engine, docs/operations (incl. billing), docs/decisions
 - [x] Rounds 1–21 documented in rounds/
+- [x] Round 22: run-detail AI diagnosis for failed/cancelled runs, assistant recommendations on reports
+- [x] **141 Pest tests / 500 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green

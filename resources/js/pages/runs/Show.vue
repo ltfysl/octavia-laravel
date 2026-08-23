@@ -204,6 +204,7 @@ const runDiagnosis = async () => {
                     :title="`Step ${point.n}: ${Math.round(point.score * 100)}%`"
                 />
             </div>
+        </div>
 
         <!-- AI Diagnosis for failed/cancelled runs -->
         <OPanel v-if="isTerminal" class="mt-6" :title="t('runs.diagnosisTitle')">
@@ -226,7 +227,6 @@ const runDiagnosis = async () => {
             <pre v-else-if="diagnosis" class="scroll-thin mt-3 max-h-64 overflow-auto whitespace-pre-wrap rounded-xl border border-emerald-200 bg-emerald-50/40 p-4 font-mono text-xs leading-relaxed text-emerald-900 dark:bg-emerald-950/20">{{ diagnosis }}</pre>
             <p v-else-if="diagnosisError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ diagnosisError }}</p>
         </OPanel>
-        </div>
 
         <!-- Step timeline -->
         <section v-if="run.steps.length > 0" class="mt-8 grid gap-6 lg:grid-cols-[16rem_1fr]">

@@ -48,3 +48,13 @@ pending → running → completed | failed | cancelled
 
 ## Testing
 `tests/Feature/EvolutionEngineTest.php` covers scoring semantics, regex validation, a full climb-to-target run with version persistence, and the no-benchmark failure path — all against the deterministic mock.
+
+## AI-assisted surfaces
+
+The same provider contract supports lightweight, marker-driven LLM features beyond the core engine:
+
+- **[OCTAVIA-INSIGHT]** — structured prompt/benchmark review (structure, clarity, measurability, coverage), surfaced on prompt and benchmark detail pages.
+- **[OCTAVIA-DIAGNOSIS]** — run failure analysis. `POST /runs/{run}/diagnosis` returns a likely cause and one concrete next step for failed or cancelled runs. Owner-only; throttled.
+- **Reports recommendations** — `/reports` offers an "Ask for recommendations" button that calls the existing assistant chat endpoint with a short stats summary, producing 1–2 actionable next steps.
+
+All three use the container-bound `LlmProvider` and fall back to the deterministic mock in local/test environments.

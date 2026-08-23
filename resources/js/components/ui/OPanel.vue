@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-    <section class="rounded-card border border-ink-100 bg-white shadow-panel">
+    <section class="rounded-card border border-ink-100 bg-card shadow-panel">
         <header v-if="title || $slots.actions" class="flex items-start justify-between gap-4 px-5 pt-4 pb-1">
             <div>
                 <h2 v-if="title" class="font-display text-base font-semibold text-ink-950">{{ title }}</h2>

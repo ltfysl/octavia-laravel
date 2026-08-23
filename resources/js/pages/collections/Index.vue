@@ -93,7 +93,7 @@ const destroy = (id: number) => {
 
         <ul v-else class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <li v-for="collection in collections" :key="collection.id">
-                <article class="flex h-full flex-col rounded-card border border-ink-100 bg-white p-5 shadow-panel">
+                <article class="flex h-full flex-col rounded-card border border-ink-100 bg-card p-5 shadow-panel">
                     <h2 class="font-display text-sm font-semibold text-ink-950">{{ collection.name }}</h2>
                     <p class="mt-1.5 flex-1 text-sm text-ink-500">{{ collection.description ?? '—' }}</p>
                     <div class="mt-4 flex items-center justify-between border-t border-ink-100 pt-3 text-xs text-ink-300">

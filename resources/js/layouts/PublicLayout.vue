@@ -31,7 +31,7 @@ const year = new Date().getFullYear();
             <slot />
         </main>
 
-        <footer class="border-t border-ink-100 bg-white">
+        <footer class="border-t border-ink-100 bg-card">
             <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-[1fr_auto_auto]">
                 <div>
                     <div class="flex items-center gap-2.5">

@@ -77,7 +77,7 @@ const destroy = () => {
             <div class="flex flex-wrap items-end gap-3">
                 <select
                     v-model="promptId"
-                    class="w-64 rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500"
+                    class="w-64 rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500"
                     :aria-label="t('nav.prompts')"
                 >
                     <option value="" disabled>—</option>

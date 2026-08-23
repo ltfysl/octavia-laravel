@@ -48,7 +48,7 @@ const { t } = useI18n();
 
         <ul v-else class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <li v-for="benchmark in benchmarks" :key="benchmark.id">
-                <Link :href="`/benchmarks/${benchmark.id}`" class="group flex h-full flex-col overflow-hidden rounded-card border border-ink-100 bg-white card-lift">
+                <Link :href="`/benchmarks/${benchmark.id}`" class="group flex h-full flex-col overflow-hidden rounded-card border border-ink-100 bg-card card-lift">
                     <div class="h-1 w-full bg-ink-900" aria-hidden="true" />
                     <div class="flex h-full flex-col p-5">
                         <div class="flex items-start justify-between gap-2">

@@ -19,7 +19,7 @@ const attrs = useAttrs();
     <input
         :type="type"
         :value="String(modelValue ?? '')"
-        class="w-full rounded-lg border bg-white px-3 py-2 text-sm text-ink-900 placeholder:text-ink-300 transition-colors"
+        class="w-full rounded-lg border bg-card px-3 py-2 text-sm text-ink-900 placeholder:text-ink-300 transition-colors"
         :class="error ? 'border-rose-450 focus:border-rose-450' : 'border-ink-200 focus:border-accent-500'"
         v-bind="attrs"
         @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"

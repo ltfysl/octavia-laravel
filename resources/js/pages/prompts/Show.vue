@@ -164,7 +164,7 @@ const saveAsVersion = () => {
                     v-model="form.content"
                     rows="20"
                     :aria-label="t('prompts.content')"
-                    class="w-full rounded-card border border-ink-200 bg-white px-4 py-3 font-mono text-sm leading-relaxed shadow-panel focus:border-accent-500"
+                    class="w-full rounded-card border border-ink-200 bg-card px-4 py-3 font-mono text-sm leading-relaxed shadow-panel focus:border-accent-500"
                 />
                 <div class="mt-3 flex items-center gap-3">
                     <OInput v-model="form.changelog" :placeholder="t('prompts.changelog')" class="max-w-xs flex-1" />
@@ -178,7 +178,7 @@ const saveAsVersion = () => {
                 <OPanel :title="t('prompts.runAgainst')">
                     <select
                         v-model="selectedBenchmarkId"
-                        class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500"
+                        class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500"
                         :aria-label="t('prompts.runAgainst')"
                         aria-describedby="run-benchmark-hint"
                     >
@@ -208,7 +208,7 @@ const saveAsVersion = () => {
                         v-model="playgroundInput"
                         rows="4"
                         :placeholder="t('benchmarks.wizard.caseInput')"
-                        class="w-full rounded-xl border border-ink-200 bg-white px-3 py-2.5 text-sm shadow-sm transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
+                        class="w-full rounded-xl border border-ink-200 bg-card px-3 py-2.5 text-sm shadow-sm transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
                     />
                     <OButton
                         variant="secondary"
@@ -227,8 +227,8 @@ const saveAsVersion = () => {
                         <div class="h-3 w-3/4 rounded bg-ink-100 shimmer" />
                     </div>
                     <div v-else-if="playgroundOutput !== null" class="relative mt-3">
-                        <pre class="max-h-56 overflow-auto whitespace-pre-wrap rounded-xl bg-ink-950 p-4 font-mono text-xs leading-relaxed text-emerald-50 shadow-inner">{{ playgroundOutput }}</pre>
-                        <button type="button" class="absolute right-2 top-2 rounded-md bg-white/10 px-2 py-1 font-mono text-xs text-white backdrop-blur hover:bg-white/20" @click="copyOutput">Copy</button>
+                        <pre class="max-h-56 overflow-auto whitespace-pre-wrap rounded-xl pinned-dark p-4 font-mono text-xs leading-relaxed text-emerald-100 shadow-inner">{{ playgroundOutput }}</pre>
+                        <button type="button" class="absolute right-2 top-2 rounded-md bg-card/10 px-2 py-1 font-mono text-xs text-white backdrop-blur hover:bg-card/20" @click="copyOutput">Copy</button>
                     </div>
                     <p v-if="playgroundError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ playgroundError }}</p>
                 </OPanel>

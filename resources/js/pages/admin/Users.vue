@@ -44,13 +44,13 @@ const destroy = (id: number) => {
                     v-model="search"
                     type="search"
                     placeholder="Name or email…"
-                    class="w-56 rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500"
+                    class="w-56 rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500"
                 />
-                <button type="submit" class="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm hover:bg-paper-100">Search</button>
+                <button type="submit" class="rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm hover:bg-paper-100">Search</button>
             </form>
         </div>
 
-        <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-white shadow-panel">
+        <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-card shadow-panel">
             <table class="w-full text-left text-sm">
                 <thead>
                     <tr class="border-b border-ink-100 text-xs uppercase tracking-wide text-ink-300">

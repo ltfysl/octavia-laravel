@@ -144,11 +144,11 @@ onMounted(() => {
 
         <div class="max-w-[1400px] mx-auto">
             <!-- WOW HERO — Cinematic Field Station -->
-            <section class="relative -mx-4 -mt-6 overflow-hidden bg-ink-950 sm:-mx-6 lg:-mx-10">
+            <section class="relative -mx-4 -mt-6 overflow-hidden pinned-dark bg-ink-950 sm:-mx-6 lg:-mx-10">
                 <div class="pointer-events-none absolute inset-0">
                     <div class="absolute -left-20 top-10 h-[520px] w-[520px] rounded-full bg-accent-600/20 blur-[90px] animate-[float_8s_ease-in-out_infinite]" />
                     <div class="absolute -right-20 top-32 h-[460px] w-[460px] rounded-full bg-emerald-400/10 blur-[80px] animate-[float_10s_ease-in-out_infinite_reverse]" />
-                    <div class="absolute left-1/3 top-1/2 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-white/[0.04] blur-[60px]" />
+                    <div class="absolute left-1/3 top-1/2 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-card/[0.04] blur-[60px]" />
                     <!-- contour lines over dark -->
                     <svg class="absolute inset-0 h-full w-full opacity-[0.08]" viewBox="0 0 1440 600" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                         <path d="M-40 420 C240 380 380 440 620 400 S1060 340 1480 360" stroke="white" stroke-width="1" />
@@ -162,10 +162,10 @@ onMounted(() => {
 
                 <div class="relative grid items-center gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.25fr_0.9fr] lg:px-10 lg:py-14 min-h-[540px] lg:min-h-[560px]">
                     <div class="relative">
-                        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[11px] font-medium tracking-wide text-white/70 backdrop-blur">
+                        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-card/[0.06] px-3 py-1 text-[11px] font-medium tracking-wide text-white/70 backdrop-blur">
                             <span class="h-2 w-2 animate-pulse rounded-full bg-accent-500" />
                             FIELD STATION · LIVE
-                            <span class="ml-2 hidden sm:inline h-4 w-px bg-white/10" />
+                            <span class="ml-2 hidden sm:inline h-4 w-px bg-card/10" />
                             <span class="hidden sm:inline font-mono text-white/40">ELEV {{ animated.bestScore }}.0</span>
                         </div>
                         <!-- Kinetic headline with stroke gradient -->
@@ -181,18 +181,18 @@ onMounted(() => {
                             {{ t('dashboard.subtitle') }} — traverse the fitness landscape. Every run is an expedition, every version a waypoint.
                         </p>
                         <div class="mt-7 flex flex-wrap items-center gap-3">
-                            <Link ref="magneticBtn" href="/runs/create" class="group relative inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink-950 shadow-[0_8px_30px_rgba(0,0,0,0.3)] transition-all hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] active:scale-[0.98]">
+                            <Link ref="magneticBtn" href="/runs/create" class="group relative inline-flex items-center gap-3 rounded-full bg-card px-6 py-3 text-sm font-semibold text-ink-950 shadow-[0_8px_30px_rgba(0,0,0,0.3)] transition-all hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] active:scale-[0.98]">
                                 Start expedition
                                 <span class="flex h-7 w-7 items-center justify-center rounded-full bg-ink-950 text-white transition-transform group-hover:translate-x-0.5">→</span>
                             </Link>
-                            <div class="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur">
-                                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-white text-xs">◈</span>
+                            <div class="flex items-center gap-3 rounded-full border border-white/10 bg-card/5 px-4 py-2 backdrop-blur">
+                                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-card/10 text-white text-xs">◈</span>
                                 <span class="font-mono text-xs text-white/70">{{ animated.prompts }} specimens · {{ animated.benchmarks }} suites</span>
                             </div>
                         </div>
                         <div class="mt-6 flex items-center gap-4 font-mono text-xs text-white/40">
                             <span>01 — FIELD STATION</span>
-                            <span class="h-px w-12 bg-white/20" />
+                            <span class="h-px w-12 bg-card/20" />
                             <span>CONTOUR INTERVAL 10%</span>
                         </div>
                     </div>
@@ -201,7 +201,7 @@ onMounted(() => {
                     <div class="relative lg:pl-4">
                         <div
                             ref="tiltCard"
-                            class="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white p-7 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] backdrop-blur transition-transform duration-200 will-change-transform lg:p-8"
+                            class="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-card p-7 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] backdrop-blur transition-transform duration-200 will-change-transform lg:p-8"
                             @mousemove="onTiltMove"
                             @mouseleave="onTiltLeave"
                         >
@@ -240,7 +240,7 @@ onMounted(() => {
                             </div>
                         </div>
                         <!-- floating waypoint -->
-                        <div class="absolute -bottom-4 -left-4 hidden items-center gap-3 rounded-2xl border border-white/20 bg-white px-4 py-3 shadow-[0_16px_32px_rgba(0,0,0,0.2)] lg:flex">
+                        <div class="absolute -bottom-4 -left-4 hidden items-center gap-3 rounded-2xl border border-white/20 bg-card px-4 py-3 shadow-[0_16px_32px_rgba(0,0,0,0.2)] lg:flex">
                             <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent-600 text-ink-950">▲</span>
                             <div class="text-xs leading-tight">
                                 <p class="font-semibold text-ink-950">Waypoint reached</p>
@@ -253,7 +253,7 @@ onMounted(() => {
                 <!-- Kinetic marquee -->
                 <div class="absolute bottom-0 left-0 w-full border-t border-white/10 bg-black/20 py-3 backdrop-blur">
                     <div class="flex w-max animate-[marquee_28s_linear_infinite] gap-8 whitespace-nowrap font-mono text-xs tracking-widest text-white/50">
-                        <span v-for="i in 6" :key="i" class="flex items-center gap-8"><span>OCTAVIA FIELD STATION</span><span class="h-1 w-1 rotate-45 bg-accent-600" /><span>PROMPT LABORATORY</span><span class="h-1 w-1 rotate-45 bg-white/30" /><span>ELEV {{ animated.bestScore }}% — CONTOUR 10%</span><span class="h-1 w-1 rotate-45 bg-accent-600" /></span>
+                        <span v-for="i in 6" :key="i" class="flex items-center gap-8"><span>OCTAVIA FIELD STATION</span><span class="h-1 w-1 rotate-45 bg-accent-600" /><span>PROMPT LABORATORY</span><span class="h-1 w-1 rotate-45 bg-card/30" /><span>ELEV {{ animated.bestScore }}% — CONTOUR 10%</span><span class="h-1 w-1 rotate-45 bg-accent-600" /></span>
                     </div>
                 </div>
             </section>
@@ -261,7 +261,7 @@ onMounted(() => {
             <!-- Bento 2.0 — 5 archetypes -->
             <section class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-12">
                 <!-- Intelligent List -->
-                <div class="group relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4" style="--index:0">
+                <div class="group relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4" style="--index:0">
                     <div class="flex items-center justify-between">
                         <p class="eyebrow">Intelligent list</p>
                         <span class="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
@@ -269,7 +269,7 @@ onMounted(() => {
                     <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Recent expeditions</h3>
                     <ul class="mt-4 space-y-2">
                         <li v-for="(run, i) in recentRuns.slice(0, 4)" :key="run.id" class="flex items-center gap-3 rounded-2xl border border-transparent bg-paper-100/70 px-3 py-2.5 transition-all duration-300" :style="`animation-delay: ${i * 90}ms`">
-                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[11px] font-bold text-ink-700 shadow-sm">{{ String(i+1).padStart(2,'0') }}</span>
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-card text-[11px] font-bold text-ink-700 shadow-sm">{{ String(i+1).padStart(2,'0') }}</span>
                             <span class="min-w-0 flex-1 truncate text-sm font-medium text-ink-900">{{ run.name }}</span>
                             <OBadge :tone="statusTone[run.status] ?? 'neutral'" class="!px-1.5 !py-0 text-[11px]">{{ run.status }}</OBadge>
                         </li>
@@ -279,7 +279,7 @@ onMounted(() => {
                 </div>
 
                 <!-- Command Input — Typewriter -->
-                <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4 flex flex-col" style="--index:1">
+                <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4 flex flex-col" style="--index:1">
                     <p class="eyebrow">Command input</p>
                     <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Ask Octavia</h3>
                     <div class="mt-4 flex-1 rounded-2xl border border-ink-100 bg-paper-50 p-4">
@@ -298,12 +298,12 @@ onMounted(() => {
                 </div>
 
                 <!-- Live Status — breathing -->
-                <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-ink-950 p-6 text-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] md:col-span-4 flex flex-col" style="--index:2">
+                <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 pinned-dark p-6 text-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] md:col-span-4 flex flex-col" style="--index:2">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent" aria-hidden="true" />
                     <p class="eyebrow !text-white/50">Live status</p>
                     <h3 class="mt-2 font-display text-lg font-semibold tracking-tight">Field activity</h3>
                     <div class="mt-4 flex-1 space-y-3">
-                        <div v-for="run in (liveRuns.length ? liveRuns : recentRuns.slice(0,2))" :key="run.id" class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2.5 backdrop-blur">
+                        <div v-for="run in (liveRuns.length ? liveRuns : recentRuns.slice(0,2))" :key="run.id" class="flex items-center gap-3 rounded-2xl border border-white/10 bg-card/[0.06] px-3 py-2.5 backdrop-blur">
                             <span class="relative flex h-2.5 w-2.5">
                                 <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-40" />
                                 <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
@@ -313,24 +313,24 @@ onMounted(() => {
                         </div>
                         <div v-if="recentRuns.length===0" class="rounded-2xl border border-white/10 px-3 py-6 text-center text-sm text-white/60">Idle — no active expeditions</div>
                     </div>
-                    <div class="mt-4 flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs">
+                    <div class="mt-4 flex items-center gap-2 rounded-full bg-card/10 px-3 py-2 text-xs">
                         <span class="h-2 w-2 rounded-full bg-emerald-400" /> {{ animated.activeRuns }} climbing
                         <span class="ml-auto font-mono text-white/60">{{ animated.prompts }} specimens</span>
                     </div>
                 </div>
 
                 <!-- Wide Data Stream — marquee -->
-                <div class="group relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-0 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-8" style="--index:3">
+                <div class="group relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-0 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-8" style="--index:3">
                     <div class="flex items-center justify-between px-6 pt-6">
                         <div>
                             <p class="eyebrow">Wide data stream</p>
                             <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink-950">Prompt specimens</h3>
                         </div>
-                        <Link href="/prompts" class="rounded-full border border-ink-100 bg-white px-3 py-1 text-xs font-medium text-ink-600 hover:bg-paper-50">View all →</Link>
+                        <Link href="/prompts" class="rounded-full border border-ink-100 bg-card px-3 py-1 text-xs font-medium text-ink-600 hover:bg-paper-50">View all →</Link>
                     </div>
                     <div class="relative mt-4 overflow-hidden border-y border-ink-50 bg-paper-50/60 py-4">
                         <div class="flex w-max animate-[marquee_22s_linear_infinite] gap-3 pl-6 group-hover:[animation-play-state:paused]">
-                            <div v-for="n in 8" :key="n" class="flex w-[220px] shrink-0 flex-col gap-2 rounded-2xl border border-white bg-white p-4 shadow-sm">
+                            <div v-for="n in 8" :key="n" class="flex w-[220px] shrink-0 flex-col gap-2 rounded-2xl border border-white bg-card p-4 shadow-sm">
                                 <div class="flex items-center gap-2">
                                     <span class="h-1.5 w-1.5 rotate-45 bg-accent-600" aria-hidden="true" />
                                     <span class="font-mono text-xs text-ink-400">#{{ String(n).padStart(3,'0') }}</span>
@@ -340,7 +340,7 @@ onMounted(() => {
                                 <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-ink-100"><div class="h-full rounded-full bg-accent-500" :style="`width:${38 + n*7}%`" /></div>
                             </div>
                             <!-- duplicate for seamless loop -->
-                            <div v-for="n in 8" :key="'d'+n" class="flex w-[220px] shrink-0 flex-col gap-2 rounded-2xl border border-white bg-white p-4 shadow-sm" aria-hidden="true">
+                            <div v-for="n in 8" :key="'d'+n" class="flex w-[220px] shrink-0 flex-col gap-2 rounded-2xl border border-white bg-card p-4 shadow-sm" aria-hidden="true">
                                 <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rotate-45 bg-accent-600" /><span class="font-mono text-xs text-ink-400">#{{ String(n).padStart(3,'0') }}</span><span class="ml-auto rounded-full bg-ink-950 px-1.5 py-0.5 font-mono text-[10px] text-white">v{{ (n%3)+1 }}</span></div>
                                 <p class="line-clamp-2 text-sm font-medium leading-snug text-ink-900">Product tagline writer — variant {{n}}</p>
                                 <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-ink-100"><div class="h-full rounded-full bg-accent-500" :style="`width:${38 + n*7}%`" /></div>
@@ -351,7 +351,7 @@ onMounted(() => {
                 </div>
 
                 <!-- Contextual UI — focus mode -->
-                <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-white p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4 flex flex-col" style="--index:4">
+                <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4 flex flex-col" style="--index:4">
                     <p class="eyebrow">Focus mode</p>
                     <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Current prompt</h3>
                     <div class="mt-4 rounded-2xl border border-ink-100 bg-paper-50 p-4 font-mono text-xs leading-relaxed text-ink-700">
@@ -361,7 +361,7 @@ onMounted(() => {
                     </div>
                     <!-- floating toolbar -->
                     <div class="pointer-events-none mt-4 flex justify-center">
-                        <div class="flex items-center gap-1 rounded-full border border-ink-100 bg-white p-1 shadow-[0_8px_20px_rgba(14,26,29,0.08)] animate-[float_3s_ease-in-out_infinite]">
+                        <div class="flex items-center gap-1 rounded-full border border-ink-100 bg-card p-1 shadow-[0_8px_20px_rgba(14,26,29,0.08)] animate-[float_3s_ease-in-out_infinite]">
                             <span class="flex h-7 w-7 items-center justify-center rounded-full bg-ink-950 text-white text-xs">B</span>
                             <span class="flex h-7 w-7 items-center justify-center rounded-full bg-paper-100 text-ink-600 text-xs">I</span>
                             <span class="h-4 w-px bg-ink-100" />
@@ -373,7 +373,7 @@ onMounted(() => {
             </section>
 
             <!-- Chart — Score Trend (fix for chartWidth 0 guard) -->
-            <section class="mt-4 overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+            <section class="mt-4 overflow-hidden rounded-[2rem] border border-slate-200 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="eyebrow">Performance</p>
@@ -412,7 +412,7 @@ onMounted(() => {
                         <p class="mt-4 font-display text-sm font-semibold">{{ t('dashboard.startRun') }}</p>
                         <p class="mt-1 text-xs leading-relaxed text-white/60">Evaluate or evolve</p>
                     </Link>
-                    <Link v-for="act in [{n:'02', title: t('dashboard.createPrompt'), desc:'New specimen', href:'/prompts/create'}, {n:'03', title: t('dashboard.createBenchmark'), desc:'Build suite', href:'/benchmarks/wizard'}, {n:'04', title: t('dashboard.browseMarketplace'), desc:'Community', href:'/marketplace'}]" :key="act.n" :href="act.href" class="group rounded-2xl border border-ink-100 bg-white p-5 transition-all hover:border-ink-200 hover:shadow-[0_16px_30px_rgba(14,26,29,0.06)] active:scale-[0.98]">
+                    <Link v-for="act in [{n:'02', title: t('dashboard.createPrompt'), desc:'New specimen', href:'/prompts/create'}, {n:'03', title: t('dashboard.createBenchmark'), desc:'Build suite', href:'/benchmarks/wizard'}, {n:'04', title: t('dashboard.browseMarketplace'), desc:'Community', href:'/marketplace'}]" :key="act.n" :href="act.href" class="group rounded-2xl border border-ink-100 bg-card p-5 transition-all hover:border-ink-200 hover:shadow-[0_16px_30px_rgba(14,26,29,0.06)] active:scale-[0.98]">
                         <div class="flex items-center justify-between"><span class="font-mono text-xs text-ink-300">{{ act.n }}</span><span class="h-2 w-2 rotate-45 bg-ink-200 group-hover:bg-accent-500 transition-colors" /></div>
                         <p class="mt-3 font-display text-sm font-semibold text-ink-950">{{ act.title }}</p>
                         <p class="mt-1 text-xs text-ink-500">{{ act.desc }}</p>
@@ -430,7 +430,7 @@ onMounted(() => {
                     <ul class="divide-y divide-ink-100">
                         <li v-for="run in recentRuns" :key="run.id" class="group">
                             <Link :href="`/runs/${run.id}`" class="flex items-center gap-4 px-4 py-3 transition-colors hover:bg-paper-50">
-                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white border border-ink-100"><span class="h-2 w-2 rotate-45" :class="{ 'bg-mint-500': run.status==='completed', 'bg-accent-500': run.status==='running', 'bg-ink-200': run.status!=='completed'&&run.status!=='running' }" /></span>
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-card border border-ink-100"><span class="h-2 w-2 rotate-45" :class="{ 'bg-mint-500': run.status==='completed', 'bg-accent-500': run.status==='running', 'bg-ink-200': run.status!=='completed'&&run.status!=='running' }" /></span>
                                 <OBadge :tone="statusTone[run.status] ?? 'neutral'">{{ t(`runs.status.${run.status}`) }}</OBadge>
                                 <span class="min-w-0 flex-1 truncate text-sm font-medium text-ink-900">{{ run.name }}</span>
                                 <OScoreBar v-if="run.score!==null" :score="run.score" :show-value="true" class="hidden w-40 sm:flex" />

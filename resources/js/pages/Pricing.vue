@@ -32,7 +32,7 @@ const howItems = [
                 <div
                     v-for="plan in plans"
                     :key="plan.key"
-                    class="rounded-card border bg-white p-8 shadow-panel transition-transform duration-500 hover:-translate-y-1"
+                    class="rounded-card border bg-card p-8 shadow-panel transition-transform duration-500 hover:-translate-y-1"
                     :class="plan.featured ? 'border-violet-300 ring-2 ring-violet-200' : 'border-ink-100'"
                 >
                     <div class="flex items-center justify-between">
@@ -56,7 +56,7 @@ const howItems = [
                         :href="plan.key === 'free' ? '/register' : '#'"
                         class="mt-8 block rounded-lg px-4 py-2.5 text-center text-sm font-medium transition-colors"
                         :class="plan.featured
-                            ? 'border border-ink-200 bg-white text-ink-500'
+                            ? 'border border-ink-200 bg-card text-ink-500'
                             : 'bg-violet-600 text-white hover:bg-violet-700'"
                     >{{ t(`pricing.${plan.key}.cta`) }}</a>
                 </div>
@@ -65,7 +65,7 @@ const howItems = [
             <p class="mt-6 text-xs text-ink-300">{{ t('pricing.note') }}</p>
         </section>
 
-        <section class="border-t border-ink-100 bg-white py-20">
+        <section class="border-t border-ink-100 bg-card py-20">
             <div class="mx-auto max-w-3xl px-4 sm:px-6">
                 <h2 class="text-center font-display text-2xl font-bold tracking-tight text-ink-950">{{ t('pricing.howTitle') }}</h2>
                 <ol class="mt-8 space-y-4">

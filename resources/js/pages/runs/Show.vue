@@ -111,7 +111,7 @@ onBeforeUnmount(() => window.clearInterval(pollTimer));
         </div>
 
         <!-- Live Evolution Progress — glass + shimmer, WebSocket-ready (polling fallback) -->
-        <div v-if="isRunning" class="mt-6 flex items-center gap-4 rounded-card border border-emerald-200 bg-white p-4 shadow-sm glass">
+        <div v-if="isRunning" class="mt-6 flex items-center gap-4 rounded-card border border-emerald-200 bg-card p-4 shadow-sm glass">
             <span class="relative flex h-3 w-3 shrink-0">
                 <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-30" />
                 <span class="relative inline-flex h-3 w-3 rounded-full bg-emerald-500 icon-pulse" />
@@ -129,7 +129,7 @@ onBeforeUnmount(() => window.clearInterval(pollTimer));
         </div>
 
         <!-- Score summary — editorial -->
-        <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-white bg-field-grid">
+        <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-card bg-field-grid">
             <div class="rule-accent" aria-hidden="true" />
             <div class="grid gap-6 p-6 sm:grid-cols-[1.4fr_1fr_1fr]">
                 <div class="relative">
@@ -150,7 +150,7 @@ onBeforeUnmount(() => window.clearInterval(pollTimer));
                     <p class="mt-1 font-mono text-xs text-ink-400">evaluations</p>
                 </div>
             </div>
-            <div class="border-t border-ink-100 bg-white px-6 py-4">
+            <div class="border-t border-ink-100 bg-card px-6 py-4">
                 <OScoreBar :score="run.best_score ?? 0" :target="run.target_score" />
             </div>
 
@@ -195,7 +195,7 @@ onBeforeUnmount(() => window.clearInterval(pollTimer));
                     </p>
                     <div class="mt-3">
                         <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-300">{{ t('runs.promptUsed') }}</p>
-                        <pre class="max-h-64 overflow-auto whitespace-pre-wrap rounded-lg bg-ink-950 p-4 font-mono text-xs leading-relaxed text-ink-100 scroll-thin">{{ selectedStep.prompt_content }}</pre>
+                        <pre class="max-h-64 overflow-auto whitespace-pre-wrap rounded-lg pinned-dark p-4 font-mono text-xs leading-relaxed text-ink-100 dark:text-ink-900 scroll-thin">{{ selectedStep.prompt_content }}</pre>
                     </div>
                 </OPanel>
 

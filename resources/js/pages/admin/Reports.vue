@@ -42,7 +42,7 @@ const resolve = (id: number, action: 'dismiss' | 'unlist') => {
 
         <ul v-else class="mt-8 space-y-4">
             <li v-for="report in reports" :key="report.id">
-                <article class="rounded-card border border-ink-100 bg-white p-5 shadow-panel">
+                <article class="rounded-card border border-ink-100 bg-card p-5 shadow-panel">
                     <div class="flex flex-wrap items-start justify-between gap-3">
                         <div class="min-w-0">
                             <div class="flex flex-wrap items-center gap-2">

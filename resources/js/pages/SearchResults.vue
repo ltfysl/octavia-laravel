@@ -30,7 +30,7 @@ const hasResults = (results: unknown) => results !== null && Array.isArray(resul
             <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-300">{{ t('prompts.title') }}</h2>
             <ul class="space-y-3">
                 <li v-for="item in results.prompts" :key="'p' + item.id">
-                    <Link :href="item.url" class="block rounded-card border border-ink-100 bg-white p-4 shadow-panel transition-colors hover:border-accent-200">
+                    <Link :href="item.url" class="block rounded-card border border-ink-100 bg-card p-4 shadow-panel transition-colors hover:border-accent-200">
                         <span class="font-display text-sm font-semibold text-ink-950">{{ item.title }}</span>
                         <span v-if="item.subtitle" class="mt-1 block text-xs text-ink-500">{{ item.subtitle }}</span>
                     </Link>
@@ -43,7 +43,7 @@ const hasResults = (results: unknown) => results !== null && Array.isArray(resul
             <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-300">{{ t('benchmarks.title') }}</h2>
             <ul class="space-y-3">
                 <li v-for="item in results.benchmarks" :key="'b' + item.id">
-                    <Link :href="item.url" class="block rounded-card border border-ink-100 bg-white p-4 shadow-panel transition-colors hover:border-accent-200">
+                    <Link :href="item.url" class="block rounded-card border border-ink-100 bg-card p-4 shadow-panel transition-colors hover:border-accent-200">
                         <span class="font-display text-sm font-semibold text-ink-950">{{ item.title }}</span>
                         <span v-if="item.subtitle" class="mt-1 block text-xs text-ink-500">{{ item.subtitle }}</span>
                     </Link>
@@ -56,7 +56,7 @@ const hasResults = (results: unknown) => results !== null && Array.isArray(resul
             <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-300">{{ t('runs.title') }}</h2>
             <ul class="space-y-3">
                 <li v-for="item in results.runs" :key="'r' + item.id">
-                    <Link :href="item.url" class="block rounded-card border border-ink-100 bg-white p-4 shadow-panel transition-colors hover:border-violet-200">
+                    <Link :href="item.url" class="block rounded-card border border-ink-100 bg-card p-4 shadow-panel transition-colors hover:border-violet-200">
                         <span class="font-display text-sm font-semibold text-ink-950">{{ item.title }}</span>
                         <span v-if="item.subtitle" class="mt-1 block text-xs text-ink-500">{{ item.subtitle }}</span>
                     </Link>

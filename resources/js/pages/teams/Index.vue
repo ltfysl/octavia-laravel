@@ -45,7 +45,7 @@ const removeTeam = (id: number) => {
         </div>
 
         <!-- Create form -->
-        <div v-if="showForm" class="mt-6 max-w-md rounded-card border border-ink-100 bg-white p-5 shadow-panel">
+        <div v-if="showForm" class="mt-6 max-w-md rounded-card border border-ink-100 bg-card p-5 shadow-panel">
             <form class="space-y-4" @submit.prevent="create">
                 <OField :label="t('teams.teamName')" for="team-name" required>
                     <OInput id="team-name" v-model="form.name" required autofocus />
@@ -68,7 +68,7 @@ const removeTeam = (id: number) => {
 
         <ul v-else class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <li v-for="team in teams" :key="team.id">
-                <article class="flex h-full flex-col rounded-card border border-ink-100 bg-white p-5 shadow-panel">
+                <article class="flex h-full flex-col rounded-card border border-ink-100 bg-card p-5 shadow-panel">
                     <div class="flex items-center justify-between gap-2">
                         <h2 class="truncate font-display text-sm font-semibold text-ink-950">{{ team.name }}</h2>
                         <OBadge v-if="team.is_owner" tone="accent">{{ t('teams.owner') }}</OBadge>

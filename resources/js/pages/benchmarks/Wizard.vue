@@ -130,10 +130,10 @@ const submit = () => {
                 <OInput id="bm-name" v-model="basics.name" placeholder="e.g. Marketing copy quality" required autofocus />
             </OField>
             <OField :label="t('benchmarks.wizard.description')" for="bm-desc">
-                <textarea id="bm-desc" v-model="basics.description" rows="3" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500" />
+                <textarea id="bm-desc" v-model="basics.description" rows="3" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" />
             </OField>
             <OField :label="t('benchmarks.wizard.category')" for="bm-cat">
-                <select id="bm-cat" v-model="basics.category" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500">
+                <select id="bm-cat" v-model="basics.category" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500">
                     <option v-for="cat in props.categories" :key="cat.value" :value="cat.value">{{ cat.label }}</option>
                 </select>
             </OField>
@@ -156,7 +156,7 @@ const submit = () => {
 
         <!-- Step 2: Cases -->
         <section v-if="step === 2" class="mt-8 space-y-6">
-            <div v-for="(c, ci) in cases" :key="ci" class="rounded-card border border-ink-100 bg-white p-5 shadow-panel">
+            <div v-for="(c, ci) in cases" :key="ci" class="rounded-card border border-ink-100 bg-card p-5 shadow-panel">
                 <div class="flex items-center justify-between">
                     <h2 class="font-display text-sm font-semibold text-ink-950">{{ t('benchmarks.wizard.caseTitle') }} {{ ci + 1 }}</h2>
                     <button v-if="cases.length > 1" type="button" class="text-xs text-rose-450 hover:underline" @click="removeCase(ci)">{{ t('common.delete') }}</button>
@@ -168,16 +168,16 @@ const submit = () => {
                     <OField :label="t('benchmarks.wizard.criteria')" :hint="' '" />
                 </div>
                 <OField :label="t('benchmarks.wizard.caseInput')" required class="mt-0">
-                    <textarea v-model="c.input" rows="3" class="w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm focus:border-accent-500" />
+                    <textarea v-model="c.input" rows="3" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" />
                 </OField>
 
                 <div class="mt-4 space-y-3 rounded-lg bg-paper-100/70 p-4">
                     <p class="text-xs font-semibold uppercase tracking-wide text-ink-300">{{ t('benchmarks.wizard.criteria') }}</p>
-                    <div v-for="(cr, cri) in c.criteria" :key="cri" class="rounded-lg border border-ink-100 bg-white p-3">
+                    <div v-for="(cr, cri) in c.criteria" :key="cri" class="rounded-lg border border-ink-100 bg-card p-3">
                         <div class="flex items-start gap-3">
                             <select
                                 v-model="cr.type"
-                                class="w-44 shrink-0 rounded-lg border border-ink-200 bg-white px-2 py-1.5 text-sm focus:border-accent-500"
+                                class="w-44 shrink-0 rounded-lg border border-ink-200 bg-card px-2 py-1.5 text-sm focus:border-accent-500"
                                 :aria-label="t('benchmarks.wizard.criterionType')"
                             >
                                 <option value="contains">{{ t('benchmarks.wizard.contains') }}</option>
@@ -208,7 +208,7 @@ const submit = () => {
         <!-- Step 3: Review -->
         <section v-if="step === 3" class="mt-8 max-w-3xl">
             <p class="text-sm text-ink-500">{{ t('benchmarks.wizard.reviewHint') }}</p>
-            <div class="mt-4 rounded-card border border-ink-100 bg-white p-5 shadow-panel">
+            <div class="mt-4 rounded-card border border-ink-100 bg-card p-5 shadow-panel">
                 <div class="flex items-center gap-3">
                     <h2 class="font-display text-base font-semibold text-ink-950">{{ basics.name }}</h2>
                     <OBadge tone="accent">{{ props.categories.find((c) => c.value === basics.category)?.label }}</OBadge>

@@ -37,7 +37,7 @@ const setListed = (id: number, listed: boolean) => {
         <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">Marketplace</h1>
         <p class="mt-1 text-sm text-ink-500">Moderate community listings. Unlisting hides an item from the marketplace without deleting it.</p>
 
-        <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-white shadow-panel">
+        <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-card shadow-panel">
             <table class="w-full text-left text-sm">
                 <thead>
                     <tr class="border-b border-ink-100 text-xs uppercase tracking-wide text-ink-300">

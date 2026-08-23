@@ -73,7 +73,7 @@ const submitReport = (id: number) => {
 
         <!-- Filters -->
         <div class="mt-6 flex flex-wrap items-center gap-3">
-            <div class="flex rounded-lg border border-ink-200 bg-white p-0.5" role="group" :aria-label="t('marketplace.browse')">
+            <div class="flex rounded-lg border border-ink-200 bg-card p-0.5" role="group" :aria-label="t('marketplace.browse')">
                 <button
                     v-for="filter in [{ v: null, label: t('marketplace.browse') }, { v: 'prompt', label: t('marketplace.prompts') }, { v: 'benchmark', label: t('marketplace.benchmarks') }]"
                     :key="String(filter.v)"
@@ -94,7 +94,7 @@ const submitReport = (id: number) => {
 
         <ul v-else class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <li v-for="item in items.data" :key="item.id">
-                <article class="flex h-full flex-col rounded-card border border-ink-100 bg-white p-5 shadow-panel">
+                <article class="flex h-full flex-col rounded-card border border-ink-100 bg-card p-5 shadow-panel">
                     <div class="flex items-center justify-between gap-2">
                         <OBadge :tone="item.item_type === 'benchmark' ? 'accent' : 'neutral'">
                             {{ item.item_type === 'benchmark' ? t('marketplace.benchmarks') : t('marketplace.prompts') }}
@@ -125,14 +125,14 @@ const submitReport = (id: number) => {
                         ⚑ {{ t('marketplace.reportTitle') }}
                     </button>
                     <form v-if="reportItem === item.id" class="mt-2 space-y-2" @submit.prevent="submitReport(item.id)">
-                        <select v-model="reportReason" class="w-full rounded-lg border border-ink-200 bg-white px-2 py-1.5 text-xs focus:border-accent-500" :aria-label="t('marketplace.reportReason')">
+                        <select v-model="reportReason" class="w-full rounded-lg border border-ink-200 bg-card px-2 py-1.5 text-xs focus:border-accent-500" :aria-label="t('marketplace.reportReason')">
                             <option value="inappropriate">{{ t('marketplace.reasons.inappropriate') }}</option>
                             <option value="spam">{{ t('marketplace.reasons.spam') }}</option>
                             <option value="copyright">{{ t('marketplace.reasons.copyright') }}</option>
                             <option value="broken">{{ t('marketplace.reasons.broken') }}</option>
                             <option value="other">{{ t('marketplace.reasons.other') }}</option>
                         </select>
-                        <textarea v-model="reportMessage" rows="2" :placeholder="t('marketplace.reportPlaceholder')" class="w-full rounded-lg border border-ink-200 bg-white px-2 py-1.5 text-xs focus:border-accent-500" />
+                        <textarea v-model="reportMessage" rows="2" :placeholder="t('marketplace.reportPlaceholder')" class="w-full rounded-lg border border-ink-200 bg-card px-2 py-1.5 text-xs focus:border-accent-500" />
                         <div class="flex justify-end gap-2">
                             <OButton variant="ghost" size="sm" type="button" @click="reportItem = null">{{ t('common.cancel') }}</OButton>
                             <OButton size="sm" type="submit" :disabled="reportForm.processing">{{ t('marketplace.reportSubmit') }}</OButton>

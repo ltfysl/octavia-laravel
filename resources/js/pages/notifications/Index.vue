@@ -44,7 +44,7 @@ const remove = (id: string) => router.delete(`/notifications/${id}`, { preserveS
             </OButton>
         </div>
 
-        <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-white shadow-panel">
+        <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-card shadow-panel">
             <p v-if="feed.data.length === 0" class="px-5 py-8 text-center text-sm text-ink-300">—</p>
             <ul v-else class="divide-y divide-ink-100">
                 <li

@@ -50,14 +50,14 @@ const severity = ref<'all' | 'info' | 'success' | 'warning' | 'error'>('all');
 
         <!-- Filters -->
         <div class="mt-6 flex flex-wrap items-center gap-3">
-            <div class="flex flex-1 min-w-[220px] items-center gap-2 rounded-full border border-ink-200 bg-white px-3 py-2 shadow-sm">
+            <div class="flex flex-1 min-w-[220px] items-center gap-2 rounded-full border border-ink-200 bg-card px-3 py-2 shadow-sm">
                 <svg class="h-4 w-4 text-ink-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
                 <input v-model="search" placeholder="Search actions…" class="flex-1 bg-transparent text-sm outline-none placeholder:text-ink-400" />
             </div>
             <div class="flex items-center gap-1 rounded-full bg-ink-100 p-1">
                 <button v-for="s in ['all', 'info', 'success', 'warning', 'error']" :key="s" type="button"
                     class="rounded-full px-3 py-1.5 text-xs font-medium capitalize transition"
-                    :class="severity === s ? 'bg-white text-ink-900 shadow-sm' : 'text-ink-500 hover:text-ink-700'"
+                    :class="severity === s ? 'bg-card text-ink-900 shadow-sm' : 'text-ink-500 hover:text-ink-700'"
                     @click="severity = s as any"
                 >{{ s }}</button>
             </div>

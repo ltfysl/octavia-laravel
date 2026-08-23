@@ -26,7 +26,7 @@ const tone = computed(() => {
     <div class="flex items-center gap-2">
         <!-- Survey bar: 10% graticule ticks, fill, and a datum line at the target -->
         <div
-            class="relative h-2 w-full overflow-hidden rounded-full border border-ink-100 bg-white"
+            class="relative h-2 w-full overflow-hidden rounded-full border border-ink-100 bg-card"
             role="meter"
             :aria-valuenow="pct"
             aria-valuemin="0"

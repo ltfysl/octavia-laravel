@@ -48,3 +48,13 @@ Orange is never paired with white text. Solid fills that carry a label use
 - Orange marks the route (identity, waypoints, the one primary CTA per view); it never floods large surfaces.
 - Dark surfaces (`ink-950`) are used for primary buttons/key fills and the prompt-content block in run steps (code-instrument feel).
 - Contrast: all text/background pairs meet WCAG AA; verified pairs: white on ink-950 ≈ 15:1, ink-950 on accent-600 ≈ 4.7:1, rose outline danger uses ink-900 label on tinted ground.
+
+## Dark mode
+Class-based (`html.dark`), toggled in the shell header, persisted in
+`localStorage('octavia-theme')`, initialized pre-paint in `app.blade.php`
+(falls back to `prefers-color-scheme`). Inversion is token-level:
+`paper-*` become deep spruce surfaces, `ink-*` flip to fog-light text,
+`--color-card` (#ffffff / #131b1e) replaces raw `bg-white`. Cinematic
+hero surfaces and prompt terminals are pinned dark in both modes via
+`.pinned-dark`; `bg-ink-950` labels auto-invert through
+`.dark .bg-ink-950:not(.pinned-dark)`. Accent orange stays in both modes.

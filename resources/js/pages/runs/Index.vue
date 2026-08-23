@@ -53,7 +53,7 @@ const tone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral' | 'accent'> = {
             </template>
         </OEmptyState>
 
-        <div v-else class="mt-8 overflow-hidden rounded-card border border-ink-100 bg-white shadow-panel">
+        <div v-else class="mt-8 overflow-hidden rounded-card border border-ink-100 bg-card shadow-panel">
             <table class="w-full text-left text-sm">
                 <thead>
                     <tr class="border-b border-ink-100 text-xs uppercase tracking-wide text-ink-300">

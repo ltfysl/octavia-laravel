@@ -79,6 +79,14 @@ const adminNav = computed(() =>
 );
 const isActive = (href: string) => page.url.startsWith(href);
 
+// Theme toggle — persisted, class-based dark mode
+const isDark = ref(typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
+const toggleTheme = () => {
+    isDark.value = !isDark.value;
+    document.documentElement.classList.toggle('dark', isDark.value);
+    try { localStorage.setItem('octavia-theme', isDark.value ? 'dark' : 'light'); } catch {}
+};
+
 // Command palette — reference parity, better: glass + spotlight + keyboard
 const commandOpen = ref(false);
 const commandQuery = ref('');
@@ -118,7 +126,7 @@ if (typeof window !== 'undefined') {
     <div class="min-h-screen lg:grid lg:grid-cols-[18rem_1fr] xl:grid-cols-[23.75rem_1fr]">
         <!-- Sidebar — glass, wider at xl for dashboard bento -->
 
-        <aside class="hidden lg:flex lg:h-screen lg:flex-col lg:border-r lg:border-ink-100 lg:bg-white/80 lg:backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <aside class="hidden lg:flex lg:h-screen lg:flex-col lg:border-r lg:border-ink-100 lg:bg-card/80 lg:backdrop-blur supports-[backdrop-filter]:bg-card/60">
             <div class="px-5 pt-6 pb-4">
                 <Link href="/dashboard" class="flex items-center gap-2.5" aria-label="Octavia home">
                     <span class="flex h-8 w-8 items-center justify-center rounded-md bg-accent-600 font-display text-lg font-bold text-ink-950">O</span>
@@ -131,7 +139,7 @@ if (typeof window !== 'undefined') {
                     :key="item.href"
                     :href="item.href"
                     class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors"
-                    :class="isActive(item.href) ? 'bg-white text-ink-950 shadow-panel' : 'text-ink-500 hover:bg-paper-200 hover:text-ink-900'"
+                    :class="isActive(item.href) ? 'bg-card text-ink-950 shadow-panel' : 'text-ink-500 hover:bg-paper-200 hover:text-ink-900'"
                     :aria-current="isActive(item.href) ? 'page' : undefined"
                 >
                     <span class="h-1.5 w-1.5 rotate-45" :class="isActive(item.href) ? 'bg-accent-600' : 'bg-ink-300'" />
@@ -144,7 +152,7 @@ if (typeof window !== 'undefined') {
                     :key="item.href"
                     :href="item.href"
                     class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors"
-                    :class="isActive(item.href) ? 'bg-white text-ink-950 shadow-panel' : 'text-ink-500 hover:bg-paper-200 hover:text-ink-900'"
+                    :class="isActive(item.href) ? 'bg-card text-ink-950 shadow-panel' : 'text-ink-500 hover:bg-paper-200 hover:text-ink-900'"
                     :aria-current="isActive(item.href) ? 'page' : undefined"
                 >
                     <span class="h-1.5 w-1.5 rotate-45" :class="isActive(item.href) ? 'bg-accent-600' : 'bg-ink-300'" />
@@ -152,7 +160,7 @@ if (typeof window !== 'undefined') {
                 </Link>
             </nav>
             <div class="border-t border-ink-100 px-3 py-3">
-                <Link href="/settings/profile" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors" :class="isActive('/settings') ? 'bg-white text-ink-950 shadow-panel' : 'text-ink-500 hover:bg-paper-200 hover:text-ink-900'">
+                <Link href="/settings/profile" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors" :class="isActive('/settings') ? 'bg-card text-ink-950 shadow-panel' : 'text-ink-500 hover:bg-paper-200 hover:text-ink-900'">
                     <span class="flex h-7 w-7 items-center justify-center rounded-full bg-ink-100 text-xs font-semibold text-ink-700">{{ user?.name?.charAt(0).toUpperCase() }}</span>
                     <span class="truncate">{{ user?.name }}</span>
                 </Link>
@@ -163,7 +171,7 @@ if (typeof window !== 'undefined') {
         </aside>
 
         <!-- Mobile top bar -->
-        <div class="sticky top-0 z-30 flex items-center justify-between border-b border-ink-100 bg-white/90 px-4 py-3 backdrop-blur lg:hidden">
+        <div class="sticky top-0 z-30 flex items-center justify-between border-b border-ink-100 bg-card/90 px-4 py-3 backdrop-blur lg:hidden">
             <Link href="/dashboard" class="flex items-center gap-2">
                 <span class="flex h-7 w-7 items-center justify-center rounded-md bg-accent-600 font-display text-sm font-bold text-ink-950">O</span>
                 <span class="font-display font-semibold text-ink-950">Octavia</span>
@@ -172,7 +180,7 @@ if (typeof window !== 'undefined') {
                 <summary class="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-lg border border-ink-200 text-ink-700" aria-label="Menu">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
                 </summary>
-                <nav class="absolute right-0 z-40 mt-2 w-56 rounded-card border border-ink-100 bg-white p-2 shadow-pop" aria-label="Mobile">
+                <nav class="absolute right-0 z-40 mt-2 w-56 rounded-card border border-ink-100 bg-card p-2 shadow-pop" aria-label="Mobile">
                     <Link v-for="item in nav" :key="item.href" :href="item.href" class="block rounded-lg px-3 py-2 text-sm" :class="isActive(item.href) ? 'bg-paper-100 text-ink-950' : 'text-ink-700'">{{ item.label }}</Link>
                     <hr class="my-2 border-ink-100" />
                     <Link href="/settings/profile" class="block rounded-lg px-3 py-2 text-sm text-ink-700">{{ t('nav.settings') }}</Link>
@@ -205,7 +213,7 @@ if (typeof window !== 'undefined') {
                     </p>
                 </div>
                 <div class="mb-6 hidden items-center justify-between gap-4 lg:flex">
-                    <Link href="/search" class="flex items-center gap-2 rounded-full border border-ink-200 bg-white px-3 py-1.5 text-sm text-ink-400 shadow-sm transition hover:border-ink-300 hover:bg-paper-100 hover:text-ink-600">
+                    <Link href="/search" class="flex items-center gap-2 rounded-full border border-ink-200 bg-card px-3 py-1.5 text-sm text-ink-400 shadow-sm transition hover:border-ink-300 hover:bg-paper-100 hover:text-ink-600">
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
                         <span>Search</span>
                         <span class="ml-2 hidden sm:inline-flex items-center gap-1 rounded bg-ink-100 px-1.5 py-0.5 font-mono text-xs text-ink-500">
@@ -224,7 +232,7 @@ if (typeof window !== 'undefined') {
                                     class="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent-600 px-1 text-[10px] font-semibold text-ink-950"
                                 >{{ notifications.unread }}</span>
                             </summary>
-                            <div class="absolute right-0 z-40 mt-2 w-80 rounded-card border border-ink-100 bg-white p-2 shadow-pop">
+                            <div class="absolute right-0 z-40 mt-2 w-80 rounded-card border border-ink-100 bg-card p-2 shadow-pop">
                                 <p class="px-2 pb-1 pt-1 text-xs font-semibold uppercase tracking-wide text-ink-300">Notifications</p>
                                 <p v-if="notifications.items.length === 0" class="px-2 py-3 text-sm text-ink-300">—</p>
                                 <div
@@ -253,6 +261,10 @@ if (typeof window !== 'undefined') {
                                 </Link>
                             </div>
                         </details>
+                        <button type="button" class="flex h-8 w-8 items-center justify-center rounded-lg text-ink-500 transition hover:bg-paper-100 hover:text-ink-900" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'" @click="toggleTheme">
+                            <svg v-if="isDark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0Z" /></svg>
+                            <svg v-else class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+                        </button>
                         <button type="button" class="hidden h-8 w-8 items-center justify-center rounded-lg text-ink-400 transition hover:bg-paper-100 hover:text-ink-700 md:flex" aria-label="Keyboard shortcuts" title="Press ? for shortcuts">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>
                         </button>
@@ -269,7 +281,7 @@ if (typeof window !== 'undefined') {
             class="fixed inset-0 z-50 flex items-start justify-center bg-ink-950/20 p-4 pt-[18vh] backdrop-blur-sm"
             @click.self="closeCommand"
         >
-            <div class="w-full max-w-lg overflow-hidden rounded-[1.5rem] border border-white/20 bg-white shadow-[0_24px_64px_rgba(14,26,29,0.18)]">
+            <div class="w-full max-w-lg overflow-hidden rounded-[1.5rem] border border-white/20 bg-card shadow-[0_24px_64px_rgba(14,26,29,0.18)]">
                 <div class="flex items-center gap-3 border-b border-ink-100 px-4 py-3">
                     <svg class="h-4 w-4 text-ink-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
                     <input
@@ -296,8 +308,8 @@ if (typeof window !== 'undefined') {
                     <p v-if="filteredNav.length === 0" class="px-3 py-8 text-center text-sm text-ink-400">No results — try “prompts” or “benchmarks”</p>
                 </div>
                 <div class="flex items-center justify-between border-t border-ink-100 bg-paper-50 px-4 py-2 text-xs text-ink-400">
-                    <span>Press <span class="rounded bg-white px-1 py-0.5 font-mono shadow-sm">↵</span> to navigate</span>
-                    <span class="hidden sm:inline"> <span class="rounded bg-white px-1 py-0.5 font-mono shadow-sm">?</span> for help · <span class="rounded bg-white px-1 py-0.5 font-mono shadow-sm">⌘K</span> to toggle</span>
+                    <span>Press <span class="rounded bg-card px-1 py-0.5 font-mono shadow-sm">↵</span> to navigate</span>
+                    <span class="hidden sm:inline"> <span class="rounded bg-card px-1 py-0.5 font-mono shadow-sm">?</span> for help · <span class="rounded bg-card px-1 py-0.5 font-mono shadow-sm">⌘K</span> to toggle</span>
                 </div>
             </div>
         </div>

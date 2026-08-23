@@ -31,7 +31,7 @@ const finish = () => {
         </div>
 
         <div class="mt-8 space-y-5">
-            <fieldset class="rounded-card border border-ink-100 bg-white p-4">
+            <fieldset class="rounded-card border border-ink-100 bg-card p-4">
                 <legend class="px-1 text-sm font-medium text-ink-700">{{ t('settings.language') }}</legend>
                 <div class="mt-1 grid grid-cols-2 gap-3">
                     <button
@@ -48,7 +48,7 @@ const finish = () => {
                 </div>
             </fieldset>
 
-            <label class="flex cursor-pointer items-start gap-3 rounded-card border border-ink-100 bg-white p-4">
+            <label class="flex cursor-pointer items-start gap-3 rounded-card border border-ink-100 bg-card p-4">
                 <input v-model="withSample" type="checkbox" class="mt-0.5 h-4 w-4 rounded border-ink-200 accent-accent-600" />
                 <span>
                     <span class="block text-sm font-medium text-ink-900">Add starter content</span>

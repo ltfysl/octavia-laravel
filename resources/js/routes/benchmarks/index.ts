@@ -446,6 +446,64 @@ destroy.delete = (args: { benchmark: number | { id: number } } | [benchmark: num
 })
 
 /**
+* @see \App\Http\Controllers\BenchmarkInsightController::__invoke
+* @see app/Http/Controllers/BenchmarkInsightController.php:11
+* @route '/benchmarks/{benchmark}/insight'
+*/
+export const insight = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: insight.url(args, options),
+    method: 'post',
+})
+
+insight.definition = {
+    methods: ["post"],
+    url: '/benchmarks/{benchmark}/insight',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\BenchmarkInsightController::__invoke
+* @see app/Http/Controllers/BenchmarkInsightController.php:11
+* @route '/benchmarks/{benchmark}/insight'
+*/
+insight.url = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { benchmark: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { benchmark: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            benchmark: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        benchmark: typeof args.benchmark === 'object'
+        ? args.benchmark.id
+        : args.benchmark,
+    }
+
+    return insight.definition.url
+            .replace('{benchmark}', parsedArgs.benchmark.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\BenchmarkInsightController::__invoke
+* @see app/Http/Controllers/BenchmarkInsightController.php:11
+* @route '/benchmarks/{benchmark}/insight'
+*/
+insight.post = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: insight.url(args, options),
+    method: 'post',
+})
+
+/**
 * @see \App\Http\Controllers\BenchmarkImportController::importMethod
 * @see app/Http/Controllers/BenchmarkImportController.php:12
 * @route '/benchmarks/import'
@@ -488,6 +546,7 @@ const benchmarks = {
     edit: Object.assign(edit, edit),
     update: Object.assign(update, update),
     destroy: Object.assign(destroy, destroy),
+    insight: Object.assign(insight, insight),
     import: Object.assign(importMethod, importMethod),
 }
 

@@ -1,13 +1,34 @@
 <script setup lang="ts">
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { usePage } from '@inertiajs/vue3';
 
 const { t } = useI18n();
+const page = usePage<{ prompt?: { name: string } | null; benchmark?: { name: string } | null; run?: { name: string; mode: string } | null }>();
 
 interface ChatMessage {
-    role: 'user' | 'assistant';
+    role: 'system' | 'user' | 'assistant';
     content: string;
 }
+
+const contextMessage = computed<ChatMessage>(() => {
+    const parts: string[] = [];
+    const path = typeof window !== 'undefined' ? window.location.pathname : '';
+
+    if (path.includes('/prompts/') && page.props.prompt?.name) {
+        parts.push(`The user is currently viewing the prompt "${page.props.prompt.name}".`);
+    } else if (path.includes('/benchmarks/') && page.props.benchmark?.name) {
+        parts.push(`The user is currently viewing the benchmark "${page.props.benchmark.name}".`);
+    } else if (path.includes('/runs/') && page.props.run?.name) {
+        parts.push(`The user is currently viewing the run "${page.props.run.name}" (mode: ${page.props.run.mode}).`);
+    }
+
+    if (parts.length === 0) {
+        return { role: 'system', content: 'The user is browsing the Octavia prompt-lab application.' };
+    }
+
+    return { role: 'system', content: parts.join(' ') + ' Keep your answer relevant to this context.' };
+});
 
 const open = ref(false);
 const busy = ref(false);
@@ -45,7 +66,7 @@ const send = async () => {
             },
             credentials: 'include',
             body: JSON.stringify({
-                messages: [systemPrompt(), ...thread.value.slice(-10)],
+                messages: [systemPrompt(), contextMessage.value, ...thread.value.slice(-10)],
             }),
         });
 

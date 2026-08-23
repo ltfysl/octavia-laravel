@@ -16,7 +16,8 @@
         "teams": "Teams",
         "search": "Search",
         "tournaments": "Tournaments",
-        "audit": "Audit log"
+        "audit": "Audit log",
+        "reports": "Reports"
     },
     "verification": {
         "banner": "Verify your email address to unlock all features.",
@@ -154,7 +155,10 @@
         "mPublic": "Public",
         "noMatchTitle": "No benchmarks match “{q}”",
         "noMatchBody": "Try a different search or clear filters.",
-        "clearFilters": "Clear filters"
+        "clearFilters": "Clear filters",
+        "insightTitle": "AI review",
+        "insightHint": "Check the suite for variety, measurability and coverage.",
+        "insightButton": "Review benchmark"
     },
     "runs": {
         "title": "Runs",
@@ -385,5 +389,20 @@
         "send": "Send",
         "thinking": "Thinking…",
         "error": "The assistant is unavailable right now."
+    },
+    "reports": {
+        "title": "Reports",
+        "subtitle": "Performance and usage at a glance.",
+        "totalRuns": "Total runs",
+        "completed": "Completed",
+        "avgScore": "Average score",
+        "byBenchmark": "By benchmark",
+        "byPrompt": "By prompt",
+        "recentRuns": "Recent runs",
+        "noData": "No runs yet.",
+        "name": "Name",
+        "runs": "Runs",
+        "lastRun": "Last run",
+        "score": "Score"
     }
 }

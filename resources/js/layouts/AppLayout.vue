@@ -71,6 +71,7 @@ const nav = computed(() => [
     { href: '/benchmarks', label: t('nav.benchmarks'), icon: 'checklist' },
     { href: '/collections', label: t('benchmarks.collections.title'), icon: 'layers' },
     { href: '/tournaments', label: t('nav.tournaments'), icon: 'trophy' },
+    { href: '/reports', label: t('nav.reports'), icon: 'chart' },
     { href: '/audit', label: t('nav.audit'), icon: 'clock' },
     { href: '/marketplace', label: t('nav.marketplace'), icon: 'store' },
 ]);

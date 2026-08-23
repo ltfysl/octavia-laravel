@@ -16,7 +16,8 @@
         "teams": "Teams",
         "search": "Suchen",
         "tournaments": "Turniere",
-        "audit": "Audit-Log"
+        "audit": "Audit-Log",
+        "reports": "Berichte"
     },
     "verification": {
         "banner": "Bestätige deine E-Mail-Adresse, um alle Funktionen freizuschalten.",
@@ -154,7 +155,10 @@
         "mPublic": "Öffentlich",
         "noMatchTitle": "Keine Benchmarks für „{q}“",
         "noMatchBody": "Andere Suche versuchen oder Filter zurücksetzen.",
-        "clearFilters": "Filter zurücksetzen"
+        "clearFilters": "Filter zurücksetzen",
+        "insightTitle": "KI-Review",
+        "insightHint": "Prüfe die Suite auf Vielfalt, Messbarkeit und Abdeckung.",
+        "insightButton": "Benchmark bewerten"
     },
     "runs": {
         "title": "Läufe",
@@ -384,5 +388,20 @@
         "send": "Senden",
         "thinking": "Denke nach…",
         "error": "Der Assistent ist gerade nicht erreichbar."
+    },
+    "reports": {
+        "title": "Berichte",
+        "subtitle": "Performance und Nutzung auf einen Blick.",
+        "totalRuns": "Läufe gesamt",
+        "completed": "Abgeschlossen",
+        "avgScore": "Durchschnitt",
+        "byBenchmark": "Nach Benchmark",
+        "byPrompt": "Nach Prompt",
+        "recentRuns": "Letzte Läufe",
+        "noData": "Noch keine Läufe.",
+        "name": "Name",
+        "runs": "Läufe",
+        "lastRun": "Letzter Lauf",
+        "score": "Score"
     }
 }

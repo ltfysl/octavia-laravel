@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BenchmarkController;
 use App\Http\Controllers\BenchmarkExportController;
 use App\Http\Controllers\BenchmarkImportController;
+use App\Http\Controllers\BenchmarkInsightController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\PromptController;
 use App\Http\Controllers\PromptExportController;
 use App\Http\Controllers\PromptImportController;
 use App\Http\Controllers\PromptInsightController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
@@ -99,6 +101,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/benchmarks/{benchmark}/export', BenchmarkExportController::class)
         ->name('benchmarks.export');
     Route::resource('benchmarks', BenchmarkController::class)->except(['create']);
+    Route::post('/benchmarks/{benchmark}/insight', BenchmarkInsightController::class)
+        ->middleware('throttle:assistant')
+        ->name('benchmarks.insight');
     Route::post('/benchmarks/import', [BenchmarkImportController::class, '__invoke'])
         ->name('benchmarks.import');
 
@@ -112,6 +117,7 @@ Route::middleware('auth')->group(function () {
         ->name('assistant.chat');
     Route::post('/runs/{run}/cancel', [RunController::class, 'cancel'])->name('runs.cancel');
 
+    Route::get('/reports', ReportController::class)->name('reports.index');
     Route::get('/audit', [AuditLogController::class, 'index'])->name('audit.index');
     Route::post('/audit', [AuditLogController::class, 'store'])->name('audit.store');
     Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournaments.index');

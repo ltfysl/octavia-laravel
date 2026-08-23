@@ -11,9 +11,11 @@ import PromptImportController from './PromptImportController'
 import CollectionController from './CollectionController'
 import BenchmarkController from './BenchmarkController'
 import BenchmarkExportController from './BenchmarkExportController'
+import BenchmarkInsightController from './BenchmarkInsightController'
 import BenchmarkImportController from './BenchmarkImportController'
 import RunController from './RunController'
 import AssistantController from './AssistantController'
+import ReportController from './ReportController'
 import AuditLogController from './AuditLogController'
 import TournamentController from './TournamentController'
 import MarketplaceController from './MarketplaceController'
@@ -37,9 +39,11 @@ const Controllers = {
     CollectionController: Object.assign(CollectionController, CollectionController),
     BenchmarkController: Object.assign(BenchmarkController, BenchmarkController),
     BenchmarkExportController: Object.assign(BenchmarkExportController, BenchmarkExportController),
+    BenchmarkInsightController: Object.assign(BenchmarkInsightController, BenchmarkInsightController),
     BenchmarkImportController: Object.assign(BenchmarkImportController, BenchmarkImportController),
     RunController: Object.assign(RunController, RunController),
     AssistantController: Object.assign(AssistantController, AssistantController),
+    ReportController: Object.assign(ReportController, ReportController),
     AuditLogController: Object.assign(AuditLogController, AuditLogController),
     TournamentController: Object.assign(TournamentController, TournamentController),
     MarketplaceController: Object.assign(MarketplaceController, MarketplaceController),

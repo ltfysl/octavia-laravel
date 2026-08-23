@@ -1,6 +1,6 @@
 # AGENTS.md — Octavia
 
-Operating manual for autonomous coding agents working on this repository. Read this before changing anything.
+Operating manual for autonomous coding agents working on this repository. Read this before changing anything. Every source directory also has its own `AGENTS.md` with local rules — read the nearest one before editing.
 
 ## Product
 **Octavia** is a prompt laboratory: users define benchmarks (test cases with success criteria), then run evaluation or evolution (hill-climbing prompt optimization) against them, inspect every step, keep winning prompts as new versions, and share via a versioned marketplace. Core promise: *fine-tuning, but for prompts.*
@@ -72,6 +72,17 @@ php artisan wayfinder:generate --skip-actions --skip-routes  # after controller 
 - Migrations are paired create/down; FKs cascade where children belong to parents.
 - Result rows snapshot labels (e.g., `criterion_label`) so history survives source edits.
 - Indexes on every FK plus hot query paths (user_id+created_at patterns).
+
+## Engineering principles
+
+- Keep files small and focused: one responsibility per file; split when a file grows beyond ~200 lines.
+- Reuse before creating: prefer existing `O*` components, Laravel helpers, Spatie packages, and established project patterns.
+- Outsource cross-cutting concerns: use Laravel middleware, form requests, policies, resources, observers, notifications, and queues instead of inline solutions.
+- Extract shared logic: business rules belong in `Actions`/`Services`; UI patterns belong in `components/ui`; never copy markup or queries between pages.
+- Avoid generic AI slop: do not use raw hex colors, ad-hoc shadows, placeholder text, or default-looking UI. Use theme tokens and intentional copy.
+- Maintainability beats cleverness: write explicit, named code; prefer typed DTOs, typed props, and clear test names.
+- Stay consistent: every change must follow the conventions in this file and in the nearest `AGENTS.md`.
+
 
 ## Definition of done (per change)
 1. Behavior implemented end to end (UI → controller → service).

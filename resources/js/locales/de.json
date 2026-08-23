@@ -93,7 +93,18 @@
         "playgroundHistory": "Verlauf · letzte {n}",
         "insightTitle": "KI-Review",
         "insightHint": "Bewerte den aktuellen Prompt auf Klarheit, Struktur und Abdeckung.",
-        "insightButton": "Prompt bewerten"
+        "insightButton": "Prompt bewerten",
+        "analytics": {
+            "title": "Analytics",
+            "runs": "Läufe",
+            "completed": "Abgeschlossen",
+            "avg": "Durchschnitt",
+            "best": "Beste",
+            "history": "Score über Zeit",
+            "byBenchmark": "Nach Benchmark",
+            "benchmarkName": "Benchmark",
+            "empty": "Noch keine abgeschlossenen Läufe."
+        }
     },
     "benchmarks": {
         "title": "Benchmarks",

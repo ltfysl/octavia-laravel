@@ -30,6 +30,7 @@
 - Export: prompt index has CSV export; missing export for dashboard/benchmark/runs leaderboards
 - Playground: exists on prompt detail, but no standalone playground view with chat history
 - Version diff: works, but no AI diff explanation
+- Prompt analytics: per-prompt runs, average/best score, score-over-time sparkline, per-benchmark breakdown — basic version on prompt detail
 
 ## Missing (candidate backlog)
 

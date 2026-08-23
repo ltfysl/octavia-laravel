@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\RunPlayground;
+use App\Enums\RunStatus;
 use App\Http\Requests\StorePromptRequest;
 use App\Http\Requests\UpdatePromptRequest;
 use App\Models\AuditLog;
@@ -188,6 +189,48 @@ class PromptController extends Controller
 
         AuditLog::record('prompt.deleted', 'prompts', 'Prompt deleted', 'prompt', $id, $name, 'warning');
 
-        return redirect()->route('prompts.index')->with('success', __('Prompt deleted.'));
+        return redirect()->route('prompts.index')->with('success', __('messages.promptDeleted'));
+    }
+
+    /**
+     * Per-prompt analytics: score-over-time and per-benchmark breakdown.
+     */
+    public function analytics(Request $request, Prompt $prompt): JsonResponse
+    {
+        $this->authorize('view', $prompt);
+
+        $runs = $prompt->runs()->where('status', RunStatus::Completed->value)->whereNotNull('best_score');
+        $avgScore = $runs->avg('best_score');
+        $bestScore = $runs->max('best_score');
+
+        $history = $runs->orderBy('created_at')
+            ->get(['created_at', 'best_score'])
+            ->map(fn ($r) => [
+                'at' => $r->created_at->toIso8601String(),
+                'score' => $r->best_score,
+            ]);
+
+        $byBenchmark = $prompt->runs()
+            ->where('status', RunStatus::Completed->value)
+            ->whereNotNull('best_score')
+            ->join('benchmarks', 'benchmarks.id', '=', 'runs.benchmark_id')
+            ->selectRaw('benchmarks.name, count(*) as runs_count, avg(best_score) as avg_score, max(best_score) as best_score')
+            ->groupBy('benchmarks.id', 'benchmarks.name')
+            ->orderByDesc('avg_score')
+            ->get();
+
+        return response()->json([
+            'runs_count' => $prompt->runs()->count(),
+            'completed_count' => $runs->count(),
+            'avg_score' => $avgScore !== null ? round((float) $avgScore * 100, 1) : null,
+            'best_score' => $bestScore !== null ? round((float) $bestScore * 100, 1) : null,
+            'history' => $history,
+            'by_benchmark' => $byBenchmark->map(fn ($b) => [
+                'name' => $b->name,
+                'runs_count' => $b->runs_count,
+                'avg_score' => $b->avg_score !== null ? round((float) $b->avg_score * 100, 1) : null,
+                'best_score' => $b->best_score !== null ? round((float) $b->best_score * 100, 1) : null,
+            ]),
+        ]);
     }
 }

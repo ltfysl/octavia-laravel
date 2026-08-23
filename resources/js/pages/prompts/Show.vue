@@ -8,6 +8,7 @@ import OButton from '../../components/ui/OButton.vue';
 import OInput from '../../components/ui/OInput.vue';
 import OBadge from '../../components/ui/OBadge.vue';
 import ODiff from '../../components/ODiff.vue';
+import OEmptyState from '../../components/ui/OEmptyState.vue';
 
 const props = defineProps<{
     prompt: {
@@ -24,7 +25,7 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
-const tab = ref<'editor' | 'versions'>('editor');
+const tab = ref<'editor' | 'versions' | 'analytics'>('editor');
 
 const form = useForm({
     name: props.prompt.name,
@@ -129,6 +130,33 @@ const copyOutput = () => {
 
 const selectedBenchmarkId = ref<number | ''>('');
 
+interface PromptAnalytics {
+    runs_count: number;
+    completed_count: number;
+    avg_score: number | null;
+    best_score: number | null;
+    history: Array<{ at: string; score: number }>;
+    by_benchmark: Array<{ name: string; runs_count: number; avg_score: number | null; best_score: number | null }>;
+}
+
+const analytics = ref<PromptAnalytics | null>(null);
+const analyticsLoading = ref(false);
+const analyticsError = ref('');
+
+const loadAnalytics = async () => {
+    analyticsLoading.value = true;
+    analyticsError.value = '';
+    try {
+        const res = await fetch(`/prompts/${props.prompt.id}/analytics`, { headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error();
+        analytics.value = await res.json();
+    } catch {
+        analyticsError.value = t('common.error');
+    } finally {
+        analyticsLoading.value = false;
+    }
+};
+
 const startRun = (mode: 'evaluate' | 'optimize') => {
     if (! selectedBenchmarkId.value) return;
     router.post('/runs', {
@@ -212,13 +240,13 @@ const runInsight = async () => {
         <!-- Tabs -->
         <div class="mt-6 flex gap-1 border-b border-ink-100" role="tablist">
             <button
-                v-for="tb in [{ id: 'editor', label: t('prompts.content') }, { id: 'versions', label: t('prompts.versions') }]"
+                v-for="tb in [{ id: 'editor', label: t('prompts.content') }, { id: 'versions', label: t('prompts.versions') }, { id: 'analytics', label: t('prompts.analytics.title') }]"
                 :key="tb.id"
                 role="tab"
                 :aria-selected="tab === tb.id"
                 class="-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors"
                 :class="tab === tb.id ? 'border-accent-600 text-accent-700' : 'border-transparent text-ink-500 hover:text-ink-900'"
-                @click="tab = tb.id as 'editor' | 'versions'"
+                @click="tab = tb.id as 'editor' | 'versions' | 'analytics'; if (tab === 'analytics') loadAnalytics()"
             >
                 {{ tb.label }}
             </button>
@@ -343,7 +371,7 @@ const runInsight = async () => {
 
 
         <!-- Versions tab -->
-        <div v-else class="mt-6 space-y-4">
+        <div v-else-if="tab === 'versions'" class="mt-6 space-y-4">
             <!-- Compare any two historical versions (backend LCS endpoint) -->
             <OPanel title="Diff">
                 <div class="flex flex-wrap items-center gap-2">
@@ -409,6 +437,77 @@ const runInsight = async () => {
                     v-else
                     class="mt-3 max-h-40 overflow-auto whitespace-pre-wrap rounded-lg bg-paper-100 p-3 font-mono text-xs leading-relaxed text-ink-700 scroll-thin"
                 >{{ version.content }}</pre>
+            </OPanel>
+        </div>
+
+        <!-- Analytics tab -->
+        <div v-else-if="tab === 'analytics'" class="mt-6">
+            <OPanel :title="t('prompts.analytics.title')">
+                <div v-if="analyticsLoading" class="space-y-2">
+                    <div class="h-3 w-full rounded bg-ink-100 shimmer" />
+                    <div class="h-3 w-5/6 rounded bg-ink-100 shimmer" />
+                </div>
+                <p v-else-if="analyticsError" class="text-sm text-rose-600">{{ analyticsError }}</p>
+                <div v-else-if="analytics" class="space-y-6">
+                    <div class="grid gap-3 sm:grid-cols-4">
+                        <div>
+                            <p class="eyebrow">{{ t('prompts.analytics.runs') }}</p>
+                            <p class="mt-1 font-display text-3xl font-semibold text-ink-950">{{ analytics.runs_count }}</p>
+                        </div>
+                        <div>
+                            <p class="eyebrow">{{ t('prompts.analytics.completed') }}</p>
+                            <p class="mt-1 font-display text-3xl font-semibold text-ink-950">{{ analytics.completed_count }}</p>
+                        </div>
+                        <div>
+                            <p class="eyebrow">{{ t('prompts.analytics.avg') }}</p>
+                            <p class="mt-1 font-display text-3xl font-semibold text-ink-950">{{ analytics.avg_score === null ? '—' : `${analytics.avg_score}%` }}</p>
+                        </div>
+                        <div>
+                            <p class="eyebrow">{{ t('prompts.analytics.best') }}</p>
+                            <p class="mt-1 font-display text-3xl font-semibold text-ink-950">{{ analytics.best_score === null ? '—' : `${analytics.best_score}%` }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Score over time -->
+                    <div v-if="analytics.history.length > 1" class="space-y-2">
+                        <p class="text-xs font-medium text-ink-700">{{ t('prompts.analytics.history') }}</p>
+                        <div class="flex h-16 items-end gap-1" aria-hidden="true">
+                            <div
+                                v-for="(point, i) in analytics.history"
+                                :key="i"
+                                class="flex-1 rounded-t-sm transition-all"
+                                :class="point.score >= 0.8 ? 'bg-mint-500' : 'bg-accent-400'"
+                                :style="{ height: Math.max(4, point.score * 100) + '%' }"
+                                :title="`${new Date(point.at).toLocaleDateString()}: ${Math.round(point.score * 100)}%`"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- By benchmark -->
+                    <div v-if="analytics.by_benchmark.length" class="space-y-2">
+                        <p class="text-xs font-medium text-ink-700">{{ t('prompts.analytics.byBenchmark') }}</p>
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="border-b border-ink-100 text-xs uppercase tracking-wide text-ink-300">
+                                    <th class="py-2 font-medium">{{ t('prompts.analytics.benchmarkName') }}</th>
+                                    <th class="py-2 font-medium">{{ t('prompts.analytics.runs') }}</th>
+                                    <th class="py-2 font-medium">{{ t('prompts.analytics.avg') }}</th>
+                                    <th class="py-2 font-medium">{{ t('prompts.analytics.best') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-ink-100">
+                                <tr v-for="b in analytics.by_benchmark" :key="b.name">
+                                    <td class="py-2">{{ b.name }}</td>
+                                    <td class="py-2 font-mono text-xs">{{ b.runs_count }}</td>
+                                    <td class="py-2 font-mono text-xs">{{ b.avg_score === null ? '—' : `${b.avg_score}%` }}</td>
+                                    <td class="py-2 font-mono text-xs">{{ b.best_score === null ? '—' : `${b.best_score}%` }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <OEmptyState v-else :title="t('prompts.analytics.empty')" />
+                </div>
+                <OEmptyState v-else :title="t('prompts.analytics.empty')" />
             </OPanel>
         </div>
     </AppLayout>

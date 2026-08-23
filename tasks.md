@@ -7,11 +7,8 @@
 ## Next
 - [ ] Welcome mail polish (optional)
 - [ ] Billing tiers tied to token scopes (prerequisite done in round 21)
-- [ ] "Update available" notification when publisher republishes at new version (email channel)
 
 ## Later
-- [ ] Export/import prompts as JSON files — done
-- [ ] Search across runs — done
 - [ ] "Update available" notification when publisher republishes at new version (email channel)
 
 ## Human Action Required

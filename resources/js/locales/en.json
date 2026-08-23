@@ -93,7 +93,18 @@
         "playgroundHistory": "History · last {n}",
         "insightTitle": "AI review",
         "insightHint": "Get a quick review of the current prompt's clarity, structure and coverage.",
-        "insightButton": "Review prompt"
+        "insightButton": "Review prompt",
+        "analytics": {
+            "title": "Analytics",
+            "runs": "Runs",
+            "completed": "Completed",
+            "avg": "Average",
+            "best": "Best",
+            "history": "Score over time",
+            "byBenchmark": "By benchmark",
+            "benchmarkName": "Benchmark",
+            "empty": "No completed runs yet."
+        }
     },
     "benchmarks": {
         "title": "Benchmarks",

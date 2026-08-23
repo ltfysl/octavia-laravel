@@ -90,6 +90,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('prompts', PromptController::class)->only(['index', 'create', 'store', 'show', 'update', 'destroy']);
     Route::post('/prompts/{prompt}/playground', [PromptController::class, 'playground'])->name('prompts.playground');
     Route::get('/prompts/{prompt}/diff', [PromptController::class, 'diff'])->name('prompts.diff');
+    Route::get('/prompts/{prompt}/analytics', [PromptController::class, 'analytics'])->name('prompts.analytics');
     Route::post('/prompts/{prompt}/insight', PromptInsightController::class)
         ->middleware('throttle:assistant')
         ->name('prompts.insight');

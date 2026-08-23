@@ -157,6 +157,8 @@
         "title": "Läufe",
         "subtitle": "Jeder Evaluations- und Optimierungslauf, Schritt für Schritt.",
         "new": "Neuer Lauf",
+        "filterAll": "Alle",
+        "sortByScore": "Nach Score sortieren",
         "mode": {
             "evaluate": "Einmal evaluieren",
             "optimize": "Optimieren (evolvieren)"

@@ -64,9 +64,11 @@ const scoreTrend = computed(() => evalSteps.value.map((s) => ({ n: s.number, sco
 // Reverb server is running.
 let pollTimer: number | undefined;
 const refresh = () => {
-    if (! isRunning.value) {
-        if (pollTimer) window.clearInterval(pollTimer);
-        router.reload({ only: ['run'] });
+    router.reload({ only: ['run'] });
+
+    if (! isRunning.value && pollTimer) {
+        window.clearInterval(pollTimer);
+        pollTimer = undefined;
     }
 };
 
@@ -74,26 +76,17 @@ onMounted(() => {
     const echo = useEcho();
     if (echo) {
         echo.private(`runs.${props.run.id}`).listen('.progress', () => refresh());
-        return;
     }
 
     // Fallback: poll while the run executes
     if (! isRunning.value) return;
-    pollTimer = window.setInterval(async () => {
-        try {
-            const res = await fetch(`/runs/${props.run.id}/status`, { headers: { Accept: 'application/json' } });
-            const data: { status: string } = await res.json();
-            if (! ['pending', 'running'].includes(data.status)) {
-                window.clearInterval(pollTimer);
-                router.reload({ only: ['run'] });
-            }
-        } catch {
-            // transient network errors are ignored; next tick retries
-        }
-    }, 2000);
+    pollTimer = window.setInterval(() => refresh(), 2000);
 });
 
-onBeforeUnmount(() => window.clearInterval(pollTimer));
+onBeforeUnmount(() => {
+    window.clearInterval(pollTimer);
+    pollTimer = undefined;
+});
 
  const cancel = () => router.post(`/runs/${props.run.id}/cancel`);
  </script>

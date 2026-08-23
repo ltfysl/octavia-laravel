@@ -157,6 +157,8 @@
         "title": "Runs",
         "subtitle": "Every evaluation and optimization run, step by step.",
         "new": "New run",
+        "filterAll": "All",
+        "sortByScore": "Sort by score",
         "mode": {
             "evaluate": "Evaluate once",
             "optimize": "Optimize (evolve)"

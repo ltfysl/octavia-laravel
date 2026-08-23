@@ -7,6 +7,15 @@ use App\Models\PromptVersion;
 use App\Services\EvaluationService;
 use App\Services\Llm\Contracts\LlmProvider;
 
+/**
+ * Ad-hoc A/B evaluation of two prompt versions against a single benchmark.
+ *
+ * This is intentionally not a persisted run: it mirrors RunPlayground by
+ * evaluating without creating Run records or touching the database. It reuses
+ * EvaluationService, which itself performs no DB writes, and returns a direct
+ * comparison. Because it is ad-hoc, it is throttled by the same `throttle:runs`
+ * middleware as run creation.
+ */
 class RunPromptAbTest
 {
     public function __construct(

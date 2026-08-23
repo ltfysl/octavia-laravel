@@ -14,7 +14,9 @@
         "collections": "Collections",
         "notifications": "Notifications",
         "teams": "Teams",
-        "search": "Search"
+        "search": "Search",
+        "tournaments": "Tournaments",
+        "audit": "Audit log"
     },
     "verification": {
         "banner": "Verify your email address to unlock all features.",

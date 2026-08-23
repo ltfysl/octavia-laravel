@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePromptRequest;
 use App\Models\AuditLog;
 use App\Models\Prompt;
 use App\Models\PromptVersion;
+use App\Services\DiffService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -102,6 +103,39 @@ class PromptController extends Controller
             $validated['input'],
             $validated['content'] ?? null,
         ));
+    }
+
+    /**
+     * Line diff between two versions of the prompt (JSON for the versions tab).
+     */
+    public function diff(Request $request, Prompt $prompt, DiffService $diff): JsonResponse
+    {
+        $this->authorize('view', $prompt);
+
+        $validated = $request->validate([
+            'from' => ['required', 'integer'],
+            'to' => ['required', 'integer', 'different:from'],
+        ]);
+
+        $versions = $prompt->versions()
+            ->whereIn('id', [$validated['from'], $validated['to']])
+            ->get()
+            ->keyBy('id');
+
+        abort_unless(
+            $versions->count() === 2,
+            404,
+            __('Both versions must belong to this prompt.'),
+        );
+
+        $from = $versions[$validated['from']];
+        $to = $versions[$validated['to']];
+
+        return response()->json([
+            'from' => ['id' => $from->id, 'version' => $from->version],
+            'to' => ['id' => $to->id, 'version' => $to->version],
+            'ops' => $diff->lineDiff((string) $from->content, (string) $to->content),
+        ]);
     }
 
     public function update(UpdatePromptRequest $request, Prompt $prompt): RedirectResponse

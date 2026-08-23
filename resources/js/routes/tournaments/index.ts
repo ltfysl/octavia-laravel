@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\TournamentController::index
-* @see app/Http/Controllers/TournamentController.php:15
+* @see app/Http/Controllers/TournamentController.php:22
 * @route '/tournaments'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\TournamentController::index
-* @see app/Http/Controllers/TournamentController.php:15
+* @see app/Http/Controllers/TournamentController.php:22
 * @route '/tournaments'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\TournamentController::index
-* @see app/Http/Controllers/TournamentController.php:15
+* @see app/Http/Controllers/TournamentController.php:22
 * @route '/tournaments'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\TournamentController::index
-* @see app/Http/Controllers/TournamentController.php:15
+* @see app/Http/Controllers/TournamentController.php:22
 * @route '/tournaments'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\TournamentController::store
-* @see app/Http/Controllers/TournamentController.php:22
+* @see app/Http/Controllers/TournamentController.php:60
 * @route '/tournaments'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +60,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\TournamentController::store
-* @see app/Http/Controllers/TournamentController.php:22
+* @see app/Http/Controllers/TournamentController.php:60
 * @route '/tournaments'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -69,7 +69,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\TournamentController::store
-* @see app/Http/Controllers/TournamentController.php:22
+* @see app/Http/Controllers/TournamentController.php:60
 * @route '/tournaments'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({

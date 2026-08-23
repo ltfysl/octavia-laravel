@@ -14,7 +14,9 @@
         "collections": "Sammlungen",
         "notifications": "Mitteilungen",
         "teams": "Teams",
-        "search": "Suchen"
+        "search": "Suchen",
+        "tournaments": "Turniere",
+        "audit": "Audit-Log"
     },
     "verification": {
         "banner": "Bestätige deine E-Mail-Adresse, um alle Funktionen freizuschalten.",

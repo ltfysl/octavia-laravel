@@ -83,6 +83,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('prompts', PromptController::class)->only(['index', 'create', 'store', 'show', 'update', 'destroy']);
     Route::post('/prompts/{prompt}/playground', [PromptController::class, 'playground'])->name('prompts.playground');
+    Route::get('/prompts/{prompt}/diff', [PromptController::class, 'diff'])->name('prompts.diff');
     Route::post('/prompts/{prompt}/versions/{version}/restore', [PromptController::class, 'restoreVersion'])
         ->name('prompts.restore');
     Route::get('/prompts/{prompt}/export', PromptExportController::class)->name('prompts.export');

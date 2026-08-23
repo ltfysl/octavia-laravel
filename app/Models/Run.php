@@ -22,6 +22,7 @@ class Run extends Model
         'model',
         'max_steps',
         'target_score',
+        'best_score',
     ];
 
     protected function casts(): array

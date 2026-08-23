@@ -69,6 +69,8 @@ const nav = computed(() => [
     { href: '/prompts', label: t('nav.prompts'), icon: 'sparkles' },
     { href: '/benchmarks', label: t('nav.benchmarks'), icon: 'checklist' },
     { href: '/collections', label: t('benchmarks.collections.title'), icon: 'layers' },
+    { href: '/tournaments', label: t('nav.tournaments'), icon: 'trophy' },
+    { href: '/audit', label: t('nav.audit'), icon: 'clock' },
     { href: '/marketplace', label: t('nav.marketplace'), icon: 'store' },
 ]);
 

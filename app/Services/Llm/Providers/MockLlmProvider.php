@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
  * Deterministic, credential-free provider used for local development,
  * demos, CI and tests.
  *
- * Four stable, testable modes keyed off system-prompt markers:
+ * Five stable, testable modes keyed off system-prompt markers:
  *
  * 1. Judge mode (`[OCTAVIA-JUDGE]`): scores how many meaningful words of
  *    the stated requirement appear in the model output. Deterministic.
@@ -21,9 +21,11 @@ use Illuminate\Support\Str;
  * 3. Insight mode (`[OCTAVIA-INSIGHT]`): returns a short structured review
  *    of a prompt or benchmark — structure score, clarity, measurability
  *    and coverage. Used by the assistant and prompt-insight endpoints.
- * 4. Task mode: echoes the user input and repeats every explicit bullet /
- *    numbered requirement found in the system prompt. Structured prompts
- *    (role definition, constraints, examples) produce richer output.
+ * 4. Diagnosis mode (`[OCTAVIA-DIAGNOSIS]`): summarises the run context
+ *    and returns a likely cause plus one concrete next step. Used for
+ *    failed or cancelled run detail pages.
+ * 5. Task mode (default): echoes the user input and repeats every explicit
+ *    bullet / numbered requirement found in the system prompt.
  */
 class MockLlmProvider implements LlmProvider
 {
@@ -44,6 +46,7 @@ class MockLlmProvider implements LlmProvider
             Str::contains($system, '[OCTAVIA-JUDGE]') => $this->judge($user),
             Str::contains($system, '[OCTAVIA-OPTIMIZER]') => $this->optimize($user),
             Str::contains($system, '[OCTAVIA-INSIGHT]') => $this->insight($user),
+            Str::contains($system, '[OCTAVIA-DIAGNOSIS]') => $this->diagnosis($user),
             default => $this->task($system, $user),
         };
     }
@@ -62,6 +65,37 @@ class MockLlmProvider implements LlmProvider
         ];
 
         return new LlmResponse(implode("\n", $lines), Str::wordCount($user), Str::wordCount(implode("\n", $lines)));
+    }
+
+    /**
+     * Run-diagnosis branch for the [OCTAVIA-DIAGNOSIS] system marker.
+     * Deterministic: picks a cause from the run context and recommends
+     * one concrete next step.
+     */
+    private function diagnosis(string $user): LlmResponse
+    {
+        $context = mb_strtolower($user);
+
+        if (str_contains($context, 'cancelled')) {
+            $cause = 'The run was cancelled manually.';
+            $next = 'If that was unintentional, start a new run with the same prompt and benchmark.';
+        } elseif (str_contains($context, 'timeout') || str_contains($context, 'took too long')) {
+            $cause = 'A step exceeded the configured timeout.';
+            $next = 'Try reducing max_steps or switching to a faster provider/model in Settings.';
+        } elseif (str_contains($context, 'no benchmarks') || str_contains($context, 'empty')) {
+            $cause = 'The run had no benchmark cases to evaluate against.';
+            $next = 'Add at least one test case to the benchmark before running again.';
+        } elseif (count($this->extractRequirements($context)) >= 1) {
+            $cause = 'Evaluation passed partial checks but did not reach the target score.';
+            $next = 'Use the Optimize mode to evolve the prompt against these requirements.';
+        } else {
+            $cause = 'An unexpected error occurred during execution.';
+            $next = 'Check the application logs and re-run with the same inputs.';
+        }
+
+        $text = "- Likely cause: {$cause}\n- Next step: {$next}";
+
+        return new LlmResponse($text, Str::wordCount($user), Str::wordCount($text));
     }
 
     private function judge(string $user): LlmResponse

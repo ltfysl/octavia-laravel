@@ -15,6 +15,7 @@ import BenchmarkInsightController from './BenchmarkInsightController'
 import BenchmarkImportController from './BenchmarkImportController'
 import RunController from './RunController'
 import AssistantController from './AssistantController'
+import RunDiagnosisController from './RunDiagnosisController'
 import ReportController from './ReportController'
 import AuditLogController from './AuditLogController'
 import TournamentController from './TournamentController'
@@ -43,6 +44,7 @@ const Controllers = {
     BenchmarkImportController: Object.assign(BenchmarkImportController, BenchmarkImportController),
     RunController: Object.assign(RunController, RunController),
     AssistantController: Object.assign(AssistantController, AssistantController),
+    RunDiagnosisController: Object.assign(RunDiagnosisController, RunDiagnosisController),
     ReportController: Object.assign(ReportController, ReportController),
     AuditLogController: Object.assign(AuditLogController, AuditLogController),
     TournamentController: Object.assign(TournamentController, TournamentController),

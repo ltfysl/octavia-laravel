@@ -198,7 +198,10 @@
         "empty": "Noch keine Läufe. Wähle einen Prompt und einen Benchmark und lass Octavia arbeiten.",
         "targetReached": "Ziel-Score erreicht",
         "improvedTo": "Verbessert von {from} auf {to}",
-        "quotaWarning": "Tageskontingent fast aufgebraucht: {used} von {limit} Läufen heute. Das Kontingent setzt sich um Mitternacht zurück."
+        "quotaWarning": "Tageskontingent fast aufgebraucht: {used} von {limit} Läufen heute. Das Kontingent setzt sich um Mitternacht zurück.",
+        "diagnosisTitle": "KI-Diagnose",
+        "diagnosisHint": "Analysiere, warum dieser Lauf stoppte, und was als Nächstes zu probieren ist.",
+        "diagnosisButton": "Lauf diagnostizieren"
     },
     "marketplace": {
         "title": "Marketplace",
@@ -402,6 +405,8 @@
         "name": "Name",
         "runs": "Läufe",
         "lastRun": "Letzter Lauf",
-        "score": "Score"
+        "score": "Score",
+        "EmpfehlungButton": "Empfehlungen einholen",
+        "recommendationButton": "Empfehlungen einholen"
     }
 }

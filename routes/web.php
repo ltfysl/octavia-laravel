@@ -23,6 +23,7 @@ use App\Http\Controllers\PromptImportController;
 use App\Http\Controllers\PromptInsightController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RunController;
+use App\Http\Controllers\RunDiagnosisController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SitemapController;
@@ -116,6 +117,9 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:assistant')
         ->name('assistant.chat');
     Route::post('/runs/{run}/cancel', [RunController::class, 'cancel'])->name('runs.cancel');
+    Route::post('/runs/{run}/diagnosis', RunDiagnosisController::class)
+        ->middleware('throttle:assistant')
+        ->name('runs.diagnosis');
 
     Route::get('/reports', ReportController::class)->name('reports.index');
     Route::get('/audit', [AuditLogController::class, 'index'])->name('audit.index');

@@ -198,7 +198,10 @@
         "empty": "No runs yet. Pick a prompt and a benchmark and let Octavia work.",
         "targetReached": "Target score reached",
         "improvedTo": "Improved from {from} to {to}",
-        "quotaWarning": "Daily quota almost used up: {used} of {limit} runs today. The quota resets at midnight."
+        "quotaWarning": "Daily quota almost used up: {used} of {limit} runs today. The quota resets at midnight.",
+        "diagnosisTitle": "AI diagnosis",
+        "diagnosisHint": "Analyse why this run stopped and what to try next.",
+        "diagnosisButton": "Diagnose run"
     },
     "marketplace": {
         "title": "Marketplace",
@@ -403,6 +406,7 @@
         "name": "Name",
         "runs": "Runs",
         "lastRun": "Last run",
-        "score": "Score"
+        "score": "Score",
+        "recommendationButton": "Ask for recommendations"
     }
 }

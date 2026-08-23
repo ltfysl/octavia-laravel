@@ -89,6 +89,37 @@ onBeforeUnmount(() => {
 });
 
  const cancel = () => router.post(`/runs/${props.run.id}/cancel`);
+
+const diagnosis = ref<string | null>(null);
+const diagnosisLoading = ref(false);
+const diagnosisError = ref('');
+
+const isTerminal = computed(() => ['failed', 'cancelled'].includes(props.run.status));
+
+const runDiagnosis = async () => {
+    diagnosisLoading.value = true;
+    diagnosisError.value = '';
+    diagnosis.value = null;
+
+    try {
+        const res = await fetch(`/runs/${props.run.id}/diagnosis`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content ?? '',
+                Accept: 'application/json',
+            },
+            credentials: 'include',
+        });
+        if (! res.ok) throw new Error();
+        const data: { diagnosis: string } = await res.json();
+        diagnosis.value = data.diagnosis;
+    } catch {
+        diagnosisError.value = t('common.error');
+    } finally {
+        diagnosisLoading.value = false;
+    }
+};
  </script>
 <template>
     <AppLayout>
@@ -173,6 +204,28 @@ onBeforeUnmount(() => {
                     :title="`Step ${point.n}: ${Math.round(point.score * 100)}%`"
                 />
             </div>
+
+        <!-- AI Diagnosis for failed/cancelled runs -->
+        <OPanel v-if="isTerminal" class="mt-6" :title="t('runs.diagnosisTitle')">
+            <p class="mb-3 text-xs leading-relaxed text-ink-500">{{ t('runs.diagnosisHint') }}</p>
+            <OButton
+                variant="secondary"
+                size="sm"
+                class="w-full hover-glow-emerald"
+                :class="diagnosisLoading ? 'shimmer' : ''"
+                :disabled="diagnosisLoading"
+                @click="runDiagnosis"
+            >
+                <span v-if="diagnosisLoading" class="icon-pulse">●</span>
+                <span v-else>✦</span> {{ diagnosisLoading ? t('common.loading') : t('runs.diagnosisButton') }}
+            </OButton>
+            <div v-if="diagnosisLoading" class="mt-3 space-y-2">
+                <div class="h-3 w-full rounded bg-ink-100 shimmer" />
+                <div class="h-3 w-5/6 rounded bg-ink-100 shimmer" />
+            </div>
+            <pre v-else-if="diagnosis" class="scroll-thin mt-3 max-h-64 overflow-auto whitespace-pre-wrap rounded-xl border border-emerald-200 bg-emerald-50/40 p-4 font-mono text-xs leading-relaxed text-emerald-900 dark:bg-emerald-950/20">{{ diagnosis }}</pre>
+            <p v-else-if="diagnosisError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ diagnosisError }}</p>
+        </OPanel>
         </div>
 
         <!-- Step timeline -->

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppLayout from '../../layouts/AppLayout.vue';
 import OPanel from '../../components/ui/OPanel.vue';
 import OEmptyState from '../../components/ui/OEmptyState.vue';
 import OBadge from '../../components/ui/OBadge.vue';
+import OButton from '../../components/ui/OButton.vue';
 
 const props = defineProps<{
     stats: { total: number; completed: number; avg_score: number };
@@ -33,6 +35,49 @@ const tone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral' | 'accent'> = {
 };
 
 const pct = (n: number | null) => n === null ? '—' : `${Math.round(n)}%`;
+
+const recommendation = ref<string | null>(null);
+const recommendationLoading = ref(false);
+const recommendationError = ref('');
+
+const worstPrompt = computed(() => {
+    const scored = props.byPrompt.filter((p) => p.avg_score !== null).sort((a, b) => (a.avg_score ?? 0) - (b.avg_score ?? 0));
+    return scored[0] ?? null;
+});
+
+const fetchRecommendation = async () => {
+    recommendationLoading.value = true;
+    recommendationError.value = '';
+    recommendation.value = null;
+
+    const summary = `Stats: ${props.stats.total} runs, average score ${props.stats.avg_score}%.` +
+        (worstPrompt.value ? ` Lowest prompt: "${worstPrompt.value.name}" with ${worstPrompt.value.avg_score}% over ${worstPrompt.value.runs_count} runs.` : '') +
+        ` Recent runs: ${props.recentRuns.map((r) => `${r.name} (${r.status}, ${Math.round((r.best_score ?? 0) * 100)}%)`).join(', ')}.`;
+
+    try {
+        const res = await fetch('/assistant/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                'X-CSRF-TOKEN': (document.querySelector('meta[name=csrf-token]') as HTMLMetaElement | null)?.content ?? '',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                messages: [
+                    { role: 'user', content: `Given this report, give 1-2 concrete next actions to improve prompt performance. Report: ${summary}` },
+                ],
+            }),
+        });
+        if (! res.ok) throw new Error();
+        const data: { reply?: string } = await res.json();
+        recommendation.value = data.reply ?? '';
+    } catch {
+        recommendationError.value = t('common.error');
+    } finally {
+        recommendationLoading.value = false;
+    }
+};
 </script>
 
 <template>
@@ -42,8 +87,16 @@ const pct = (n: number | null) => n === null ? '—' : `${Math.round(n)}%`;
         <div>
             <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">{{ t('reports.title') }}</h1>
             <p class="mt-1 text-sm text-ink-500">{{ t('reports.subtitle') }}</p>
+            <OButton variant="secondary" size="sm" class="mt-3" @click="fetchRecommendation" :disabled="recommendationLoading">
+                {{ recommendationLoading ? t('common.loading') : t('reports.recommendationButton') }}
+            </OButton>
+            <div v-if="recommendationLoading" class="mt-3 space-y-2">
+                <div class="h-3 w-full rounded bg-ink-100 shimmer" />
+                <div class="h-3 w-5/6 rounded bg-ink-100 shimmer" />
+            </div>
+            <pre v-else-if="recommendation" class="scroll-thin mt-3 max-h-64 overflow-auto whitespace-pre-wrap rounded-xl border border-emerald-200 bg-emerald-50/40 p-4 font-mono text-xs leading-relaxed text-emerald-900 dark:bg-emerald-950/20">{{ recommendation }}</pre>
+            <p v-else-if="recommendationError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ recommendationError }}</p>
         </div>
-
         <div class="mt-6 grid gap-3 sm:grid-cols-3">
             <OPanel>
                 <p class="eyebrow">{{ t('reports.totalRuns') }}</p>

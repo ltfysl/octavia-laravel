@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\BenchmarkCategory;
 use App\Enums\CriterionType;
+use App\Models\AuditLog;
 use App\Models\Benchmark;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -70,6 +71,8 @@ class BenchmarkController extends Controller
             return $benchmark;
         });
 
+        AuditLog::record('benchmark.created', 'benchmarks', 'Benchmark created', 'benchmark', (string) $benchmark->id, $benchmark->name);
+
         return redirect()->route('benchmarks.show', $benchmark)->with('success', __('Benchmark created.'));
     }
 
@@ -133,6 +136,8 @@ class BenchmarkController extends Controller
             $benchmark->bumpVersion();
         });
 
+        AuditLog::record('benchmark.updated', 'benchmarks', 'Benchmark updated', 'benchmark', (string) $benchmark->id, $benchmark->name);
+
         return back()->with('success', __('Benchmark saved.'));
     }
 
@@ -140,7 +145,12 @@ class BenchmarkController extends Controller
     {
         $this->authorize('delete', $benchmark);
 
+        $name = $benchmark->name;
+        $id = (string) $benchmark->id;
+
         $benchmark->delete();
+
+        AuditLog::record('benchmark.deleted', 'benchmarks', 'Benchmark deleted', 'benchmark', $id, $name, 'warning');
 
         return redirect()->route('benchmarks.index')->with('success', __('Benchmark deleted.'));
     }

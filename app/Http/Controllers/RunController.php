@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\InsufficientCreditsException;
 use App\Jobs\ProcessRunJob;
+use App\Models\AuditLog;
 use App\Models\Benchmark;
 use App\Models\Prompt;
 use App\Models\Run;
@@ -115,6 +116,8 @@ class RunController extends Controller
             'target_score' => $validated['target_score'] ?? config('llm.evolution.target_score'),
         ]);
 
+        AuditLog::record('run.started', 'runs', 'Run started ('.($validated['mode'] ?? 'evaluate').')', 'run', (string) $run->id, $run->name);
+
         ProcessRunJob::dispatch($run->id);
 
         return redirect()->route('runs.show', $run);
@@ -188,6 +191,8 @@ class RunController extends Controller
 
         if (! $run->isFinished()) {
             $run->forceFill(['status' => 'cancelled', 'finished_at' => now()])->save();
+
+            AuditLog::record('run.cancelled', 'runs', 'Run cancelled', 'run', (string) $run->id, $run->name, 'warning');
         }
 
         return back()->with('success', __('Run cancelled.'));

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\RunPlayground;
 use App\Http\Requests\StorePromptRequest;
 use App\Http\Requests\UpdatePromptRequest;
+use App\Models\AuditLog;
 use App\Models\Prompt;
 use App\Models\PromptVersion;
 use Illuminate\Http\JsonResponse;
@@ -52,6 +53,8 @@ class PromptController extends Controller
         ]);
 
         $prompt->update(['current_version_id' => $version->id]);
+
+        AuditLog::record('prompt.created', 'prompts', 'Prompt created', 'prompt', (string) $prompt->id, $prompt->name);
 
         return redirect()->route('prompts.show', $prompt)->with('success', __('Prompt created.'));
     }
@@ -118,6 +121,8 @@ class PromptController extends Controller
             $prompt->update(['current_version_id' => $version->id]);
         }
 
+        AuditLog::record('prompt.updated', 'prompts', 'Prompt updated', 'prompt', (string) $prompt->id, $prompt->name);
+
         return back()->with('success', __('Prompt saved.'));
     }
 
@@ -142,7 +147,12 @@ class PromptController extends Controller
     {
         $this->authorize('delete', $prompt);
 
+        $name = $prompt->name;
+        $id = (string) $prompt->id;
+
         $prompt->delete();
+
+        AuditLog::record('prompt.deleted', 'prompts', 'Prompt deleted', 'prompt', $id, $name, 'warning');
 
         return redirect()->route('prompts.index')->with('success', __('Prompt deleted.'));
     }

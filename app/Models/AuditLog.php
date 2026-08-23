@@ -27,4 +27,28 @@ class AuditLog extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /** Convenience writer used by controllers and actions. */
+    public static function record(
+        string $action,
+        string $category,
+        string $description,
+        ?string $entityType = null,
+        ?string $entityId = null,
+        ?string $entityName = null,
+        string $severity = 'info',
+        array $metadata = [],
+    ): self {
+        return static::create([
+            'user_id' => auth()->id(),
+            'action' => $action,
+            'category' => $category,
+            'entity_type' => $entityType,
+            'entity_id' => $entityId,
+            'entity_name' => $entityName,
+            'description' => $description,
+            'metadata' => $metadata ?: null,
+            'severity' => $severity,
+        ]);
+    }
 }

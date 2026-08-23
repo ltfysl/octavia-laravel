@@ -18,7 +18,7 @@
 - Search across prompts/benchmarks/runs
 - Reports / Insights
 - Audit log page + API
-- Settings (profile, password, sessions, billing placeholder)
+- Settings (profile, password, sessions, billing placeholder, **config presets**)
 - Dark mode + command palette + O* design system
 - Assistant chat + prompt/benchmark AI insight + run diagnosis + report recommendations
 
@@ -33,7 +33,6 @@
 
 ## Missing (candidate backlog)
 
-- **Config presets** — saveable run parameter profiles
 - **A/B testing for prompts** — compare two prompt versions against a benchmark
 - **Regression testing** — verify a new version does not break existing cases
 - **Prompt/skill analytics** — per-prompt run stats, score over time

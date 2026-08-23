@@ -1,5 +1,8 @@
 *.log
 .DS_Store
+.DS_Store
+/resources/js/actions
+/resources/js/routes
 .env
 .env.backup
 .env.production

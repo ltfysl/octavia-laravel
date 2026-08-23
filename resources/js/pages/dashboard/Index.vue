@@ -10,6 +10,8 @@ import OScoreBar from '../../components/ui/OScoreBar.vue';
 
 const props = defineProps<{
     stats: { prompts: number; benchmarks: number; activeRuns: number; bestScore: number };
+    scoreHistory: Array<{ at: string; score: number }>;
+    topPrompts: Array<{ id: number; name: string; avg_score: number | null; best_score: number | null }>;
     recentRuns: Array<{
         id: number;
         name: string;
@@ -101,7 +103,7 @@ onUnmounted(() => window.clearTimeout(typeTimer));
 const liveRuns = computed(() => props.recentRuns.filter(r => r.status === 'running').slice(0, 3));
 
 // Chart — score trend with fallback width (fixes chartWidth 0 bug from test)
-const chartData = computed(() => props.recentRuns.filter((r) => r.score !== null).map((r) => Math.round((r.score ?? 0) * 100)));
+const chartData = computed(() => props.scoreHistory.map((h) => Math.round(h.score * 100)));
 const chartWidth = 600;
 const chartPath = computed(() => {
     if (chartData.value.length < 2) return '';
@@ -397,6 +399,37 @@ onMounted(() => {
                     </div>
                 </div>
                 <p class="mt-2 font-mono text-xs text-ink-300">fallback width 600 when container 0 — no blank chart</p>
+            </section>
+
+            <!-- Leaderboard — top prompts -->
+            <section v-if="topPrompts.length" class="mt-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="eyebrow">{{ t('dashboard.leaderboard.title') }}</p>
+                        <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.leaderboard.heading') }}</h3>
+                    </div>
+                    <span class="rounded-full bg-ink-950 px-3 py-1 font-mono text-xs text-white">{{ topPrompts.length }}</span>
+                </div>
+                <div class="mt-4 overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-ink-100 text-left text-xs text-ink-400">
+                                <th class="pb-2 font-medium">{{ t('common.name') }}</th>
+                                <th class="pb-2 pr-4 text-right font-medium">{{ t('dashboard.leaderboard.best') }}</th>
+                                <th class="pb-2 text-right font-medium">{{ t('dashboard.leaderboard.avg') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="prompt in topPrompts" :key="prompt.id" class="border-b border-ink-50 last:border-0">
+                                <td class="py-3">
+                                    <Link :href="`/prompts/${prompt.id}`" class="font-medium text-ink-900 hover:text-accent-700">{{ prompt.name }}</Link>
+                                </td>
+                                <td class="py-3 pr-4 text-right font-mono text-ink-950">{{ prompt.best_score ?? '-' }}</td>
+                                <td class="py-3 text-right font-mono text-ink-950">{{ prompt.avg_score ?? '-' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <!-- Field Actions — keep but more compact, after bento -->

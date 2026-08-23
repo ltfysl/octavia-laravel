@@ -55,7 +55,13 @@
         "createBenchmark": "Benchmark bauen",
         "startRun": "Optimierungslauf starten",
         "browseMarketplace": "Marketplace ansehen",
-        "emptyRuns": "Noch keine Läufe. Optimiere einen Prompt gegen einen Benchmark."
+        "emptyRuns": "Noch keine Läufe. Optimiere einen Prompt gegen einen Benchmark.",
+        "leaderboard": {
+            "title": "Rangliste",
+            "heading": "Beste Prompts",
+            "best": "Beste",
+            "avg": "Ø"
+        }
     },
     "prompts": {
         "title": "Prompts",
@@ -323,7 +329,8 @@
         "required": "Dieses Feld ist erforderlich.",
         "optional": "optional",
         "skipTour": "Tour überspringen",
-        "nextTip": "Nächster Tipp"
+        "nextTip": "Nächster Tipp",
+        "name": "Name"
     },
     "notifications": {
         "unreadCount": "{count} ungelesen",

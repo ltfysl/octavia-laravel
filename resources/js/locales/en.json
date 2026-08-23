@@ -55,6 +55,12 @@
         "createBenchmark": "Build a benchmark",
         "startRun": "Start an optimization run",
         "browseMarketplace": "Browse the marketplace",
+        "leaderboard": {
+            "title": "Leaderboard",
+            "heading": "Top performing prompts",
+            "best": "Best",
+            "avg": "Avg"
+        },
         "emptyRuns": "No runs yet. Start by optimizing a prompt against a benchmark."
     },
     "prompts": {
@@ -305,6 +311,7 @@
     },
     "common": {
         "loading": "Loading…",
+        "name": "Name",
         "saving": "Saving…",
         "cancel": "Cancel",
         "confirm": "Confirm",

@@ -84,8 +84,12 @@
         "addCriterion": "Add criterion",
         "diff": {
             "compare": "Compare with current",
-            "hideCompare": "Hide comparison"
-        }
+            "hideCompare": "Hide comparison",
+            "baseLabel": "Base version",
+            "compareLabel": "Compare version",
+            "pickTwo": "— pick two versions —"
+        },
+        "playgroundHistory": "History · last {n}"
     },
     "benchmarks": {
         "title": "Benchmarks",
@@ -138,7 +142,16 @@
             "empty": "No collections yet.",
             "count": "{count} benchmarks",
             "pickBenchmarks": "Pick benchmarks"
-        }
+        },
+        "searchPh": "Search benchmarks…",
+        "exportCsv": "Export CSV",
+        "mTotal": "Total",
+        "mCases": "Cases",
+        "mPrivate": "Private",
+        "mPublic": "Public",
+        "noMatchTitle": "No benchmarks match “{q}”",
+        "noMatchBody": "Try a different search or clear filters.",
+        "clearFilters": "Clear filters"
     },
     "runs": {
         "title": "Runs",
@@ -252,7 +265,8 @@
         "required": "This field is required.",
         "optional": "optional",
         "skipTour": "Skip tour",
-        "nextTip": "Next tip"
+        "nextTip": "Next tip",
+        "copy": "Copy"
     },
     "notifications": {
         "unreadCount": "{count} unread",
@@ -333,5 +347,28 @@
         "how1": "One credit = one engine step.",
         "how2": "Runs reserve credits up front and refund unused steps automatically.",
         "how3": "New accounts start with 100 free credits."
+    },
+    "audit": {
+        "title": "Audit log",
+        "subtitle": "Who did what — every action recorded with category and severity.",
+        "searchPh": "Search actions…",
+        "empty": "— no audit entries yet —"
+    },
+    "tournaments": {
+        "title": "Tournament",
+        "subtitle": "Run the same prompt against the same benchmark on multiple providers — ranked by score.",
+        "newTitle": "New tournament",
+        "ranking": "Ranking",
+        "prompt": "Prompt",
+        "benchmark": "Benchmark",
+        "providers": "Providers",
+        "selected": "{n} selected · min 2",
+        "ready": "ready",
+        "notConfigured": "not configured",
+        "start": "Start tournament ({n} runs)",
+        "onlyOne": "Only one provider configured — tournaments need at least two.",
+        "noneYet": "— no tournament yet —",
+        "noneYetHint": "Pick a prompt, a benchmark and two providers, then start.",
+        "processing": "runs may still be processing — refresh to update"
     }
 }

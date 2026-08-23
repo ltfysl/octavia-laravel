@@ -84,8 +84,12 @@
         "addCriterion": "Kriterium hinzufügen",
         "diff": {
             "compare": "Mit aktueller Version vergleichen",
-            "hideCompare": "Vergleich ausblenden"
-        }
+            "hideCompare": "Vergleich ausblenden",
+            "baseLabel": "Basisversion",
+            "compareLabel": "Vergleichsversion",
+            "pickTwo": "— zwei Versionen wählen —"
+        },
+        "playgroundHistory": "Verlauf · letzte {n}"
     },
     "benchmarks": {
         "title": "Benchmarks",
@@ -138,7 +142,16 @@
             "empty": "Noch keine Sammlungen.",
             "count": "{count} Benchmarks",
             "pickBenchmarks": "Benchmarks auswählen"
-        }
+        },
+        "searchPh": "Benchmarks durchsuchen…",
+        "exportCsv": "CSV exportieren",
+        "mTotal": "Gesamt",
+        "mCases": "Fälle",
+        "mPrivate": "Privat",
+        "mPublic": "Öffentlich",
+        "noMatchTitle": "Keine Benchmarks für „{q}“",
+        "noMatchBody": "Andere Suche versuchen oder Filter zurücksetzen.",
+        "clearFilters": "Filter zurücksetzen"
     },
     "runs": {
         "title": "Läufe",
@@ -333,5 +346,28 @@
         "how1": "Ein Credit = ein Engine-Schritt.",
         "how2": "Läufe reservieren Credits im Voraus und erstatten ungenutzte Schritte automatisch.",
         "how3": "Neue Konten starten mit 100 kostenlosen Credits."
+    },
+    "audit": {
+        "title": "Audit-Log",
+        "subtitle": "Wer hat was gemacht — jede Aktion mit Kategorie und Schweregrad.",
+        "searchPh": "Aktionen durchsuchen…",
+        "empty": "— noch keine Einträge —"
+    },
+    "tournaments": {
+        "title": "Turnier",
+        "subtitle": "Denselben Prompt gegen denselben Benchmark auf mehreren Providern laufen lassen — nach Score sortiert.",
+        "newTitle": "Neues Turnier",
+        "ranking": "Rangliste",
+        "prompt": "Prompt",
+        "benchmark": "Benchmark",
+        "providers": "Provider",
+        "selected": "{n} ausgewählt · min. 2",
+        "ready": "bereit",
+        "notConfigured": "nicht konfiguriert",
+        "start": "Turnier starten ({n} Runs)",
+        "onlyOne": "Nur ein Provider konfiguriert — Turniere brauchen mindestens zwei.",
+        "noneYet": "— noch kein Turnier —",
+        "noneYetHint": "Prompt, Benchmark und zwei Provider wählen, dann starten.",
+        "processing": "Runs laufen ggf. noch — Seite aktualisieren zum Aktualisieren"
     }
 }

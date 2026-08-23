@@ -271,7 +271,7 @@ const saveAsVersion = () => {
                     </div>
                     <p v-if="playgroundError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ playgroundError }}</p>
                     <div v-if="playgroundHistory.length > 0" class="mt-4 border-t border-dashed border-ink-100 pt-3">
-                        <p class="eyebrow mb-2">History · last {{ playgroundHistory.length }}</p>
+                        <p class="eyebrow mb-2">{{ t('prompts.playgroundHistory', { n: playgroundHistory.length }) }}</p>
                         <ul class="space-y-1.5">
                             <li v-for="(h, hi) in playgroundHistory" :key="hi">
                                 <button
@@ -296,11 +296,11 @@ const saveAsVersion = () => {
             <!-- Compare any two historical versions (backend LCS endpoint) -->
             <OPanel title="Diff">
                 <div class="flex flex-wrap items-center gap-2">
-                    <select v-model="diffFrom" class="rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" aria-label="Base version">
+                    <select v-model="diffFrom" class="rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" :aria-label="t('prompts.diff.baseLabel')">
                         <option v-for="v in prompt.versions" :key="'f' + v.id" :value="v.id">v{{ v.version }}</option>
                     </select>
                     <span class="font-mono text-xs text-ink-400">→</span>
-                    <select v-model="diffTo" class="rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" aria-label="Compare version">
+                    <select v-model="diffTo" class="rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" :aria-label="t('prompts.diff.compareLabel')">
                         <option v-for="v in prompt.versions" :key="'t' + v.id" :value="v.id">v{{ v.version }}</option>
                     </select>
                     <OButton variant="secondary" size="sm" :disabled="diffLoading || !diffFrom || !diffTo || diffFrom === diffTo" @click="loadDiff">
@@ -320,7 +320,7 @@ const saveAsVersion = () => {
                         <span class="select-none font-bold" :class="line.op === 'delete' ? 'text-rose-450' : line.op === 'insert' ? 'text-mint-600' : 'text-ink-300'">{{ line.op === 'delete' ? '-' : line.op === 'insert' ? '+' : ' ' }}</span>{{ line.text }}
                     </div>
                 </div>
-                <p v-else class="mt-3 text-center font-mono text-xs text-ink-300">— pick two versions —</p>
+                <p v-else class="mt-3 text-center font-mono text-xs text-ink-300">{{ t('prompts.diff.pickTwo') }}</p>
             </OPanel>
             <OPanel v-for="version in prompt.versions" :key="version.id">
                 <template #actions>

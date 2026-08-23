@@ -135,7 +135,7 @@ const exportCsv = () => {
         <div v-else-if="filtered.length === 0" class="mt-8 rounded-card border border-dashed border-ink-200 bg-card p-8 text-center">
             <p class="text-sm font-medium text-ink-900">No benchmarks match “{{ searchQuery }}”</p>
             <p class="mt-1 text-sm text-ink-500">Try a different search or clear filters.</p>
-            <button type="button" class="mt-4 rounded-full bg-ink-950 px-4 py-1.5 text-sm font-medium text-white hover:bg-ink-700" @click="searchQuery = ''; visibilityFilter = 'all'">Clear filters</button>
+            <button type="button" class="mt-4 rounded-full bg-ink-950 px-4 py-1.5 text-sm font-medium text-white hover:bg-ink-700" @click="searchQuery = ''; visibilityFilter = 'all'">{{ t('benchmarks.clearFilters') }}</button>
         </div>
         <ul v-else class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <li v-for="benchmark in filtered" :key="benchmark.id">

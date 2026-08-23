@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppLayout from '../../layouts/AppLayout.vue';
 import OPanel from '../../components/ui/OPanel.vue';
 import OBadge from '../../components/ui/OBadge.vue';
+
+const { t } = useI18n();
 
 const props = defineProps<{
     logs: {
@@ -57,16 +60,16 @@ watch(severity, applyFilters);
 
 <template>
     <AppLayout>
-        <Head><title>Audit Log</title></Head>
+        <Head><title>{{ t('audit.title') }}</title></Head>
 
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <div class="flex items-center gap-2">
                     <span class="h-2 w-2 rotate-45 bg-accent-600" aria-hidden="true" />
-                    <p class="eyebrow">Activity trail</p>
+                    <p class="eyebrow">{{ t('audit.title') }}</p>
                 </div>
-                <h1 class="display-hero mt-2 text-3xl tracking-tight text-ink-950">Audit Log</h1>
-                <p class="mt-1 max-w-xl text-sm leading-relaxed text-ink-500">Who did what — every action recorded with category and severity.</p>
+                <h1 class="display-hero mt-2 text-3xl tracking-tight text-ink-950">{{ t('audit.title') }}</h1>
+                <p class="mt-1 max-w-xl text-sm leading-relaxed text-ink-500">{{ t('audit.subtitle') }}</p>
             </div>
         </div>
 
@@ -74,7 +77,7 @@ watch(severity, applyFilters);
         <div class="mt-6 flex flex-wrap items-center gap-3">
             <div class="flex flex-1 min-w-[220px] items-center gap-2 rounded-full border border-ink-200 bg-card px-3 py-2 shadow-sm">
                 <svg class="h-4 w-4 text-ink-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
-                <input v-model="search" placeholder="Search actions…" class="flex-1 bg-transparent text-sm outline-none placeholder:text-ink-400" />
+                <input v-model="search" :placeholder="t('audit.searchPh')" class="flex-1 bg-transparent text-sm outline-none placeholder:text-ink-400" />
             </div>
             <div class="flex items-center gap-1 rounded-full bg-ink-100 p-1">
                 <button v-for="s in ['all', 'info', 'success', 'warning', 'error']" :key="s" type="button"
@@ -105,7 +108,7 @@ watch(severity, applyFilters);
                     </div>
                 </li>
             </ul>
-            <p v-if="logs.data.length === 0" class="px-5 py-12 text-center text-sm text-ink-300">— no audit entries yet —</p>
+            <p v-if="logs.data.length === 0" class="px-5 py-12 text-center text-sm text-ink-300">{{ t('audit.empty') }}</p>
         </OPanel>
 
         <!-- Pagination -->

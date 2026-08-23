@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
 import AppLayout from '../../layouts/AppLayout.vue';
 import OPanel from '../../components/ui/OPanel.vue';
 import OBadge from '../../components/ui/OBadge.vue';
 import OButton from '../../components/ui/OButton.vue';
+
+const { t } = useI18n();
 
 defineProps<{
     providers: Array<{ name: string; driver: string; configured: boolean }>;
@@ -45,41 +48,41 @@ const medal = (i: number) => `${String(i + 1).padStart(2, '0')}`;
 
 <template>
     <AppLayout>
-        <Head><title>Tournaments</title></Head>
+        <Head><title>{{ t('tournaments.title') }}</title></Head>
 
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
                 <div class="flex items-center gap-2">
                     <span class="h-2 w-2 rotate-45 bg-accent-600" aria-hidden="true" />
-                    <p class="eyebrow">Multi-model arena</p>
+                    <p class="eyebrow">{{ t('tournaments.newTitle') }}</p>
                 </div>
-                <h1 class="display-hero mt-2 text-3xl tracking-tight text-ink-950">Tournament</h1>
+                <h1 class="display-hero mt-2 text-3xl tracking-tight text-ink-950">{{ t('tournaments.title') }}</h1>
                 <p class="mt-1 max-w-xl text-sm leading-relaxed text-ink-500">
-                    Run the same prompt against the same benchmark on multiple providers — ranked by score.
+                    {{ t('tournaments.subtitle') }}
                 </p>
             </div>
         </div>
 
         <div class="mt-6 grid gap-4 lg:grid-cols-2">
             <!-- Setup -->
-            <OPanel title="New tournament">
+            <OPanel :title="t('tournaments.newTitle')">
                 <div class="space-y-4">
                     <div>
-                        <label class="eyebrow mb-1.5 block" for="t-prompt">Prompt</label>
+                        <label class="eyebrow mb-1.5 block" for="t-prompt">{{ t('tournaments.prompt') }}</label>
                         <select id="t-prompt" v-model="promptId" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500">
                             <option value="" disabled>—</option>
                             <option v-for="p in prompts" :key="p.id" :value="p.id">{{ p.name }}</option>
                         </select>
                     </div>
                     <div>
-                        <label class="eyebrow mb-1.5 block" for="t-benchmark">Benchmark</label>
+                        <label class="eyebrow mb-1.5 block" for="t-benchmark">{{ t('tournaments.benchmark') }}</label>
                         <select id="t-benchmark" v-model="benchmarkId" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500">
                             <option value="" disabled>—</option>
                             <option v-for="b in benchmarks" :key="b.id" :value="b.id">{{ b.name }}</option>
                         </select>
                     </div>
                     <div>
-                        <p class="eyebrow mb-1.5">Providers <span class="font-mono normal-case tracking-normal">({{ configuredCount }} selected · min 2)</span></p>
+                        <p class="eyebrow mb-1.5">{{ t('tournaments.providers') }} <span class="font-mono normal-case tracking-normal">({{ t('tournaments.selected', { n: configuredCount }) }})</span></p>
                         <div class="grid gap-2 sm:grid-cols-2">
                             <label
                                 v-for="prov in providers"
@@ -98,23 +101,23 @@ const medal = (i: number) => `${String(i + 1).padStart(2, '0')}`;
                                     @change="toggle(prov.name)"
                                 />
                                 <span class="font-mono font-medium text-ink-900">{{ prov.name }}</span>
-                                <span v-if="!prov.configured" class="ml-auto text-xs text-ink-400">not configured</span>
-                                <span v-else class="ml-auto rounded-full bg-mint-100 px-1.5 py-0.5 font-mono text-[10px] text-mint-600">ready</span>
+                                <span v-if="!prov.configured" class="ml-auto text-xs text-ink-400">{{ t('tournaments.notConfigured') }}</span>
+                                <span v-else class="ml-auto rounded-full bg-mint-100 px-1.5 py-0.5 font-mono text-[10px] text-mint-600">{{ t('tournaments.ready') }}</span>
                             </label>
                         </div>
                     </div>
                     <OButton variant="primary" class="w-full" :disabled="!canStart" @click="start">
-                        Start tournament ({{ configuredCount }} runs)
+                        {{ t('tournaments.start', { n: configuredCount }) }}
                     </OButton>
-                    <p v-if="configuredCount === 1" class="text-xs text-amber-600">Only one provider configured — tournaments need at least two.</p>
+                    <p v-if="configuredCount === 1" class="text-xs text-amber-600">{{ t('tournaments.onlyOne') }}</p>
                 </div>
             </OPanel>
 
             <!-- Ranking -->
-            <OPanel title="Ranking">
+            <OPanel :title="t('tournaments.ranking')">
                 <div v-if="results.length === 0" class="py-10 text-center">
-                    <p class="font-mono text-sm text-ink-300">— no tournament yet —</p>
-                    <p class="mt-1 text-xs text-ink-400">Pick a prompt, a benchmark and two providers, then start.</p>
+                    <p class="font-mono text-sm text-ink-300">{{ t('tournaments.noneYet') }}</p>
+                    <p class="mt-1 text-xs text-ink-400">{{ t('tournaments.noneYetHint') }}</p>
                 </div>
                 <ul v-else class="divide-y divide-ink-100">
                     <li v-for="(run, i) in results" :key="run.id" class="flex items-center gap-3 py-3">
@@ -127,7 +130,7 @@ const medal = (i: number) => `${String(i + 1).padStart(2, '0')}`;
                         <Link :href="`/runs/${run.id}`" class="text-xs font-medium text-accent-600 hover:text-accent-700">→</Link>
                     </li>
                 </ul>
-                <p v-if="results.length > 0" class="mt-3 text-center font-mono text-xs text-ink-300">runs may still be processing — refresh to update</p>
+                <p v-if="results.length > 0" class="mt-3 text-center font-mono text-xs text-ink-300">{{ t('tournaments.processing') }}</p>
             </OPanel>
         </div>
     </AppLayout>

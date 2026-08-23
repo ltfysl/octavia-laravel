@@ -18,6 +18,8 @@ if (PHP_SAPI === 'cli-server') {
 $force = [
     'DB_DATABASE' => 'octavia_e2e',
     'QUEUE_CONNECTION' => 'sync',
+    // No Reverb server in E2E — broadcasting must degrade to a no-op
+    'BROADCAST_CONNECTION' => 'log',
 ];
 
 foreach ($force as $key => $value) {

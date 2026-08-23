@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use App\Enums\StepPhase;
+use App\Observers\RunStepProgressObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[ObservedBy([RunStepProgressObserver::class])]
 class RunStep extends Model
 {
     public const UPDATED_AT = null;

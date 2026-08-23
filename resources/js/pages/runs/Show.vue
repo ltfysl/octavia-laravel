@@ -3,6 +3,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import AppLayout from '../../layouts/AppLayout.vue';
+import { useEcho } from '../../echo';
 import OPanel from '../../components/ui/OPanel.vue';
 import OButton from '../../components/ui/OButton.vue';
 import OBadge from '../../components/ui/OBadge.vue';
@@ -58,11 +59,25 @@ const isRunning = computed(() => ['pending', 'running'].includes(props.run.statu
 
 const scoreTrend = computed(() => evalSteps.value.map((s) => ({ n: s.number, score: s.score ?? 0 })));
 
-// Live progress: poll while the run executes; a partial reload refreshes
-// the whole step timeline once the run reaches a terminal status.
+// Live progress — primary path is the Reverb WebSocket (RunProgress event),
+// a slow status poll stays as fallback so the page still completes when no
+// Reverb server is running.
 let pollTimer: number | undefined;
+const refresh = () => {
+    if (! isRunning.value) {
+        if (pollTimer) window.clearInterval(pollTimer);
+        router.reload({ only: ['run'] });
+    }
+};
 
 onMounted(() => {
+    const echo = useEcho();
+    if (echo) {
+        echo.private(`runs.${props.run.id}`).listen('.progress', () => refresh());
+        return;
+    }
+
+    // Fallback: poll while the run executes
     if (! isRunning.value) return;
     pollTimer = window.setInterval(async () => {
         try {

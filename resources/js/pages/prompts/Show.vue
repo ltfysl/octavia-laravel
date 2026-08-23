@@ -7,6 +7,7 @@ import OPanel from '../../components/ui/OPanel.vue';
 import OButton from '../../components/ui/OButton.vue';
 import OInput from '../../components/ui/OInput.vue';
 import OBadge from '../../components/ui/OBadge.vue';
+import OField from '../../components/ui/OField.vue';
 import ODiff from '../../components/ODiff.vue';
 import OEmptyState from '../../components/ui/OEmptyState.vue';
 
@@ -25,7 +26,7 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
-const tab = ref<'editor' | 'versions' | 'analytics'>('editor');
+const tab = ref<'editor' | 'versions' | 'analytics' | 'abTest'>('editor');
 
 const form = useForm({
     name: props.prompt.name,
@@ -157,6 +158,48 @@ const loadAnalytics = async () => {
     }
 };
 
+interface AbResult {
+    version_a: { version: number; score: number; tokens: number };
+    version_b: { version: number; score: number; tokens: number };
+    winner: 'a' | 'b' | 'tie';
+    benchmark: string;
+}
+
+const abVersionA = ref<number | ''>('');
+const abVersionB = ref<number | ''>('');
+const abResult = ref<AbResult | null>(null);
+const abLoading = ref(false);
+const abError = ref('');
+
+const runAbTest = async () => {
+    if (! abVersionA.value || ! abVersionB.value || ! selectedBenchmarkId.value) return;
+    abLoading.value = true;
+    abError.value = '';
+    abResult.value = null;
+    try {
+        const res = await fetch(`/prompts/${props.prompt.id}/ab-test`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content ?? '',
+                Accept: 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                version_a_id: abVersionA.value,
+                version_b_id: abVersionB.value,
+                benchmark_id: selectedBenchmarkId.value,
+            }),
+        });
+        if (! res.ok) throw new Error();
+        abResult.value = await res.json();
+    } catch {
+        abError.value = t('common.error');
+    } finally {
+        abLoading.value = false;
+    }
+};
+
 const startRun = (mode: 'evaluate' | 'optimize') => {
     if (! selectedBenchmarkId.value) return;
     router.post('/runs', {
@@ -240,13 +283,13 @@ const runInsight = async () => {
         <!-- Tabs -->
         <div class="mt-6 flex gap-1 border-b border-ink-100" role="tablist">
             <button
-                v-for="tb in [{ id: 'editor', label: t('prompts.content') }, { id: 'versions', label: t('prompts.versions') }, { id: 'analytics', label: t('prompts.analytics.title') }]"
+                v-for="tb in [{ id: 'editor', label: t('prompts.content') }, { id: 'versions', label: t('prompts.versions') }, { id: 'analytics', label: t('prompts.analytics.title') }, { id: 'abTest', label: t('prompts.abTest.title') }]"
                 :key="tb.id"
                 role="tab"
                 :aria-selected="tab === tb.id"
                 class="-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors"
                 :class="tab === tb.id ? 'border-accent-600 text-accent-700' : 'border-transparent text-ink-500 hover:text-ink-900'"
-                @click="tab = tb.id as 'editor' | 'versions' | 'analytics'; if (tab === 'analytics') loadAnalytics()"
+                @click="tab = tb.id as 'editor' | 'versions' | 'analytics' | 'abTest'; if (tab === 'analytics') loadAnalytics()"
             >
                 {{ tb.label }}
             </button>
@@ -508,6 +551,57 @@ const runInsight = async () => {
                     <OEmptyState v-else :title="t('prompts.analytics.empty')" />
                 </div>
                 <OEmptyState v-else :title="t('prompts.analytics.empty')" />
+            </OPanel>
+        </div>
+
+        <!-- A/B test tab -->
+        <div v-else-if="tab === 'abTest'" class="mt-6">
+            <OPanel :title="t('prompts.abTest.title')">
+                <p class="mb-3 text-xs leading-relaxed text-ink-500">{{ t('prompts.abTest.hint') }}</p>
+                <div class="grid gap-4 sm:grid-cols-3">
+                    <OField :label="t('prompts.abTest.versionA')" for="abVersionA">
+                        <select id="abVersionA" v-model="abVersionA" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500">
+                            <option value="">{{ t('prompts.abTest.pick') }}</option>
+                            <option v-for="v in prompt.versions" :key="'a' + v.id" :value="v.id">v{{ v.version }}</option>
+                        </select>
+                    </OField>
+                    <OField :label="t('prompts.abTest.versionB')" for="abVersionB">
+                        <select id="abVersionB" v-model="abVersionB" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500">
+                            <option value="">{{ t('prompts.abTest.pick') }}</option>
+                            <option v-for="v in prompt.versions" :key="'b' + v.id" :value="v.id">v{{ v.version }}</option>
+                        </select>
+                    </OField>
+                    <OField :label="t('prompts.abTest.benchmark')" for="abBenchmark">
+                        <select id="abBenchmark" v-model="selectedBenchmarkId" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500">
+                            <option value="">{{ t('prompts.abTest.pickBenchmark') }}</option>
+                            <option v-for="b in benchmarks" :key="b.id" :value="b.id">{{ b.name }}</option>
+                        </select>
+                    </OField>
+                </div>
+                <OButton class="mt-4" :disabled="abLoading || !abVersionA || !abVersionB || !selectedBenchmarkId || abVersionA === abVersionB" @click="runAbTest">
+                    {{ abLoading ? t('common.loading') : t('prompts.abTest.run') }}
+                </OButton>
+                <p v-if="abError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ abError }}</p>
+                <div v-if="abResult" class="mt-6 grid gap-4 sm:grid-cols-2">
+                    <OPanel>
+                        <p class="eyebrow">{{ t('prompts.abTest.versionA') }}</p>
+                        <p class="mt-1 font-display text-3xl font-semibold text-ink-950">{{ Math.round(abResult.version_a.score * 100) }}%</p>
+                        <p class="text-xs text-ink-400">{{ abResult.version_a.tokens }} tokens</p>
+                    </OPanel>
+                    <OPanel>
+                        <p class="eyebrow">{{ t('prompts.abTest.versionB') }}</p>
+                        <p class="mt-1 font-display text-3xl font-semibold text-ink-950">{{ Math.round(abResult.version_b.score * 100) }}%</p>
+                        <p class="text-xs text-ink-400">{{ abResult.version_b.tokens }} tokens</p>
+                    </OPanel>
+                    <OPanel v-if="abResult.winner !== 'tie'" class="sm:col-span-2 border-mint-200 bg-mint-50/40">
+                        <p class="eyebrow">{{ t('prompts.abTest.winner') }}</p>
+                        <p class="mt-1 font-display text-3xl font-semibold text-ink-950">{{ abResult.winner === 'a' ? t('prompts.abTest.versionA') : t('prompts.abTest.versionB') }}</p>
+                    </OPanel>
+                    <OPanel v-else class="sm:col-span-2 border-ink-200 bg-paper-100">
+                        <p class="eyebrow">{{ t('prompts.abTest.winner') }}</p>
+                        <p class="mt-1 font-display text-3xl font-semibold text-ink-950">{{ t('prompts.abTest.tie') }}</p>
+                    </OPanel>
+                </div>
             </OPanel>
         </div>
     </AppLayout>

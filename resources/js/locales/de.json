@@ -104,6 +104,18 @@
             "byBenchmark": "Nach Benchmark",
             "benchmarkName": "Benchmark",
             "empty": "Noch keine abgeschlossenen Läufe."
+        },
+        "abTest": {
+            "title": "A/B-Test",
+            "hint": "Vergleiche zwei Prompt-Versionen gegen denselben Benchmark.",
+            "versionA": "Version A",
+            "versionB": "Version B",
+            "pick": "— Version wählen —",
+            "benchmark": "Benchmark",
+            "pickBenchmark": "— Benchmark wählen —",
+            "run": "A/B-Test starten",
+            "winner": "Gewinner",
+            "tie": "Unentschieden"
         }
     },
     "benchmarks": {

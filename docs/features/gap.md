@@ -34,7 +34,7 @@
 
 ## Missing (candidate backlog)
 
-- **A/B testing for prompts** — compare two prompt versions against a benchmark
+- **A/B testing for prompts** — compare two prompt versions against a benchmark ✓ (basic UI + EvaluateService backend)
 - **Regression testing** — verify a new version does not break existing cases
 - **Prompt/skill analytics** — per-prompt run stats, score over time
 - **Skill templates** — reusable starting prompt templates

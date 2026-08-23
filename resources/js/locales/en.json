@@ -104,6 +104,18 @@
             "byBenchmark": "By benchmark",
             "benchmarkName": "Benchmark",
             "empty": "No completed runs yet."
+        },
+        "abTest": {
+            "title": "A/B test",
+            "hint": "Compare two prompt versions against the same benchmark.",
+            "versionA": "Version A",
+            "versionB": "Version B",
+            "pick": "— pick a version —",
+            "benchmark": "Benchmark",
+            "pickBenchmark": "— pick a benchmark —",
+            "run": "Run A/B test",
+            "winner": "Winner",
+            "tie": "Tie"
         }
     },
     "benchmarks": {

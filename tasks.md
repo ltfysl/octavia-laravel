@@ -58,4 +58,6 @@
 - [x] Docs: README (incl. API scopes), AGENTS.md, DESIGNS.md + designs/*, docs/architecture, docs/features/engine, docs/operations (incl. billing), docs/decisions
 - [x] Rounds 1–21 documented in rounds/
 - [x] Round 22: run-detail AI diagnosis for failed/cancelled runs, assistant recommendations on reports
+- [x] Round 22b: per-prompt analytics (runs, avg/best score, score-over-time, per-benchmark breakdown)
+- [x] Round 22c: A/B testing for prompts (compare two versions against the same benchmark)
 - [x] **141 Pest tests / 500 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green

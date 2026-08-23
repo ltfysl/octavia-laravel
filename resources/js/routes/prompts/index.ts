@@ -1,4 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
+import abTestprompts from './ab-testprompts'
 /**
 * @see \App\Http\Controllers\PromptController::index
 * @see app/Http/Controllers/PromptController.php:21
@@ -510,64 +511,6 @@ analytics.head = (args: { prompt: number | { id: number } } | [prompt: number | 
 })
 
 /**
-* @see \App\Http\Controllers\PromptInsightController::__invoke
-* @see app/Http/Controllers/PromptInsightController.php:15
-* @route '/prompts/{prompt}/insight'
-*/
-export const insight = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: insight.url(args, options),
-    method: 'post',
-})
-
-insight.definition = {
-    methods: ["post"],
-    url: '/prompts/{prompt}/insight',
-} satisfies RouteDefinition<["post"]>
-
-/**
-* @see \App\Http\Controllers\PromptInsightController::__invoke
-* @see app/Http/Controllers/PromptInsightController.php:15
-* @route '/prompts/{prompt}/insight'
-*/
-insight.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { prompt: args }
-    }
-
-    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
-        args = { prompt: args.id }
-    }
-
-    if (Array.isArray(args)) {
-        args = {
-            prompt: args[0],
-        }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-        prompt: typeof args.prompt === 'object'
-        ? args.prompt.id
-        : args.prompt,
-    }
-
-    return insight.definition.url
-            .replace('{prompt}', parsedArgs.prompt.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\PromptInsightController::__invoke
-* @see app/Http/Controllers/PromptInsightController.php:15
-* @route '/prompts/{prompt}/insight'
-*/
-insight.post = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: insight.url(args, options),
-    method: 'post',
-})
-
-/**
 * @see \App\Http\Controllers\PromptController::restore
 * @see app/Http/Controllers/PromptController.php:164
 * @route '/prompts/{prompt}/versions/{version}/restore'
@@ -734,7 +677,7 @@ const prompts = {
     playground: Object.assign(playground, playground),
     diff: Object.assign(diff, diff),
     analytics: Object.assign(analytics, analytics),
-    insight: Object.assign(insight, insight),
+    abTestprompts: Object.assign(abTestprompts, abTestprompts),
     restore: Object.assign(restore, restore),
     export: Object.assign(exportMethod, exportMethod),
     import: Object.assign(importMethod, importMethod),

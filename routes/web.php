@@ -18,6 +18,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\PromptAbTestController;
 use App\Http\Controllers\PromptController;
 use App\Http\Controllers\PromptExportController;
 use App\Http\Controllers\PromptImportController;
@@ -91,7 +92,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/prompts/{prompt}/playground', [PromptController::class, 'playground'])->name('prompts.playground');
     Route::get('/prompts/{prompt}/diff', [PromptController::class, 'diff'])->name('prompts.diff');
     Route::get('/prompts/{prompt}/analytics', [PromptController::class, 'analytics'])->name('prompts.analytics');
-    Route::post('/prompts/{prompt}/insight', PromptInsightController::class)
+    Route::post('/prompts/{prompt}/insight', PromptInsightController::class);
+    Route::post('/prompts/{prompt}/ab-test', PromptAbTestController::class)->name('prompts.ab-test')
         ->middleware('throttle:assistant')
         ->name('prompts.insight');
     Route::post('/prompts/{prompt}/versions/{version}/restore', [PromptController::class, 'restoreVersion'])

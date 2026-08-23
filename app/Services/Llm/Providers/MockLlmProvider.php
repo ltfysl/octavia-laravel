@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
  * Deterministic, credential-free provider used for local development,
  * demos, CI and tests.
  *
- * Three stable, testable modes keyed off system-prompt markers:
+ * Four stable, testable modes keyed off system-prompt markers:
  *
  * 1. Judge mode (`[OCTAVIA-JUDGE]`): scores how many meaningful words of
  *    the stated requirement appear in the model output. Deterministic.
@@ -18,7 +18,10 @@ use Illuminate\Support\Str;
  *    appending every unmet requirement it can find as an explicit bullet —
  *    which, combined with task-mode echo behaviour, lets the evolution
  *    engine demonstrably climb without any external API.
- * 3. Task mode: echoes the user input and repeats every explicit bullet /
+ * 3. Insight mode (`[OCTAVIA-INSIGHT]`): returns a short structured review
+ *    of a prompt or benchmark — structure score, clarity, measurability
+ *    and coverage. Used by the assistant and prompt-insight endpoints.
+ * 4. Task mode: echoes the user input and repeats every explicit bullet /
  *    numbered requirement found in the system prompt. Structured prompts
  *    (role definition, constraints, examples) produce richer output.
  */

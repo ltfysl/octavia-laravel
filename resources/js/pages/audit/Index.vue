@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
 import AppLayout from '../../layouts/AppLayout.vue';
 import OPanel from '../../components/ui/OPanel.vue';
 import OBadge from '../../components/ui/OBadge.vue';
 
-defineProps<{
+const props = defineProps<{
     logs: {
         data: Array<{
             id: number;
@@ -29,8 +29,30 @@ const severityTone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral'> = {
     error: 'rose',
 };
 
-const search = ref('');
-const severity = ref<'all' | 'info' | 'success' | 'warning' | 'error'>('all');
+const search = ref(props.filters.search ?? '');
+const severity = ref<'all' | 'info' | 'success' | 'warning' | 'error'>(
+    (props.filters.severity as any) ?? 'all',
+);
+
+// Server-side filtering — controller already supports category/severity/search
+let debounce: number | undefined;
+const applyFilters = () => {
+    router.get(
+        '/audit',
+        {
+            ...(search.value ? { search: search.value } : {}),
+            ...(severity.value !== 'all' ? { severity: severity.value } : {}),
+        },
+        { preserveState: true, preserveScroll: true, replace: true },
+    );
+};
+
+watch(search, () => {
+    window.clearTimeout(debounce);
+    debounce = window.setTimeout(applyFilters, 300);
+});
+
+watch(severity, applyFilters);
 </script>
 
 <template>

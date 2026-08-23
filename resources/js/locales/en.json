@@ -89,7 +89,10 @@
             "compareLabel": "Compare version",
             "pickTwo": "— pick two versions —"
         },
-        "playgroundHistory": "History · last {n}"
+        "playgroundHistory": "History · last {n}",
+        "insightTitle": "AI review",
+        "insightHint": "Get a quick review of the current prompt's clarity, structure and coverage.",
+        "insightButton": "Review prompt"
     },
     "benchmarks": {
         "title": "Benchmarks",
@@ -372,5 +375,15 @@
         "noneYet": "— no tournament yet —",
         "noneYetHint": "Pick a prompt, a benchmark and two providers, then start.",
         "processing": "runs may still be processing — refresh to update"
+    },
+    "assistant": {
+        "title": "Octavia Assistant",
+        "open": "Open AI assistant",
+        "close": "Close assistant",
+        "empty": "Ask me anything about prompts, benchmarks or runs.",
+        "placeholder": "Ask something…",
+        "send": "Send",
+        "thinking": "Thinking…",
+        "error": "The assistant is unavailable right now."
     }
 }

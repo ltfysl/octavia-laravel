@@ -157,6 +157,34 @@ const saveAsVersion = () => {
         },
     });
 };
+const insight = ref<string | null>(null);
+const insightLoading = ref(false);
+const insightError = ref('');
+
+const runInsight = async () => {
+    insightLoading.value = true;
+    insightError.value = '';
+    insight.value = null;
+
+    try {
+        const res = await fetch(`/prompts/${props.prompt.id}/insight`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content ?? '',
+                Accept: 'application/json',
+            },
+            credentials: 'include',
+        });
+        if (! res.ok) throw new Error();
+        const data: { insight: string } = await res.json();
+        insight.value = data.insight;
+    } catch {
+        insightError.value = t('common.error');
+    } finally {
+        insightLoading.value = false;
+    }
+};
 </script>
 
 <template>
@@ -287,7 +315,30 @@ const saveAsVersion = () => {
                         </ul>
                     </div>
                 </OPanel>
-        </div>
+
+                <!-- AI Insights — on-demand prompt review -->
+                <OPanel :title="t('prompts.insightTitle')" class="glass">
+                    <p class="mb-3 text-xs leading-relaxed text-ink-500">{{ t('prompts.insightHint') }}</p>
+                    <OButton
+                        variant="secondary"
+                        size="sm"
+                        class="w-full hover-glow-emerald"
+                        :class="insightLoading ? 'shimmer' : ''"
+                        :disabled="insightLoading"
+                        @click="runInsight"
+                    >
+                        <span v-if="insightLoading" class="icon-pulse">●</span>
+                        <span v-else>✦</span> {{ insightLoading ? t('common.loading') : t('prompts.insightButton') }}
+                    </OButton>
+                    <div v-if="insightLoading" class="mt-3 space-y-2">
+                        <div class="h-3 w-full rounded bg-ink-100 shimmer" />
+                        <div class="h-3 w-5/6 rounded bg-ink-100 shimmer" />
+                    </div>
+                    <pre v-else-if="insight" class="scroll-thin mt-3 max-h-64 overflow-auto whitespace-pre-wrap rounded-xl border border-emerald-200 bg-emerald-50/40 p-4 font-mono text-xs leading-relaxed text-emerald-900 dark:bg-emerald-950/20">{{ insight }}</pre>
+                    <p v-else-if="insightError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ insightError }}</p>
+                </OPanel>
+
+            </div>
         </div>
 
 

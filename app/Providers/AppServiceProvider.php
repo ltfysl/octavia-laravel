@@ -33,6 +33,11 @@ class AppServiceProvider extends ServiceProvider
             (int) config('llm.run_quota_per_day', 50),
         )->by('run:'.$request->user()?->id));
 
+        // General-purpose AI assistant (chat) — per-minute, user-keyed.
+        RateLimiter::for('assistant', fn (Request $request) => Limit::perMinute(10)->by(
+            'assistant:'.($request->user()?->id ?? $request->ip()),
+        ));
+
         // Resolve the configured default provider whenever the interface
         // is requested (e.g., RunPlayground).
         $this->app->bind(

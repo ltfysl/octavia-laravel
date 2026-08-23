@@ -89,7 +89,10 @@
             "compareLabel": "Vergleichsversion",
             "pickTwo": "— zwei Versionen wählen —"
         },
-        "playgroundHistory": "Verlauf · letzte {n}"
+        "playgroundHistory": "Verlauf · letzte {n}",
+        "insightTitle": "KI-Review",
+        "insightHint": "Bewerte den aktuellen Prompt auf Klarheit, Struktur und Abdeckung.",
+        "insightButton": "Prompt bewerten"
     },
     "benchmarks": {
         "title": "Benchmarks",
@@ -371,5 +374,15 @@
         "noneYet": "— noch kein Turnier —",
         "noneYetHint": "Prompt, Benchmark und zwei Provider wählen, dann starten.",
         "processing": "Runs laufen ggf. noch — Seite aktualisieren zum Aktualisieren"
+    },
+    "assistant": {
+        "title": "Octavia Assistent",
+        "open": "KI-Assistent öffnen",
+        "close": "Assistenten schließen",
+        "empty": "Frag mich alles zu Prompts, Benchmarks oder Läufen.",
+        "placeholder": "Frag etwas…",
+        "send": "Senden",
+        "thinking": "Denke nach…",
+        "error": "Der Assistent ist gerade nicht erreichbar."
     }
 }

@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
+import OAssistantChat from '../components/OAssistantChat.vue';
 
 const page = usePage<{ auth: { user: { id: number; name: string; is_admin?: boolean; email_verified_at?: string | null } | null } }>();
 const { t } = useI18n();
@@ -315,5 +316,6 @@ if (typeof window !== 'undefined') {
                 </div>
             </div>
         </div>
+        <OAssistantChat v-if="user" />
     </div>
 </template>

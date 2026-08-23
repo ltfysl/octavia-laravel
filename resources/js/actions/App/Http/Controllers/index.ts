@@ -5,6 +5,7 @@ import Auth from './Auth'
 import DashboardController from './DashboardController'
 import OnboardingController from './OnboardingController'
 import PromptController from './PromptController'
+import PromptInsightController from './PromptInsightController'
 import PromptExportController from './PromptExportController'
 import PromptImportController from './PromptImportController'
 import CollectionController from './CollectionController'
@@ -12,6 +13,7 @@ import BenchmarkController from './BenchmarkController'
 import BenchmarkExportController from './BenchmarkExportController'
 import BenchmarkImportController from './BenchmarkImportController'
 import RunController from './RunController'
+import AssistantController from './AssistantController'
 import AuditLogController from './AuditLogController'
 import TournamentController from './TournamentController'
 import MarketplaceController from './MarketplaceController'
@@ -29,6 +31,7 @@ const Controllers = {
     DashboardController: Object.assign(DashboardController, DashboardController),
     OnboardingController: Object.assign(OnboardingController, OnboardingController),
     PromptController: Object.assign(PromptController, PromptController),
+    PromptInsightController: Object.assign(PromptInsightController, PromptInsightController),
     PromptExportController: Object.assign(PromptExportController, PromptExportController),
     PromptImportController: Object.assign(PromptImportController, PromptImportController),
     CollectionController: Object.assign(CollectionController, CollectionController),
@@ -36,6 +39,7 @@ const Controllers = {
     BenchmarkExportController: Object.assign(BenchmarkExportController, BenchmarkExportController),
     BenchmarkImportController: Object.assign(BenchmarkImportController, BenchmarkImportController),
     RunController: Object.assign(RunController, RunController),
+    AssistantController: Object.assign(AssistantController, AssistantController),
     AuditLogController: Object.assign(AuditLogController, AuditLogController),
     TournamentController: Object.assign(TournamentController, TournamentController),
     MarketplaceController: Object.assign(MarketplaceController, MarketplaceController),

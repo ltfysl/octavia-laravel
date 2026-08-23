@@ -40,8 +40,25 @@ class MockLlmProvider implements LlmProvider
         return match (true) {
             Str::contains($system, '[OCTAVIA-JUDGE]') => $this->judge($user),
             Str::contains($system, '[OCTAVIA-OPTIMIZER]') => $this->optimize($user),
+            Str::contains($system, '[OCTAVIA-INSIGHT]') => $this->insight($user),
             default => $this->task($system, $user),
         };
+    }
+
+    /**
+     * Prompt-review branch for the [OCTAVIA-INSIGHT] system marker.
+     * Deterministic: reports structure score and requirement coverage.
+     */
+    private function insight(string $user): LlmResponse
+    {
+        $lines = [
+            '- Structure: '.($this->structureScore($user) >= 1 ? 'good — the prompt uses explicit sections' : 'add explicit sections (role, task, requirements)'),
+            '- Clarity: keep instructions short and imperative; avoid nested conditionals',
+            '- Measurability: '.(count($this->extractRequirements($user)) >= 1 ? 'requirements detected — map each to a benchmark case' : 'no bullet requirements found — add 2-3 measurable criteria'),
+            '- Coverage: add one adversarial case (empty input, very long input) to your benchmark',
+        ];
+
+        return new LlmResponse(implode("\n", $lines), Str::wordCount($user), Str::wordCount(implode("\n", $lines)));
     }
 
     private function judge(string $user): LlmResponse

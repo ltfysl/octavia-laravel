@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PromptController;
 use App\Http\Controllers\PromptExportController;
 use App\Http\Controllers\PromptImportController;
+use App\Http\Controllers\PromptInsightController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
@@ -84,6 +86,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('prompts', PromptController::class)->only(['index', 'create', 'store', 'show', 'update', 'destroy']);
     Route::post('/prompts/{prompt}/playground', [PromptController::class, 'playground'])->name('prompts.playground');
     Route::get('/prompts/{prompt}/diff', [PromptController::class, 'diff'])->name('prompts.diff');
+    Route::post('/prompts/{prompt}/insight', PromptInsightController::class)
+        ->middleware('throttle:assistant')
+        ->name('prompts.insight');
     Route::post('/prompts/{prompt}/versions/{version}/restore', [PromptController::class, 'restoreVersion'])
         ->name('prompts.restore');
     Route::get('/prompts/{prompt}/export', PromptExportController::class)->name('prompts.export');
@@ -102,6 +107,9 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:runs')
         ->name('runs.store');
     Route::get('/runs/{run}/status', [RunController::class, 'status'])->name('runs.status');
+    Route::post('/assistant/chat', AssistantController::class)
+        ->middleware('throttle:assistant')
+        ->name('assistant.chat');
     Route::post('/runs/{run}/cancel', [RunController::class, 'cancel'])->name('runs.cancel');
 
     Route::get('/audit', [AuditLogController::class, 'index'])->name('audit.index');

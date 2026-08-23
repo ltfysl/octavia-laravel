@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import AppLayout from '../../layouts/AppLayout.vue';
@@ -47,6 +47,43 @@ const dirty = computed(() => form.content !== (props.prompt.content ?? ''));
 const compareWith = ref<number | null>(null);
 const currentContent = computed(() => props.prompt.content ?? '');
 
+// Diff between ANY two historical versions — hits the backend LCS endpoint
+const diffFrom = ref<number | null>(null);
+const diffTo = ref<number | null>(null);
+const diffOps = ref<Array<{ op: string; text: string }> | null>(null);
+const diffMeta = ref<{ from: number; to: number } | null>(null);
+const diffLoading = ref(false);
+
+const loadDiff = async () => {
+    if (!diffFrom.value || !diffTo.value || diffFrom.value === diffTo.value) return;
+    diffLoading.value = true;
+    try {
+        const res = await fetch(
+            `/prompts/${props.prompt.id}/diff?from=${diffFrom.value}&to=${diffTo.value}`,
+            { headers: { Accept: 'application/json' } },
+        );
+        if (!res.ok) throw new Error('diff failed');
+        const data: { ops: Array<{ op: string; text: string }>; from: { id: number }; to: { id: number } } = await res.json();
+        diffOps.value = data.ops;
+        diffMeta.value = { from: data.from.id, to: data.to.id };
+    } catch {
+        diffOps.value = null;
+        diffMeta.value = null;
+    } finally {
+        diffLoading.value = false;
+    }
+};
+
+// default pair: oldest -> current version
+watch(() => props.prompt.versions, (versions: Array<{ id: number; version: number }>) => {
+    if (versions.length >= 2 && !diffFrom.value) {
+        diffFrom.value = versions[versions.length - 1].id;
+        diffTo.value = versions[0].id;
+    }
+}, { immediate: true });
+
+const playgroundHistory = ref<Array<{ input: string; output: string; at: string }>>([]);
+
 const playgroundInput = ref('');
 const playgroundOutput = ref<string | null>(null);
 const playgroundLoading = ref(false);
@@ -78,6 +115,8 @@ const runPlayground = async () => {
 
         const data: { output: string } = await res.json();
         playgroundOutput.value = data.output;
+        playgroundHistory.value.unshift({ input: playgroundInput.value, output: data.output, at: new Date().toISOString() });
+        playgroundHistory.value = playgroundHistory.value.slice(0, 5);
     } catch {
         playgroundError.value = t('common.error');
     } finally {
@@ -231,6 +270,22 @@ const saveAsVersion = () => {
                         <button type="button" class="absolute right-2 top-2 rounded-md bg-card/10 px-2 py-1 font-mono text-xs text-white backdrop-blur hover:bg-card/20" @click="copyOutput">Copy</button>
                     </div>
                     <p v-if="playgroundError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ playgroundError }}</p>
+                    <div v-if="playgroundHistory.length > 0" class="mt-4 border-t border-dashed border-ink-100 pt-3">
+                        <p class="eyebrow mb-2">History · last {{ playgroundHistory.length }}</p>
+                        <ul class="space-y-1.5">
+                            <li v-for="(h, hi) in playgroundHistory" :key="hi">
+                                <button
+                                    type="button"
+                                    class="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left transition hover:bg-paper-200/60"
+                                    @click="playgroundInput = h.input; playgroundOutput = h.output"
+                                >
+                                    <span class="font-mono text-[10px] text-ink-300">{{ new Date(h.at).toLocaleTimeString() }}</span>
+                                    <span class="min-w-0 flex-1 truncate text-xs text-ink-600">{{ h.input }}</span>
+                                    <svg class="h-3 w-3 shrink-0 text-ink-300" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992V4.356m0 4.992c-1.11-3.036-4.047-5.198-7.5-5.198-4.008 0-7.26 3.09-7.5 7.02m19.5 0a8.188 8.188 0 01-1.56 4.86m-17.94-4.86a8.188 8.188 0 001.56 4.86" /></svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </OPanel>
         </div>
         </div>
@@ -238,6 +293,35 @@ const saveAsVersion = () => {
 
         <!-- Versions tab -->
         <div v-else class="mt-6 space-y-4">
+            <!-- Compare any two historical versions (backend LCS endpoint) -->
+            <OPanel title="Diff">
+                <div class="flex flex-wrap items-center gap-2">
+                    <select v-model="diffFrom" class="rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" aria-label="Base version">
+                        <option v-for="v in prompt.versions" :key="'f' + v.id" :value="v.id">v{{ v.version }}</option>
+                    </select>
+                    <span class="font-mono text-xs text-ink-400">→</span>
+                    <select v-model="diffTo" class="rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" aria-label="Compare version">
+                        <option v-for="v in prompt.versions" :key="'t' + v.id" :value="v.id">v{{ v.version }}</option>
+                    </select>
+                    <OButton variant="secondary" size="sm" :disabled="diffLoading || !diffFrom || !diffTo || diffFrom === diffTo" @click="loadDiff">
+                        {{ diffLoading ? '…' : t('prompts.diff.compare') }}
+                    </OButton>
+                    <span v-if="diffMeta" class="ml-auto font-mono text-xs text-ink-400">
+                        v{{ prompt.versions.find((v) => v.id === diffMeta!.from)?.version }} → v{{ prompt.versions.find((v) => v.id === diffMeta!.to)?.version }}
+                    </span>
+                </div>
+                <div v-if="diffOps" class="scroll-thin mt-3 max-h-96 overflow-auto rounded-xl border border-ink-100 bg-paper-100/60 dark:bg-paper-100/40 p-3 font-mono text-xs leading-relaxed">
+                    <div
+                        v-for="(line, i) in diffOps"
+                        :key="i"
+                        class="whitespace-pre-wrap rounded px-2 py-0.5"
+                        :class="line.op === 'delete' ? 'bg-rose-450/10 text-ink-900' : line.op === 'insert' ? 'bg-mint-500/10 text-ink-900' : 'text-ink-500'"
+                    >
+                        <span class="select-none font-bold" :class="line.op === 'delete' ? 'text-rose-450' : line.op === 'insert' ? 'text-mint-600' : 'text-ink-300'">{{ line.op === 'delete' ? '-' : line.op === 'insert' ? '+' : ' ' }}</span>{{ line.text }}
+                    </div>
+                </div>
+                <p v-else class="mt-3 text-center font-mono text-xs text-ink-300">— pick two versions —</p>
+            </OPanel>
             <OPanel v-for="version in prompt.versions" :key="version.id">
                 <template #actions>
                     <div class="flex items-center gap-2">

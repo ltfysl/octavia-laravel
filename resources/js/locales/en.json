@@ -542,7 +542,8 @@
     "exportCsv": "Export CSV",
     "total": "Total",
     "copied": "Copied!",
-    "duplicate": "Duplicate"
+    "duplicate": "Duplicate",
+    "importJson": "Import JSON"
   },
   "notifications": {
     "unreadCount": "{count} unread",

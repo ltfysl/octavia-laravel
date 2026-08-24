@@ -60,4 +60,6 @@
 - [x] Round 22: run-detail AI diagnosis for failed/cancelled runs, assistant recommendations on reports
 - [x] Round 22b: per-prompt analytics (runs, avg/best score, score-over-time, per-benchmark breakdown)
 - [x] Round 22c: A/B testing for prompts (compare two versions against the same benchmark)
-- [x] **141 Pest tests / 500 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
+- [x] Round 22d: regression testing for prompts (test current version against all/category benchmarks; optional sample-input override; per-benchmark pass/fail results)
+- [x] Round 22d: add `category` column to `prompts` with index/fillable/migration
+- [x] **155 Pest tests / 572 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green

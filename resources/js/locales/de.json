@@ -91,7 +91,28 @@
     "specimens": "Exemplare",
     "promptSpecimens": "Prompt-Exemplare",
     "wideDataStream": "Datenstrom",
-    "viewAll": "Alle ansehen"
+    "viewAll": "Alle ansehen",
+    "atAGlance": "AUF EINEN BLICK",
+    "peak": "GIPFEL",
+    "active": "Aktiv",
+    "waypointReached": "Wegpunkt erreicht",
+    "intelligentList": "Intelligente Liste",
+    "recentExpeditions": "Jüngste Expeditionen",
+    "focusMode": "Fokusmodus",
+    "currentPrompt": "Aktueller Prompt",
+    "performance": "Performance",
+    "scoreEvolution": "Score-Entwicklung",
+    "specimensByField": "Exemplare nach Feld",
+    "suitesByField": "Suites nach Feld",
+    "scoreRanges": "Score-Bereiche",
+    "nRuns": "{count} Runs",
+    "fieldActions": {
+      "title": "Feldaktionen",
+      "evaluateOrEvolve": "Evaluieren oder evolvieren",
+      "newSpecimen": "Neues Exemplar",
+      "buildSuite": "Suite bauen",
+      "community": "Community"
+    }
   },
   "prompts": {
     "title": "Prompts",

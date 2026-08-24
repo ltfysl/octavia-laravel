@@ -196,7 +196,7 @@ onMounted(() => {
                                 <span ref="scrambleRef" class="relative z-10 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">laboratory</span>
                                 <span class="absolute inset-0 bg-gradient-to-r from-accent-400 via-white to-accent-400 bg-clip-text text-transparent opacity-0 animate-[shimmer_3s_linear_infinite]" aria-hidden="true">laboratory</span>
                             </span>
-                            <span class="ml-3 inline-flex -translate-y-2 rounded-full bg-accent-600 px-3 py-1 font-mono text-xs font-bold tracking-widest text-ink-950">AT A GLANCE</span>
+                            <span class="ml-3 inline-flex -translate-y-2 rounded-full bg-accent-600 px-3 py-1 font-mono text-xs font-bold tracking-widest text-ink-950">{{ t('dashboard.atAGlance') }}</span>
                         </h1>
                         <p class="mt-4 max-w-[52ch] text-base leading-relaxed text-white/60">
                             {{ t('dashboard.subtitle') }} — traverse the fitness landscape. Every run is an expedition, every version a waypoint.
@@ -232,7 +232,7 @@ onMounted(() => {
                             <div class="relative">
                                 <div class="flex items-center justify-between">
                                     <p class="eyebrow !text-ink-400">Best avg. score — elevation</p>
-                                    <span class="rounded-full bg-ink-950 px-2.5 py-1 font-mono text-xs font-medium text-white">PEAK</span>
+                                    <span class="rounded-full bg-ink-950 px-2.5 py-1 font-mono text-xs font-medium text-white">{{ t('dashboard.peak') }}</span>
                                 </div>
                                 <div class="mt-3 flex items-baseline gap-3">
                                     <span class="display-hero text-6xl font-extrabold tracking-tighter text-ink-950 md:text-7xl">{{ animated.bestScore }}<span class="text-accent-600">%</span></span>
@@ -243,17 +243,17 @@ onMounted(() => {
                                 </div>
                                 <div class="mt-5 grid grid-cols-3 gap-3 border-t border-ink-100 pt-5">
                                     <div>
-                                        <p class="font-mono text-[11px] uppercase tracking-wide text-ink-300">Prompts</p>
+                                        <p class="font-mono text-[11px] uppercase tracking-wide text-ink-300">{{ t('nav.prompts') }}</p>
                                         <p class="font-display text-2xl font-bold text-ink-950">{{ animated.prompts }}</p>
                                         <div class="mt-1 h-1 overflow-hidden rounded-full bg-ink-100"><div class="h-full w-2/3 bg-ink-900" /></div>
                                     </div>
                                     <div class="border-l border-ink-100 pl-3">
-                                        <p class="font-mono text-[11px] uppercase tracking-wide text-ink-300">Suites</p>
+                                        <p class="font-mono text-[11px] uppercase tracking-wide text-ink-300">{{ t('nav.benchmarks') }}</p>
                                         <p class="font-display text-2xl font-bold text-ink-950">{{ animated.benchmarks }}</p>
                                         <div class="mt-1 h-1 overflow-hidden rounded-full bg-ink-100"><div class="h-full w-1/2 bg-ink-900" /></div>
                                     </div>
                                     <div class="border-l border-ink-100 pl-3">
-                                        <p class="font-mono text-[11px] uppercase tracking-wide text-ink-300">Active</p>
+                                        <p class="font-mono text-[11px] uppercase tracking-wide text-ink-300">{{ t('dashboard.active') }}</p>
                                         <p class="font-display text-2xl font-bold text-ink-950">{{ animated.activeRuns }}</p>
                                         <div class="mt-1 flex items-center gap-1"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" /><span class="h-1 w-12 rounded-full bg-emerald-500" /></div>
                                     </div>
@@ -264,7 +264,7 @@ onMounted(() => {
                         <div class="absolute -bottom-4 -left-4 hidden items-center gap-3 rounded-2xl border border-white/20 bg-card px-4 py-3 shadow-[0_16px_32px_rgba(0,0,0,0.2)] lg:flex">
                             <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent-600 text-ink-950">▲</span>
                             <div class="text-xs leading-tight">
-                                <p class="font-semibold text-ink-950">Waypoint reached</p>
+                                <p class="font-semibold text-ink-950">{{ t('dashboard.waypointReached') }}</p>
                                 <p class="font-mono text-ink-400">interpolated · 80%</p>
                             </div>
                         </div>
@@ -284,10 +284,10 @@ onMounted(() => {
                 <!-- Intelligent List -->
                 <div class="group relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4" style="--index:0">
                     <div class="flex items-center justify-between">
-                        <p class="eyebrow">Intelligent list</p>
+                        <p class="eyebrow">{{ t('dashboard.intelligentList') }}</p>
                         <span class="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
                     </div>
-                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Recent expeditions</h3>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.recentExpeditions') }}</h3>
                     <ul class="mt-4 space-y-2">
                         <li v-for="(run, i) in recentRuns.slice(0, 4)" :key="run.id" class="flex items-center gap-3 rounded-2xl border border-transparent bg-paper-100/70 px-3 py-2.5 transition-all duration-300" :style="`animation-delay: ${i * 90}ms`">
                             <span class="flex h-7 w-7 items-center justify-center rounded-full bg-card text-[11px] font-bold text-ink-700 shadow-sm">{{ String(i+1).padStart(2,'0') }}</span>
@@ -383,8 +383,8 @@ onMounted(() => {
 
                 <!-- Contextual UI — focus mode -->
                 <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4 flex flex-col" style="--index:4">
-                    <p class="eyebrow">Focus mode</p>
-                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Current prompt</h3>
+                    <p class="eyebrow">{{ t('dashboard.focusMode') }}</p>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.currentPrompt') }}</h3>
                     <div class="mt-4 rounded-2xl border border-ink-100 bg-paper-50 p-4 font-mono text-xs leading-relaxed text-ink-700">
                         <span>You are a marketing assistant.</span>
                         <mark class="rounded bg-accent-200 px-1 py-0.5 font-medium text-ink-900">Write a tagline for the product the user describes.</mark>
@@ -407,10 +407,10 @@ onMounted(() => {
             <section class="mt-4 overflow-hidden rounded-[2rem] border border-slate-200 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="eyebrow">Performance</p>
-                        <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink-950">Score evolution</h3>
+                        <p class="eyebrow">{{ t('dashboard.performance') }}</p>
+                        <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.scoreEvolution') }}</h3>
                     </div>
-                    <span class="rounded-full bg-ink-950 px-3 py-1 font-mono text-xs text-white">{{ recentRuns.length }} runs</span>
+                    <span class="rounded-full bg-ink-950 px-3 py-1 font-mono text-xs text-white">{{ t('dashboard.nRuns', { count: recentRuns.length }) }}</span>
                 </div>
                 <div class="mt-6 h-40 w-full">
                     <svg v-if="chartData.length > 1" :viewBox="`0 0 ${chartWidth} 100`" class="h-full w-full overflow-visible" preserveAspectRatio="none" aria-hidden="true">
@@ -467,7 +467,7 @@ onMounted(() => {
             <!-- Field Actions — keep but more compact, after bento -->
             <section class="mt-8">
                 <div class="flex items-center justify-between">
-                    <h2 class="eyebrow">Field actions</h2>
+                    <h2 class="eyebrow">{{ t('dashboard.fieldActions.title') }}</h2>
                     <span class="hidden sm:inline font-mono text-xs text-ink-300">01 — 04</span>
                 </div>
                 <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -477,7 +477,7 @@ onMounted(() => {
                         <p class="mt-4 font-display text-sm font-semibold">{{ t('dashboard.startRun') }}</p>
                         <p class="mt-1 text-xs leading-relaxed text-white/60">Evaluate or evolve</p>
                     </Link>
-                    <Link v-for="act in [{n:'02', title: t('dashboard.createPrompt'), desc:'New specimen', href:'/prompts/create'}, {n:'03', title: t('dashboard.createBenchmark'), desc:'Build suite', href:'/benchmarks/wizard'}, {n:'04', title: t('dashboard.browseMarketplace'), desc:'Community', href:'/marketplace'}]" :key="act.n" :href="act.href" class="group rounded-2xl border border-ink-100 bg-card p-5 transition-all hover:border-ink-200 hover:shadow-[0_16px_30px_rgba(14,26,29,0.06)] active:scale-[0.98]">
+                    <Link v-for="act in [{n:'02', title: t('dashboard.createPrompt'), desc:t('dashboard.fieldActions.newSpecimen'), href:'/prompts/create'}, {n:'03', title: t('dashboard.createBenchmark'), desc:t('dashboard.fieldActions.buildSuite'), href:'/benchmarks/wizard'}, {n:'04', title: t('dashboard.browseMarketplace'), desc:t('dashboard.fieldActions.community'), href:'/marketplace'}]" :key="act.n" :href="act.href" class="group rounded-2xl border border-ink-100 bg-card p-5 transition-all hover:border-ink-200 hover:shadow-[0_16px_30px_rgba(14,26,29,0.06)] active:scale-[0.98]">
                         <div class="flex items-center justify-between"><span class="font-mono text-xs text-ink-300">{{ act.n }}</span><span class="h-2 w-2 rotate-45 bg-ink-200 group-hover:bg-accent-500 transition-colors" /></div>
                         <p class="mt-3 font-display text-sm font-semibold text-ink-950">{{ act.title }}</p>
                         <p class="mt-1 text-xs text-ink-500">{{ act.desc }}</p>
@@ -529,7 +529,7 @@ onMounted(() => {
             <section v-if="promptCategories.length || benchmarkCategories.length || scoreDistribution.length" class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
                 <div v-if="promptCategories.length" class="overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
                     <p class="eyebrow">{{ t('dashboard.categories.prompts') }}</p>
-                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Specimens by field</h3>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.specimensByField') }}</h3>
                     <div class="mt-4 space-y-3">
                         <div v-for="cat in promptCategories" :key="cat.label" class="space-y-1">
                             <div class="flex items-center justify-between text-sm">
@@ -545,7 +545,7 @@ onMounted(() => {
 
                 <div v-if="benchmarkCategories.length" class="overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
                     <p class="eyebrow">{{ t('dashboard.categories.benchmarks') }}</p>
-                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Suites by field</h3>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.suitesByField') }}</h3>
                     <div class="mt-4 space-y-3">
                         <div v-for="cat in benchmarkCategories" :key="cat.label" class="space-y-1">
                             <div class="flex items-center justify-between text-sm">
@@ -561,7 +561,7 @@ onMounted(() => {
 
                 <div v-if="scoreDistribution.length" class="overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
                     <p class="eyebrow">{{ t('dashboard.distribution.title') }}</p>
-                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Score ranges</h3>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.scoreRanges') }}</h3>
                     <div class="mt-4 space-y-3">
                         <div v-for="bucket in scoreDistribution" :key="bucket.range" class="space-y-1">
                             <div class="flex items-center justify-between text-sm">

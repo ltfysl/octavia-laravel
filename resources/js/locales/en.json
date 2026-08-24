@@ -91,7 +91,28 @@
     "specimens": "specimens",
     "promptSpecimens": "Prompt specimens",
     "wideDataStream": "Wide data stream",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "atAGlance": "AT A GLANCE",
+    "peak": "PEAK",
+    "active": "Active",
+    "waypointReached": "Waypoint reached",
+    "intelligentList": "Intelligent list",
+    "recentExpeditions": "Recent expeditions",
+    "focusMode": "Focus mode",
+    "currentPrompt": "Current prompt",
+    "performance": "Performance",
+    "scoreEvolution": "Score evolution",
+    "specimensByField": "Specimens by field",
+    "suitesByField": "Suites by field",
+    "scoreRanges": "Score ranges",
+    "nRuns": "{count} runs",
+    "fieldActions": {
+      "title": "Field actions",
+      "evaluateOrEvolve": "Evaluate or evolve",
+      "newSpecimen": "New specimen",
+      "buildSuite": "Build suite",
+      "community": "Community"
+    }
   },
   "prompts": {
     "title": "Prompts",

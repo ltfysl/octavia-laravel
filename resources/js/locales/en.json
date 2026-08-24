@@ -84,7 +84,14 @@
     "autoSorting": "auto-sorting · AI prioritized",
     "idle": "Idle — no active expeditions",
     "commandInput": "Command input",
-    "askOctavia": "Ask Octavia"
+    "askOctavia": "Ask Octavia",
+    "liveStatus": "Live status",
+    "fieldActivity": "Field activity",
+    "climbing": "climbing",
+    "specimens": "specimens",
+    "promptSpecimens": "Prompt specimens",
+    "wideDataStream": "Wide data stream",
+    "viewAll": "View all"
   },
   "prompts": {
     "title": "Prompts",

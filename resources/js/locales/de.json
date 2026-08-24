@@ -84,7 +84,14 @@
     "autoSorting": "auto-sortiert · KI priorisiert",
     "idle": "Inaktiv — keine laufenden Expeditionen",
     "commandInput": "Befehlseingabe",
-    "askOctavia": "Frag Octavia"
+    "askOctavia": "Frag Octavia",
+    "liveStatus": "Live-Status",
+    "fieldActivity": "Feldbus",
+    "climbing": "steigend",
+    "specimens": "Exemplare",
+    "promptSpecimens": "Prompt-Exemplare",
+    "wideDataStream": "Datenstrom",
+    "viewAll": "Alle ansehen"
   },
   "prompts": {
     "title": "Prompts",

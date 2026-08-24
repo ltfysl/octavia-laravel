@@ -208,7 +208,7 @@ onMounted(() => {
                             </Link>
                             <div class="flex items-center gap-3 rounded-full border border-white/10 bg-card/5 px-4 py-2 backdrop-blur">
                                 <span class="flex h-6 w-6 items-center justify-center rounded-full bg-card/10 text-white text-xs">◈</span>
-                                <span class="font-mono text-xs text-white/70">{{ animated.prompts }} specimens · {{ animated.benchmarks }} suites</span>
+                                <span class="font-mono text-xs text-white/70">{{ animated.prompts }} {{ t('dashboard.specimens') }} · {{ animated.benchmarks }} suites</span>
                             </div>
                         </div>
                         <div class="mt-6 flex items-center gap-4 font-mono text-xs text-white/40">
@@ -331,8 +331,8 @@ onMounted(() => {
                 <!-- Live Status — breathing -->
                 <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 pinned-dark p-6 text-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] md:col-span-4 flex flex-col" style="--index:2">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent" aria-hidden="true" />
-                    <p class="eyebrow !text-white/50">Live status</p>
-                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight">Field activity</h3>
+                    <p class="eyebrow !text-white/50">{{ t('dashboard.liveStatus') }}</p>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight">{{ t('dashboard.fieldActivity') }}</h3>
                     <div class="mt-4 flex-1 space-y-3">
                         <div v-for="run in (liveRuns.length ? liveRuns : recentRuns.slice(0,2))" :key="run.id" class="flex items-center gap-3 rounded-2xl border border-white/10 bg-card/[0.06] px-3 py-2.5 backdrop-blur">
                             <span class="relative flex h-2.5 w-2.5">
@@ -345,8 +345,8 @@ onMounted(() => {
                         <div v-if="recentRuns.length===0" class="rounded-2xl border border-white/10 px-3 py-6 text-center text-sm text-white/60">{{ t('dashboard.idle') }}</div>
                     </div>
                     <div class="mt-4 flex items-center gap-2 rounded-full bg-card/10 px-3 py-2 text-xs">
-                        <span class="h-2 w-2 rounded-full bg-emerald-400" /> {{ animated.activeRuns }} climbing
-                        <span class="ml-auto font-mono text-white/60">{{ animated.prompts }} specimens</span>
+                        <span class="h-2 w-2 rounded-full bg-emerald-400" /> {{ animated.activeRuns }} {{ t('dashboard.climbing') }}
+                        <span class="ml-auto font-mono text-white/60">{{ animated.prompts }} {{ t('dashboard.specimens') }}</span>
                     </div>
                 </div>
 
@@ -354,10 +354,10 @@ onMounted(() => {
                 <div class="group relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-0 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-8" style="--index:3">
                     <div class="flex items-center justify-between px-6 pt-6">
                         <div>
-                            <p class="eyebrow">Wide data stream</p>
-                            <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink-950">Prompt specimens</h3>
+                            <p class="eyebrow">{{ t('dashboard.wideDataStream') }}</p>
+                            <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.promptSpecimens') }}</h3>
                         </div>
-                        <Link href="/prompts" class="rounded-full border border-ink-100 bg-card px-3 py-1 text-xs font-medium text-ink-600 hover:bg-paper-50">View all →</Link>
+                        <Link href="/prompts" class="rounded-full border border-ink-100 bg-card px-3 py-1 text-xs font-medium text-ink-600 hover:bg-paper-50">{{ t('dashboard.viewAll') }} →</Link>
                     </div>
                     <div class="relative mt-4 overflow-hidden border-y border-ink-50 bg-paper-50/60 py-4">
                         <div class="flex w-max animate-[marquee_22s_linear_infinite] gap-3 pl-6 group-hover:[animation-play-state:paused]">

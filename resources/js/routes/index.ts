@@ -430,6 +430,50 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\ActivityController::activity
+* @see app/Http/Controllers/ActivityController.php:16
+* @route '/activity'
+*/
+export const activity = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: activity.url(options),
+    method: 'get',
+})
+
+activity.definition = {
+    methods: ["get","head"],
+    url: '/activity',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\ActivityController::activity
+* @see app/Http/Controllers/ActivityController.php:16
+* @route '/activity'
+*/
+activity.url = (options?: RouteQueryOptions) => {
+    return activity.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\ActivityController::activity
+* @see app/Http/Controllers/ActivityController.php:16
+* @route '/activity'
+*/
+activity.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: activity.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\ActivityController::activity
+* @see app/Http/Controllers/ActivityController.php:16
+* @route '/activity'
+*/
+activity.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: activity.url(options),
+    method: 'head',
+})
+
+/**
 * @see \App\Http\Controllers\SearchController::__invoke
 * @see app/Http/Controllers/SearchController.php:15
 * @route '/search'

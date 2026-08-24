@@ -1,4 +1,5 @@
 import Api from './Api'
+import ActivityController from './ActivityController'
 import SitemapController from './SitemapController'
 import LandingController from './LandingController'
 import Auth from './Auth'
@@ -36,6 +37,7 @@ import Admin from './Admin'
 
 const Controllers = {
     Api: Object.assign(Api, Api),
+    ActivityController: Object.assign(ActivityController, ActivityController),
     SitemapController: Object.assign(SitemapController, SitemapController),
     LandingController: Object.assign(LandingController, LandingController),
     Auth: Object.assign(Auth, Auth),

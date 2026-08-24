@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ApiKeyController;
 use App\Http\Controllers\AssistantController;
@@ -90,6 +91,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/activity', [ActivityController::class, 'index'])->name('activity');
 
     Route::get('/welcome', [OnboardingController::class, 'welcome'])->name('onboarding.welcome');
     Route::post('/welcome/complete', [OnboardingController::class, 'complete'])->name('onboarding.complete');

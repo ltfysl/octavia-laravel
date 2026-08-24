@@ -17,7 +17,8 @@
     "search": "Search",
     "tournaments": "Tournaments",
     "audit": "Audit log",
-    "reports": "Reports"
+    "reports": "Reports",
+    "activity": "Activity"
   },
   "verification": {
     "banner": "Verify your email address to unlock all features.",
@@ -510,5 +511,11 @@
     "lastRun": "Last run",
     "score": "Score",
     "recommendationButton": "Ask for recommendations"
+  },
+  "activity": {
+    "title": "Activity",
+    "subtitle": "Recent runs, prompts, benchmarks and notifications.",
+    "empty": "No activity yet",
+    "emptyHint": "Create a prompt or run a benchmark to see your feed here."
   }
 }

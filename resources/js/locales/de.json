@@ -17,7 +17,8 @@
     "search": "Suchen",
     "tournaments": "Turniere",
     "audit": "Audit-Log",
-    "reports": "Berichte"
+    "reports": "Berichte",
+    "activity": "Aktivität"
   },
   "verification": {
     "banner": "Bestätige deine E-Mail-Adresse, um alle Funktionen freizuschalten.",
@@ -522,5 +523,11 @@
     "lastRun": "Letzter Lauf",
     "score": "Score",
     "recommendationButton": "Empfehlungen einholen"
+  },
+  "activity": {
+    "title": "Aktivität",
+    "subtitle": "Neueste Runs, Prompts, Benchmarks und Benachrichtigungen.",
+    "empty": "Noch keine Aktivität",
+    "emptyHint": "Erstelle einen Prompt oder führe einen Benchmark aus, um den Feed zu füllen."
   }
 }

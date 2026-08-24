@@ -25,7 +25,7 @@
 ## Partially present / needs polish
 
 - Dashboard: no charts or leaderboard; missing score-distribution/sparkline
-- Activity timeline: only credit history, no global activity feed
+- Activity timeline: global feed exists at /activity and /api/v1/activity ✓
 - Settings: no Provider Keys or Workspace; **API key management + usage tracking** ✓
 - Export: prompt index has CSV export; missing export for dashboard/benchmark/runs leaderboards
 - Playground: exists on prompt detail, but no standalone playground view with chat history

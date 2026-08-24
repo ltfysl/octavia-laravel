@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\Api\AuthTokenController;
 use App\Http\Controllers\Api\PromptController;
 use App\Http\Controllers\Api\RunController;
@@ -25,6 +26,7 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware(['auth:sanctum', 'log.api.usage'])->group(function () {
         Route::delete('/auth/token', [AuthTokenController::class, 'destroy'])->name('api.auth.logout');
+        Route::get('/activity', [ActivityController::class, 'api'])->middleware('scope:runs:read')->name('api.activity');
 
         Route::get('/me', fn (Request $request) => $request->user()->only(['id', 'name', 'email']))
             ->name('api.me');

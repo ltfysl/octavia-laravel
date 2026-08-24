@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { Head, useForm, router, usePage } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import AppLayout from '../../layouts/AppLayout.vue';
+import apiKeys from '../../routes/settings/api-keys';
 import OPanel from '../../components/ui/OPanel.vue';
 import OButton from '../../components/ui/OButton.vue';
 import OField from '../../components/ui/OField.vue';
@@ -34,7 +35,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post('/settings/api-keys', {
+    form.post(apiKeys.store.url(), {
         onSuccess: () => {
             form.reset();
         },
@@ -51,7 +52,7 @@ const toggleAbility = (ability: string) => {
 
 const destroy = (id: number) => {
     if (confirm(t('settings.apiKeys.deleteConfirm'))) {
-        router.delete(`/settings/api-keys/${id}`);
+        router.delete(apiKeys.destroy.url(id));
     }
 };
 </script>

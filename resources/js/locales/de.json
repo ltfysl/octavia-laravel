@@ -18,7 +18,8 @@
     "tournaments": "Turniere",
     "audit": "Audit-Log",
     "reports": "Berichte",
-    "activity": "Aktivität"
+    "activity": "Aktivität",
+    "playground": "Playground"
   },
   "verification": {
     "banner": "Bestätige deine E-Mail-Adresse, um alle Funktionen freizuschalten.",
@@ -530,5 +531,15 @@
     "subtitle": "Neueste Runs, Prompts, Benchmarks und Benachrichtigungen.",
     "empty": "Noch keine Aktivität",
     "emptyHint": "Erstelle einen Prompt oder führe einen Benchmark aus, um den Feed zu füllen."
+  },
+  "playground": {
+    "title": "Playground",
+    "subtitle": "Chatte mit einem System-Prompt und iteriere frei.",
+    "systemPrompt": "System-Prompt",
+    "systemPromptPlaceholder": "Gib einen System-Prompt ein...",
+    "chat": "Chat",
+    "messagePlaceholder": "Nachricht eingeben...",
+    "send": "Senden",
+    "clear": "Leeren"
   }
 }

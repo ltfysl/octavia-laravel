@@ -23,6 +23,7 @@ use App\Http\Controllers\MarketplaceForkController;
 use App\Http\Controllers\MarketplaceStarController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\PlaygroundController;
 use App\Http\Controllers\PromptAbTestController;
 use App\Http\Controllers\PromptController;
 use App\Http\Controllers\PromptExportController;
@@ -92,6 +93,8 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/playground', [PlaygroundController::class, 'index'])->name('playground');
+    Route::post('/playground/chat', [PlaygroundController::class, 'chat'])->middleware('throttle:assistant')->name('playground.chat');
     Route::get('/export/leaderboard', LeaderboardExportController::class)->name('export.leaderboard');
     Route::get('/activity', [ActivityController::class, 'index'])->name('activity');
 

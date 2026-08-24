@@ -67,6 +67,7 @@ const resendVerification = () => {
 
 const nav = computed(() => [
     { href: '/dashboard', label: t('nav.dashboard'), icon: 'grid' },
+    { href: '/playground', label: t('nav.playground'), icon: 'beaker' },
     { href: '/activity', label: t('nav.activity'), icon: 'pulse' },
     { href: '/prompts', label: t('nav.prompts'), icon: 'sparkles' },
     { href: '/benchmarks', label: t('nav.benchmarks'), icon: 'checklist' },

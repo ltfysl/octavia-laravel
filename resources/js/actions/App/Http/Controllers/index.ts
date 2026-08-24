@@ -4,6 +4,7 @@ import SitemapController from './SitemapController'
 import LandingController from './LandingController'
 import Auth from './Auth'
 import DashboardController from './DashboardController'
+import PlaygroundController from './PlaygroundController'
 import LeaderboardExportController from './LeaderboardExportController'
 import OnboardingController from './OnboardingController'
 import PromptController from './PromptController'
@@ -43,6 +44,7 @@ const Controllers = {
     LandingController: Object.assign(LandingController, LandingController),
     Auth: Object.assign(Auth, Auth),
     DashboardController: Object.assign(DashboardController, DashboardController),
+    PlaygroundController: Object.assign(PlaygroundController, PlaygroundController),
     LeaderboardExportController: Object.assign(LeaderboardExportController, LeaderboardExportController),
     OnboardingController: Object.assign(OnboardingController, OnboardingController),
     PromptController: Object.assign(PromptController, PromptController),

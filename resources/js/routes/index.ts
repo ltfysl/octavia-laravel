@@ -430,6 +430,50 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\PlaygroundController::playground
+* @see app/Http/Controllers/PlaygroundController.php:14
+* @route '/playground'
+*/
+export const playground = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: playground.url(options),
+    method: 'get',
+})
+
+playground.definition = {
+    methods: ["get","head"],
+    url: '/playground',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\PlaygroundController::playground
+* @see app/Http/Controllers/PlaygroundController.php:14
+* @route '/playground'
+*/
+playground.url = (options?: RouteQueryOptions) => {
+    return playground.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\PlaygroundController::playground
+* @see app/Http/Controllers/PlaygroundController.php:14
+* @route '/playground'
+*/
+playground.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: playground.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\PlaygroundController::playground
+* @see app/Http/Controllers/PlaygroundController.php:14
+* @route '/playground'
+*/
+playground.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: playground.url(options),
+    method: 'head',
+})
+
+/**
 * @see \App\Http\Controllers\ActivityController::activity
 * @see app/Http/Controllers/ActivityController.php:16
 * @route '/activity'

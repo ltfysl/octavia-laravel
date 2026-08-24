@@ -18,7 +18,8 @@
     "tournaments": "Tournaments",
     "audit": "Audit log",
     "reports": "Reports",
-    "activity": "Activity"
+    "activity": "Activity",
+    "playground": "Playground"
   },
   "verification": {
     "banner": "Verify your email address to unlock all features.",
@@ -518,5 +519,15 @@
     "subtitle": "Recent runs, prompts, benchmarks and notifications.",
     "empty": "No activity yet",
     "emptyHint": "Create a prompt or run a benchmark to see your feed here."
+  },
+  "playground": {
+    "title": "Playground",
+    "subtitle": "Chat with a system prompt and iterate freely.",
+    "systemPrompt": "System prompt",
+    "systemPromptPlaceholder": "Enter a system prompt to guide the assistant...",
+    "chat": "Chat",
+    "messagePlaceholder": "Type a message...",
+    "send": "Send",
+    "clear": "Clear"
   }
 }

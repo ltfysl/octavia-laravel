@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Notifications\TeamInvitationNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -18,7 +19,27 @@ class TeamController extends Controller
         /** @var User $user */
         $user = $request->user();
 
-        $teams = Team::query()
+        $teams = $this->teamsFor($user);
+
+        return Inertia::render('teams/Index', ['teams' => $teams]);
+    }
+
+    public function workspace(Request $request): Response
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        return Inertia::render('settings/Workspace', [
+            'teams' => $this->teamsFor($user),
+        ]);
+    }
+
+    /**
+     * @return Collection<int, array<string, mixed>>
+     */
+    private function teamsFor(User $user)
+    {
+        return Team::query()
             ->where('owner_id', $user->id)
             ->orWhereHas('members', fn ($q) => $q->where('user_id', $user->id))
             ->withCount('users')
@@ -30,8 +51,6 @@ class TeamController extends Controller
                 'member_count' => $team->users_count,
                 'is_owner' => $team->owner_id === $user->id,
             ]);
-
-        return Inertia::render('teams/Index', ['teams' => $teams]);
     }
 
     public function store(Request $request): RedirectResponse

@@ -382,7 +382,13 @@
       "apiKey": "API key",
       "save": "Save key",
       "deleteConfirm": "Delete this provider key?"
-    }
+    },
+    "workspace": "Workspace",
+    "workspaceSubtitle": "Teams you own or belong to.",
+    "workspaceCreate": "Create a team",
+    "workspaceList": "Your teams",
+    "workspaceMembers": "members",
+    "workspaceEmpty": "You are not in any workspace yet."
   },
   "landing": {
     "cta": "Start optimizing — free",
@@ -422,7 +428,8 @@
     "deactivate": "Deactivate",
     "export": "Export",
     "leaderboard": "Leaderboard",
-    "clear": "Clear"
+    "clear": "Clear",
+    "manage": "Manage"
   },
   "notifications": {
     "unreadCount": "{count} unread",

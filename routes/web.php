@@ -194,6 +194,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])
         ->name('notifications.destroy');
     Route::get('/search', SearchController::class)->name('search');
+    Route::get('/settings/workspace', [TeamController::class, 'workspace'])->name('settings.workspace');
     Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
     Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');

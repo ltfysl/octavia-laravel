@@ -1,5 +1,49 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
+* @see \App\Http\Controllers\TeamController::workspace
+* @see app/Http/Controllers/TeamController.php:26
+* @route '/settings/workspace'
+*/
+export const workspace = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: workspace.url(options),
+    method: 'get',
+})
+
+workspace.definition = {
+    methods: ["get","head"],
+    url: '/settings/workspace',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\TeamController::workspace
+* @see app/Http/Controllers/TeamController.php:26
+* @route '/settings/workspace'
+*/
+workspace.url = (options?: RouteQueryOptions) => {
+    return workspace.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\TeamController::workspace
+* @see app/Http/Controllers/TeamController.php:26
+* @route '/settings/workspace'
+*/
+workspace.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: workspace.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\TeamController::workspace
+* @see app/Http/Controllers/TeamController.php:26
+* @route '/settings/workspace'
+*/
+workspace.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: workspace.url(options),
+    method: 'head',
+})
+
+/**
 * @see \App\Http\Controllers\TeamController::index
 * @see app/Http/Controllers/TeamController.php:16
 * @route '/teams'
@@ -45,7 +89,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\TeamController::store
-* @see app/Http/Controllers/TeamController.php:37
+* @see app/Http/Controllers/TeamController.php:55
 * @route '/teams'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +104,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\TeamController::store
-* @see app/Http/Controllers/TeamController.php:37
+* @see app/Http/Controllers/TeamController.php:55
 * @route '/teams'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -69,7 +113,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\TeamController::store
-* @see app/Http/Controllers/TeamController.php:37
+* @see app/Http/Controllers/TeamController.php:55
 * @route '/teams'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -79,7 +123,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\TeamController::show
-* @see app/Http/Controllers/TeamController.php:48
+* @see app/Http/Controllers/TeamController.php:66
 * @route '/teams/{team}'
 */
 export const show = (args: { team: number | { id: number } } | [team: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,7 +138,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\TeamController::show
-* @see app/Http/Controllers/TeamController.php:48
+* @see app/Http/Controllers/TeamController.php:66
 * @route '/teams/{team}'
 */
 show.url = (args: { team: number | { id: number } } | [team: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -127,7 +171,7 @@ show.url = (args: { team: number | { id: number } } | [team: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\TeamController::show
-* @see app/Http/Controllers/TeamController.php:48
+* @see app/Http/Controllers/TeamController.php:66
 * @route '/teams/{team}'
 */
 show.get = (args: { team: number | { id: number } } | [team: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -137,7 +181,7 @@ show.get = (args: { team: number | { id: number } } | [team: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\TeamController::show
-* @see app/Http/Controllers/TeamController.php:48
+* @see app/Http/Controllers/TeamController.php:66
 * @route '/teams/{team}'
 */
 show.head = (args: { team: number | { id: number } } | [team: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -147,7 +191,7 @@ show.head = (args: { team: number | { id: number } } | [team: number | { id: num
 
 /**
 * @see \App\Http\Controllers\TeamController::invite
-* @see app/Http/Controllers/TeamController.php:67
+* @see app/Http/Controllers/TeamController.php:85
 * @route '/teams/{team}/invite'
 */
 export const invite = (args: { team: number | { id: number } } | [team: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -162,7 +206,7 @@ invite.definition = {
 
 /**
 * @see \App\Http\Controllers\TeamController::invite
-* @see app/Http/Controllers/TeamController.php:67
+* @see app/Http/Controllers/TeamController.php:85
 * @route '/teams/{team}/invite'
 */
 invite.url = (args: { team: number | { id: number } } | [team: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -195,7 +239,7 @@ invite.url = (args: { team: number | { id: number } } | [team: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\TeamController::invite
-* @see app/Http/Controllers/TeamController.php:67
+* @see app/Http/Controllers/TeamController.php:85
 * @route '/teams/{team}/invite'
 */
 invite.post = (args: { team: number | { id: number } } | [team: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -205,7 +249,7 @@ invite.post = (args: { team: number | { id: number } } | [team: number | { id: n
 
 /**
 * @see \App\Http\Controllers\TeamController::removeMember
-* @see app/Http/Controllers/TeamController.php:94
+* @see app/Http/Controllers/TeamController.php:112
 * @route '/teams/{team}/members/{member}'
 */
 export const removeMember = (args: { team: number | { id: number }, member: number | { id: number } } | [team: number | { id: number }, member: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -220,7 +264,7 @@ removeMember.definition = {
 
 /**
 * @see \App\Http\Controllers\TeamController::removeMember
-* @see app/Http/Controllers/TeamController.php:94
+* @see app/Http/Controllers/TeamController.php:112
 * @route '/teams/{team}/members/{member}'
 */
 removeMember.url = (args: { team: number | { id: number }, member: number | { id: number } } | [team: number | { id: number }, member: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -250,7 +294,7 @@ removeMember.url = (args: { team: number | { id: number }, member: number | { id
 
 /**
 * @see \App\Http\Controllers\TeamController::removeMember
-* @see app/Http/Controllers/TeamController.php:94
+* @see app/Http/Controllers/TeamController.php:112
 * @route '/teams/{team}/members/{member}'
 */
 removeMember.delete = (args: { team: number | { id: number }, member: number | { id: number } } | [team: number | { id: number }, member: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -260,7 +304,7 @@ removeMember.delete = (args: { team: number | { id: number }, member: number | {
 
 /**
 * @see \App\Http\Controllers\TeamController::destroy
-* @see app/Http/Controllers/TeamController.php:110
+* @see app/Http/Controllers/TeamController.php:128
 * @route '/teams/{team}'
 */
 export const destroy = (args: { team: number | { id: number } } | [team: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -275,7 +319,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\TeamController::destroy
-* @see app/Http/Controllers/TeamController.php:110
+* @see app/Http/Controllers/TeamController.php:128
 * @route '/teams/{team}'
 */
 destroy.url = (args: { team: number | { id: number } } | [team: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -308,7 +352,7 @@ destroy.url = (args: { team: number | { id: number } } | [team: number | { id: n
 
 /**
 * @see \App\Http\Controllers\TeamController::destroy
-* @see app/Http/Controllers/TeamController.php:110
+* @see app/Http/Controllers/TeamController.php:128
 * @route '/teams/{team}'
 */
 destroy.delete = (args: { team: number | { id: number } } | [team: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -316,6 +360,6 @@ destroy.delete = (args: { team: number | { id: number } } | [team: number | { id
     method: 'delete',
 })
 
-const TeamController = { index, store, show, invite, removeMember, destroy }
+const TeamController = { workspace, index, store, show, invite, removeMember, destroy }
 
 export default TeamController

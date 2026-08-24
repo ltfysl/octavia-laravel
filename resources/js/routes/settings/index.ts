@@ -270,6 +270,50 @@ presets.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\TeamController::workspace
+* @see app/Http/Controllers/TeamController.php:26
+* @route '/settings/workspace'
+*/
+export const workspace = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: workspace.url(options),
+    method: 'get',
+})
+
+workspace.definition = {
+    methods: ["get","head"],
+    url: '/settings/workspace',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\TeamController::workspace
+* @see app/Http/Controllers/TeamController.php:26
+* @route '/settings/workspace'
+*/
+workspace.url = (options?: RouteQueryOptions) => {
+    return workspace.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\TeamController::workspace
+* @see app/Http/Controllers/TeamController.php:26
+* @route '/settings/workspace'
+*/
+workspace.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: workspace.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\TeamController::workspace
+* @see app/Http/Controllers/TeamController.php:26
+* @route '/settings/workspace'
+*/
+workspace.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: workspace.url(options),
+    method: 'head',
+})
+
+/**
 * @see \App\Http\Controllers\SettingsController::logoutOthers
 * @see app/Http/Controllers/SettingsController.php:64
 * @route '/settings/logout-others'
@@ -310,6 +354,7 @@ const settings = {
     profile: Object.assign(profile, profile937a89),
     billing: Object.assign(billing, billing),
     presets: Object.assign(presets, presets728a1d),
+    workspace: Object.assign(workspace, workspace),
     password: Object.assign(password, password),
     logoutOthers: Object.assign(logoutOthers, logoutOthers),
 }

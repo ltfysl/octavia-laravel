@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\BenchmarkController::create
-* @see app/Http/Controllers/BenchmarkController.php:37
+* @see app/Http/Controllers/BenchmarkController.php:38
 * @route '/benchmarks/wizard'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::create
-* @see app/Http/Controllers/BenchmarkController.php:37
+* @see app/Http/Controllers/BenchmarkController.php:38
 * @route '/benchmarks/wizard'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::create
-* @see app/Http/Controllers/BenchmarkController.php:37
+* @see app/Http/Controllers/BenchmarkController.php:38
 * @route '/benchmarks/wizard'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::create
-* @see app/Http/Controllers/BenchmarkController.php:37
+* @see app/Http/Controllers/BenchmarkController.php:38
 * @route '/benchmarks/wizard'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::index
-* @see app/Http/Controllers/BenchmarkController.php:17
+* @see app/Http/Controllers/BenchmarkController.php:18
 * @route '/benchmarks'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -60,7 +60,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::index
-* @see app/Http/Controllers/BenchmarkController.php:17
+* @see app/Http/Controllers/BenchmarkController.php:18
 * @route '/benchmarks'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -69,7 +69,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::index
-* @see app/Http/Controllers/BenchmarkController.php:17
+* @see app/Http/Controllers/BenchmarkController.php:18
 * @route '/benchmarks'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -79,7 +79,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::index
-* @see app/Http/Controllers/BenchmarkController.php:17
+* @see app/Http/Controllers/BenchmarkController.php:18
 * @route '/benchmarks'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -89,7 +89,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::store
-* @see app/Http/Controllers/BenchmarkController.php:51
+* @see app/Http/Controllers/BenchmarkController.php:52
 * @route '/benchmarks'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -104,7 +104,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::store
-* @see app/Http/Controllers/BenchmarkController.php:51
+* @see app/Http/Controllers/BenchmarkController.php:52
 * @route '/benchmarks'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -113,7 +113,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::store
-* @see app/Http/Controllers/BenchmarkController.php:51
+* @see app/Http/Controllers/BenchmarkController.php:52
 * @route '/benchmarks'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -123,7 +123,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::show
-* @see app/Http/Controllers/BenchmarkController.php:79
+* @see app/Http/Controllers/BenchmarkController.php:80
 * @route '/benchmarks/{benchmark}'
 */
 export const show = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -138,7 +138,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::show
-* @see app/Http/Controllers/BenchmarkController.php:79
+* @see app/Http/Controllers/BenchmarkController.php:80
 * @route '/benchmarks/{benchmark}'
 */
 show.url = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -171,7 +171,7 @@ show.url = (args: { benchmark: number | { id: number } } | [benchmark: number | 
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::show
-* @see app/Http/Controllers/BenchmarkController.php:79
+* @see app/Http/Controllers/BenchmarkController.php:80
 * @route '/benchmarks/{benchmark}'
 */
 show.get = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -181,7 +181,7 @@ show.get = (args: { benchmark: number | { id: number } } | [benchmark: number | 
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::show
-* @see app/Http/Controllers/BenchmarkController.php:79
+* @see app/Http/Controllers/BenchmarkController.php:80
 * @route '/benchmarks/{benchmark}'
 */
 show.head = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -253,7 +253,7 @@ edit.head = (args: { benchmark: string | number } | [benchmark: string | number 
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::update
-* @see app/Http/Controllers/BenchmarkController.php:110
+* @see app/Http/Controllers/BenchmarkController.php:111
 * @route '/benchmarks/{benchmark}'
 */
 export const update = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -268,7 +268,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::update
-* @see app/Http/Controllers/BenchmarkController.php:110
+* @see app/Http/Controllers/BenchmarkController.php:111
 * @route '/benchmarks/{benchmark}'
 */
 update.url = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -301,7 +301,7 @@ update.url = (args: { benchmark: number | { id: number } } | [benchmark: number 
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::update
-* @see app/Http/Controllers/BenchmarkController.php:110
+* @see app/Http/Controllers/BenchmarkController.php:111
 * @route '/benchmarks/{benchmark}'
 */
 update.put = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -311,7 +311,7 @@ update.put = (args: { benchmark: number | { id: number } } | [benchmark: number 
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::update
-* @see app/Http/Controllers/BenchmarkController.php:110
+* @see app/Http/Controllers/BenchmarkController.php:111
 * @route '/benchmarks/{benchmark}'
 */
 update.patch = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -321,7 +321,7 @@ update.patch = (args: { benchmark: number | { id: number } } | [benchmark: numbe
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::destroy
-* @see app/Http/Controllers/BenchmarkController.php:144
+* @see app/Http/Controllers/BenchmarkController.php:145
 * @route '/benchmarks/{benchmark}'
 */
 export const destroy = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -336,7 +336,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::destroy
-* @see app/Http/Controllers/BenchmarkController.php:144
+* @see app/Http/Controllers/BenchmarkController.php:145
 * @route '/benchmarks/{benchmark}'
 */
 destroy.url = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -369,7 +369,7 @@ destroy.url = (args: { benchmark: number | { id: number } } | [benchmark: number
 
 /**
 * @see \App\Http\Controllers\BenchmarkController::destroy
-* @see app/Http/Controllers/BenchmarkController.php:144
+* @see app/Http/Controllers/BenchmarkController.php:145
 * @route '/benchmarks/{benchmark}'
 */
 destroy.delete = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -377,6 +377,64 @@ destroy.delete = (args: { benchmark: number | { id: number } } | [benchmark: num
     method: 'delete',
 })
 
-const BenchmarkController = { create, index, store, show, edit, update, destroy }
+/**
+* @see \App\Http\Controllers\BenchmarkController::duplicate
+* @see app/Http/Controllers/BenchmarkController.php:208
+* @route '/benchmarks/{benchmark}/duplicate'
+*/
+export const duplicate = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: duplicate.url(args, options),
+    method: 'post',
+})
+
+duplicate.definition = {
+    methods: ["post"],
+    url: '/benchmarks/{benchmark}/duplicate',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\BenchmarkController::duplicate
+* @see app/Http/Controllers/BenchmarkController.php:208
+* @route '/benchmarks/{benchmark}/duplicate'
+*/
+duplicate.url = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { benchmark: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { benchmark: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            benchmark: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        benchmark: typeof args.benchmark === 'object'
+        ? args.benchmark.id
+        : args.benchmark,
+    }
+
+    return duplicate.definition.url
+            .replace('{benchmark}', parsedArgs.benchmark.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\BenchmarkController::duplicate
+* @see app/Http/Controllers/BenchmarkController.php:208
+* @route '/benchmarks/{benchmark}/duplicate'
+*/
+duplicate.post = (args: { benchmark: number | { id: number } } | [benchmark: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: duplicate.url(args, options),
+    method: 'post',
+})
+
+const BenchmarkController = { create, index, store, show, edit, update, destroy, duplicate }
 
 export default BenchmarkController

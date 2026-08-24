@@ -43,6 +43,10 @@ const publish = () => {
     });
 };
 
+const duplicate = () => {
+    router.post(`/benchmarks/${props.benchmark.id}/duplicate`);
+};
+
 const destroy = () => {
     if (confirm(t('benchmarks.deleteConfirm'))) {
         router.delete(`/benchmarks/${props.benchmark.id}`);
@@ -115,6 +119,8 @@ const runInsight = async () => {
                 <Link href="/benchmarks" class="self-center text-sm text-ink-500 hover:text-ink-900">{{ t('common.back') }}</Link>
                 <span class="mx-1 h-5 w-px bg-ink-100" aria-hidden="true" />
                 <OButton variant="secondary" @click="publish">{{ t('marketplace.publish') }}</OButton>
+                <span class="mx-1 h-5 w-px bg-ink-100" aria-hidden="true" />
+                <OButton variant="secondary" @click="duplicate">{{ t('benchmarks.duplicate') }}</OButton>
                 <span class="mx-1 h-5 w-px bg-ink-100" aria-hidden="true" />
                 <OButton variant="danger" @click="destroy">{{ t('benchmarks.delete') }}</OButton>
             </div>

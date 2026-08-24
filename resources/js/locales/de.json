@@ -269,7 +269,8 @@
     "marketplace": "Marktplatz",
     "searchPlaceholder": "Benchmarks durchsuchen…",
     "noSearchMatches": "Keine Benchmarks passen zu",
-    "noSearchHint": "Probiere eine andere Suche oder lösche die Filter."
+    "noSearchHint": "Probiere eine andere Suche oder lösche die Filter.",
+    "duplicate": "Duplizieren"
   },
   "runs": {
     "title": "Läufe",

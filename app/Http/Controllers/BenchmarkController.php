@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\BenchmarkCategory;
 use App\Enums\CriterionType;
+use App\Enums\Visibility;
 use App\Models\AuditLog;
 use App\Models\Benchmark;
 use Illuminate\Http\RedirectResponse;
@@ -202,5 +203,45 @@ class BenchmarkController extends Controller
             'config' => $config,
             'position' => $position,
         ];
+    }
+
+    public function duplicate(Request $request, Benchmark $benchmark): RedirectResponse
+    {
+        $benchmark->load(['cases.criteria']);
+
+        abort_unless($benchmark->user_id === $request->user()->id || $benchmark->visibility === Visibility::Public, 404);
+
+        $copy = DB::transaction(function () use ($request, $benchmark) {
+            $copy = $request->user()->benchmarks()->create([
+                'name' => $benchmark->name.' (copy)',
+                'description' => $benchmark->description,
+                'category' => $benchmark->category,
+                'visibility' => Visibility::Private,
+            ]);
+
+            foreach ($benchmark->cases as $i => $case) {
+                $newCase = $copy->cases()->create([
+                    'title' => $case->title,
+                    'input' => $case->input,
+                    'weight' => $case->weight,
+                    'position' => $i,
+                ]);
+
+                foreach ($case->criteria as $j => $criterion) {
+                    $newCase->criteria()->create([
+                        'type' => $criterion->type,
+                        'label' => $criterion->label,
+                        'config' => $criterion->config,
+                        'position' => $j,
+                    ]);
+                }
+            }
+
+            return $copy;
+        });
+
+        AuditLog::record('benchmark.created', 'benchmarks', 'Benchmark duplicated', 'benchmark', (string) $copy->id, $copy->name);
+
+        return redirect()->route('benchmarks.show', $copy)->with('success', __('messages.benchmarkDuplicated'));
     }
 }

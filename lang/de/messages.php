@@ -16,4 +16,6 @@ return [
     'runCancelled' => 'Run abgebrochen.',
 
     'promptDuplicated' => 'Prompt dupliziert.',
+
+    'benchmarkDuplicated' => 'Benchmark dupliziert.',
 ];

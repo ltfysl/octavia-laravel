@@ -14,4 +14,6 @@ return [
     'providerKeyDeleted' => 'Provider key deleted.',
 
     'promptDuplicated' => 'Prompt duplicated.',
+
+    'benchmarkDuplicated' => 'Benchmark duplicated.',
 ];

@@ -269,7 +269,8 @@
     "marketplace": "marketplace",
     "searchPlaceholder": "Search benchmarks…",
     "noSearchMatches": "No benchmarks match",
-    "noSearchHint": "Try a different search or clear filters."
+    "noSearchHint": "Try a different search or clear filters.",
+    "duplicate": "Duplicate"
   },
   "runs": {
     "title": "Runs",

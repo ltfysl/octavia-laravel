@@ -135,6 +135,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/benchmarks/{benchmark}/insight', BenchmarkInsightController::class)
         ->middleware('throttle:assistant')
         ->name('benchmarks.insight');
+    Route::post('/benchmarks/{benchmark}/duplicate', [BenchmarkController::class, 'duplicate'])->name('benchmarks.duplicate');
     Route::post('/benchmarks/import', [BenchmarkImportController::class, '__invoke'])
         ->name('benchmarks.import');
 

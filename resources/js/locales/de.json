@@ -330,6 +330,19 @@
                 "optimize": "Optimieren"
             },
             "confirmDelete": "Preset \"{name}\" löschen?"
+        },
+        "webhooks": {
+            "title": "Webhooks",
+            "url": "Endpoint-URL",
+            "description": "Beschreibung",
+            "events": "Events",
+            "add": "Webhook hinzufügen",
+            "empty": "Keine Webhooks konfiguriert.",
+            "deleteConfirm": "Diesen Webhook löschen?",
+            "deactivate": "Deaktivieren",
+            "activate": "Aktivieren",
+            "showDeliveries": "Deliveries",
+            "noDeliveries": "Noch keine Deliveries."
         }
     },
     "landing": {

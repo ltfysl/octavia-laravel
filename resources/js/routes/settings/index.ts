@@ -1,7 +1,52 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import webhooksCea6cd from './webhooks'
 import profile937a89 from './profile'
 import presets728a1d from './presets'
 import password from './password'
+/**
+* @see \App\Http\Controllers\WebhookController::webhooks
+* @see app/Http/Controllers/WebhookController.php:15
+* @route '/settings/webhooks'
+*/
+export const webhooks = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: webhooks.url(options),
+    method: 'get',
+})
+
+webhooks.definition = {
+    methods: ["get","head"],
+    url: '/settings/webhooks',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\WebhookController::webhooks
+* @see app/Http/Controllers/WebhookController.php:15
+* @route '/settings/webhooks'
+*/
+webhooks.url = (options?: RouteQueryOptions) => {
+    return webhooks.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\WebhookController::webhooks
+* @see app/Http/Controllers/WebhookController.php:15
+* @route '/settings/webhooks'
+*/
+webhooks.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: webhooks.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\WebhookController::webhooks
+* @see app/Http/Controllers/WebhookController.php:15
+* @route '/settings/webhooks'
+*/
+webhooks.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: webhooks.url(options),
+    method: 'head',
+})
+
 /**
 * @see \App\Http\Controllers\SettingsController::profile
 * @see app/Http/Controllers/SettingsController.php:16
@@ -169,6 +214,7 @@ logoutOthers.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 const settings = {
+    webhooks: Object.assign(webhooks, webhooksCea6cd),
     profile: Object.assign(profile, profile937a89),
     billing: Object.assign(billing, billing),
     presets: Object.assign(presets, presets728a1d),

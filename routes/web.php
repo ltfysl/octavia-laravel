@@ -35,6 +35,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\WebhookController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -154,6 +155,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{id}/unread', [NotificationController::class, 'markUnread'])
         ->name('notifications.unread');
+    Route::get('/settings/webhooks', [WebhookController::class, 'index'])->name('settings.webhooks');
+    Route::post('/settings/webhooks', [WebhookController::class, 'store'])->name('settings.webhooks.store');
+    Route::patch('/settings/webhooks/{webhook}', [WebhookController::class, 'update'])->name('settings.webhooks.update');
+    Route::delete('/settings/webhooks/{webhook}', [WebhookController::class, 'destroy'])->name('settings.webhooks.destroy');
+    Route::get('/settings/webhooks/{webhook}/deliveries', [WebhookController::class, 'deliveries'])->name('settings.webhooks.deliveries');
+
     Route::get('/settings/profile', [SettingsController::class, 'profile'])->name('settings.profile');
     Route::get('/settings/billing', [SettingsController::class, 'billing'])->name('settings.billing');
     Route::get('/settings', fn () => redirect()->route('settings.profile'));

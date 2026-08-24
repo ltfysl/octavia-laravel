@@ -26,6 +26,7 @@ import MarketplaceController from './MarketplaceController'
 import MarketplaceStarController from './MarketplaceStarController'
 import MarketplaceForkController from './MarketplaceForkController'
 import NotificationController from './NotificationController'
+import WebhookController from './WebhookController'
 import SettingsController from './SettingsController'
 import ConfigPresetController from './ConfigPresetController'
 import SearchController from './SearchController'
@@ -61,6 +62,7 @@ const Controllers = {
     MarketplaceStarController: Object.assign(MarketplaceStarController, MarketplaceStarController),
     MarketplaceForkController: Object.assign(MarketplaceForkController, MarketplaceForkController),
     NotificationController: Object.assign(NotificationController, NotificationController),
+    WebhookController: Object.assign(WebhookController, WebhookController),
     SettingsController: Object.assign(SettingsController, SettingsController),
     ConfigPresetController: Object.assign(ConfigPresetController, ConfigPresetController),
     SearchController: Object.assign(SearchController, SearchController),

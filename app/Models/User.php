@@ -83,6 +83,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(MarketplaceInstall::class);
     }
 
+    public function webhooks(): HasMany
+    {
+        return $this->hasMany(Webhook::class);
+    }
+
     public function ownedTeams(): HasMany
     {
         return $this->hasMany(Team::class, 'owner_id');

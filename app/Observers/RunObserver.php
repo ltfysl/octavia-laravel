@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Actions\DispatchRunWebhooks;
 use App\Models\Run;
 use App\Services\CreditService;
 
@@ -31,6 +32,8 @@ class RunObserver
                 'reserved' => $reserved,
                 'executed' => $executed,
             ]);
+
+            app(DispatchRunWebhooks::class)($run, 'run.'.$run->status->value);
         }
     }
 

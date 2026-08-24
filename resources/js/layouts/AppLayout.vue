@@ -174,6 +174,9 @@ if (typeof window !== 'undefined') {
                 <Link href="/settings/presets" class="mt-1 flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors" :class="isActive('/settings/presets') ? 'bg-accent-50 text-accent-700' : 'text-ink-500 hover:bg-paper-100 hover:text-ink-900'">
                     {{ t('settings.presets.title') }}
                 </Link>
+                <Link href="/settings/webhooks" class="mt-1 flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors" :class="isActive('/settings/webhooks') ? 'bg-accent-50 text-accent-700' : 'text-ink-500 hover:bg-paper-100 hover:text-ink-900'">
+                    {{ t('settings.webhooks.title') }}
+                </Link>
             </div>
         </aside>
 
@@ -193,6 +196,7 @@ if (typeof window !== 'undefined') {
                     <Link href="/settings/profile" class="block rounded-lg px-3 py-2 text-sm text-ink-700">{{ t('nav.settings') }}</Link>
                     <Link href="/settings/billing" class="block rounded-lg px-3 py-2 text-sm text-ink-700">{{ t('billing.title') }}</Link>
                     <Link href="/settings/presets" class="block rounded-lg px-3 py-2 text-sm text-ink-700">{{ t('settings.presets.title') }}</Link>
+                    <Link href="/settings/webhooks" class="block rounded-lg px-3 py-2 text-sm text-ink-700">{{ t('settings.webhooks.title') }}</Link>
                     <Link href="/logout" method="post" as="button" class="block w-full rounded-lg px-3 py-2 text-left text-sm text-rose-450">{{ t('nav.logOut') }}</Link>
                 </nav>
             </details>

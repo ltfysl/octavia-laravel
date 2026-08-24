@@ -29,4 +29,11 @@ return [
         'unlisted' => 'Deine Meldung wurde geprüft, das Listing wurde deaktiviert.',
         'action' => 'Zum Marktplatz',
     ],
+
+    'listingUpdated' => [
+        'subject' => "Update: ':title' ist jetzt v:version",
+        'line1' => "Eine neue Version (:version) von ':title' ist im Marketplace verfügbar.",
+        'cta' => 'Update ansehen',
+        'footer' => 'Du erhältst diese Mail, weil du das Listing installiert hast. Du kannst sie in den Einstellungen deaktivieren.',
+    ],
 ];

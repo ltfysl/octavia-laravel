@@ -29,4 +29,11 @@ return [
         'unlisted' => 'Your report was reviewed and the listing has been unlisted.',
         'action' => 'Browse marketplace',
     ],
+
+    'listingUpdated' => [
+        'subject' => "Update: ':title' is now v:version",
+        'line1' => "A new version (:version) of ':title' is available on the marketplace.",
+        'cta' => 'View update',
+        'footer' => 'You receive this because you installed the listing. You can turn these mails off in Settings.',
+    ],
 ];

@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Models\MarketplaceItem;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 /**
@@ -19,7 +20,18 @@ class ListingUpdatedNotification extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return $notifiable->notify_listing_updates_mail ? ['mail', 'database'] : ['database'];
+    }
+
+    public function toMail(object $notifiable): MailMessage
+    {
+        $locale = $notifiable->preferredLocale();
+
+        return (new MailMessage)
+            ->subject(__('notifications.listingUpdated.subject', ['title' => $this->item->title], $locale))
+            ->line(__('notifications.listingUpdated.line1', ['title' => $this->item->title, 'version' => $this->newVersion], $locale))
+            ->action(__('notifications.listingUpdated.cta'), url('/marketplace'))
+            ->line(__('notifications.listingUpdated.footer', [], $locale));
     }
 
     public function toArray(object $notifiable): array

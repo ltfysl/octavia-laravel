@@ -34,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'locale',
         'notify_run_completed_mail',
+        'notify_listing_updates_mail',
     ];
 
     /** Mail notifications use the user's stored locale. */
@@ -50,6 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'is_admin' => 'boolean',
             'onboarded_at' => 'datetime',
             'notify_run_completed_mail' => 'boolean',
+            'notify_listing_updates_mail' => 'boolean',
         ];
     }
 

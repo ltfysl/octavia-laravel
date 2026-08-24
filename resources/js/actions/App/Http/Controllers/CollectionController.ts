@@ -147,7 +147,7 @@ update.patch = (args: { collection: number | { id: number } } | [collection: num
 
 /**
 * @see \App\Http\Controllers\CollectionController::destroy
-* @see app/Http/Controllers/CollectionController.php:65
+* @see app/Http/Controllers/CollectionController.php:79
 * @route '/collections/{collection}'
 */
 export const destroy = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -162,7 +162,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\CollectionController::destroy
-* @see app/Http/Controllers/CollectionController.php:65
+* @see app/Http/Controllers/CollectionController.php:79
 * @route '/collections/{collection}'
 */
 destroy.url = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -195,7 +195,7 @@ destroy.url = (args: { collection: number | { id: number } } | [collection: numb
 
 /**
 * @see \App\Http\Controllers\CollectionController::destroy
-* @see app/Http/Controllers/CollectionController.php:65
+* @see app/Http/Controllers/CollectionController.php:79
 * @route '/collections/{collection}'
 */
 destroy.delete = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -203,6 +203,64 @@ destroy.delete = (args: { collection: number | { id: number } } | [collection: n
     method: 'delete',
 })
 
-const CollectionController = { index, store, update, destroy }
+/**
+* @see \App\Http\Controllers\CollectionController::duplicate
+* @see app/Http/Controllers/CollectionController.php:65
+* @route '/collections/{collection}/duplicate'
+*/
+export const duplicate = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: duplicate.url(args, options),
+    method: 'post',
+})
+
+duplicate.definition = {
+    methods: ["post"],
+    url: '/collections/{collection}/duplicate',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\CollectionController::duplicate
+* @see app/Http/Controllers/CollectionController.php:65
+* @route '/collections/{collection}/duplicate'
+*/
+duplicate.url = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { collection: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { collection: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            collection: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        collection: typeof args.collection === 'object'
+        ? args.collection.id
+        : args.collection,
+    }
+
+    return duplicate.definition.url
+            .replace('{collection}', parsedArgs.collection.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\CollectionController::duplicate
+* @see app/Http/Controllers/CollectionController.php:65
+* @route '/collections/{collection}/duplicate'
+*/
+duplicate.post = (args: { collection: number | { id: number } } | [collection: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: duplicate.url(args, options),
+    method: 'post',
+})
+
+const CollectionController = { index, store, update, destroy, duplicate }
 
 export default CollectionController

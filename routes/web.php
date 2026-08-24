@@ -127,6 +127,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/prompts/{prompt}/export', PromptExportController::class)->name('prompts.export');
     Route::post('/prompts/import', [PromptImportController::class, '__invoke'])->name('prompts.import');
     Route::resource('collections', CollectionController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::post('/collections/{collection}/duplicate', [CollectionController::class, 'duplicate'])->name('collections.duplicate');
 
     Route::get('/benchmarks/wizard', [BenchmarkController::class, 'create'])->name('benchmarks.create');
     Route::get('/benchmarks/{benchmark}/export', BenchmarkExportController::class)

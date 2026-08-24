@@ -62,6 +62,20 @@ class CollectionController extends Controller
         return back()->with('success', __('Saved.'));
     }
 
+    public function duplicate(Request $request, BenchmarkCollection $collection): RedirectResponse
+    {
+        $this->authorize('view', $collection);
+
+        $copy = $request->user()->collections()->create([
+            'name' => $collection->name.' (copy)',
+            'description' => $collection->description,
+        ]);
+
+        $copy->benchmarks()->sync($collection->benchmarks()->pluck('benchmarks.id'));
+
+        return back()->with('success', __('Collection duplicated.'));
+    }
+
     public function destroy(Request $request, BenchmarkCollection $collection): RedirectResponse
     {
         $this->authorize('delete', $collection);

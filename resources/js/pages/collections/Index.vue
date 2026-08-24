@@ -42,6 +42,8 @@ const destroy = (id: number) => {
         router.delete(`/collections/${id}`);
     }
 };
+
+const duplicate = (id: number) => router.post(`/collections/${id}/duplicate`);
 </script>
 
 <template>
@@ -98,6 +100,7 @@ const destroy = (id: number) => {
                     <p class="mt-1.5 flex-1 text-sm text-ink-500">{{ collection.description ?? '—' }}</p>
                     <div class="mt-4 flex items-center justify-between border-t border-ink-100 pt-3 text-xs text-ink-300">
                         <span>{{ t('benchmarks.collections.count', { count: collection.benchmarks_count }) }}</span>
+                        <button type="button" class="font-medium text-ink-500 hover:underline" @click="duplicate(collection.id)">{{ t('common.duplicate') }}</button>
                         <button type="button" class="font-medium text-rose-450 hover:underline" @click="destroy(collection.id)">{{ t('common.delete') }}</button>
                     </div>
                     <Link href="/runs/create" class="mt-3 text-xs font-medium text-accent-600 hover:text-accent-700">▶ {{ t('runs.new') }}</Link>

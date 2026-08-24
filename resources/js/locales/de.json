@@ -19,7 +19,8 @@
     "audit": "Audit-Log",
     "reports": "Berichte",
     "activity": "Aktivität",
-    "playground": "Playground"
+    "playground": "Playground",
+    "pricing": "Preise"
   },
   "verification": {
     "banner": "Bestätige deine E-Mail-Adresse, um alle Funktionen freizuschalten.",
@@ -613,5 +614,12 @@
     "readyEmpty": "Dein Labor ist leer. Du kannst Prompts und Benchmarks über das Dashboard erstellen.",
     "startLab": "Labor starten",
     "finish": "Zum Dashboard"
+  },
+  "footer": {
+    "product": "Produkt",
+    "legal": "Rechtliches",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "tagline": "Das Prompt-Laboratory. Benchmark, evaluiere und verfeinere Prompts — nicht Models."
   }
 }

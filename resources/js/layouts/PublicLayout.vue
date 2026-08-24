@@ -18,7 +18,7 @@ const year = new Date().getFullYear();
                 <nav class="hidden items-center gap-7 text-sm font-medium text-ink-500 md:flex" aria-label="Main">
                     <a href="/#how" class="transition-colors hover:text-ink-900">{{ t('landing.howTitle') }}</a>
                     <a href="/#features" class="transition-colors hover:text-ink-900">{{ t('landing.featuresTitle') }}</a>
-                    <Link href="/pricing" class="transition-colors hover:text-ink-900">Pricing</Link>
+                    <Link href="/pricing" class="transition-colors hover:text-ink-900">{{ t('nav.pricing') }}</Link>
                 </nav>
                 <div class="flex items-center gap-3">
                     <Link href="/login" class="text-sm font-medium text-ink-700 transition-colors hover:text-ink-950">{{ t('nav.logIn') }}</Link>
@@ -39,22 +39,22 @@ const year = new Date().getFullYear();
                         <span class="font-display font-semibold text-ink-950">Octavia</span>
                     </div>
                     <p class="mt-3 max-w-sm text-sm text-ink-500">
-                        The prompt laboratory. Benchmark, evolve and fine-tune prompts — not models.
+                        {{ t('footer.tagline') }}
                     </p>
                 </div>
                 <nav class="text-sm" aria-label="Product">
-                    <h3 class="mb-3 font-semibold text-ink-950">Product</h3>
+                    <h3 class="mb-3 font-semibold text-ink-950">{{ t('footer.product') }}</h3>
                     <ul class="space-y-2 text-ink-500">
-                        <li><a href="/#how" class="hover:text-ink-900">How it works</a></li>
-                        <li><a href="/#features" class="hover:text-ink-900">Features</a></li>
-                        <li><Link href="/pricing" class="hover:text-ink-900">Pricing</Link></li>
+                        <li><a href="/#how" class="hover:text-ink-900">{{ t('landing.howTitle') }}</a></li>
+                        <li><a href="/#features" class="hover:text-ink-900">{{ t('landing.featuresTitle') }}</a></li>
+                        <li><Link href="/pricing" class="hover:text-ink-900">{{ t('nav.pricing') }}</Link></li>
                     </ul>
                 </nav>
                 <nav class="text-sm" aria-label="Legal">
-                    <h3 class="mb-3 font-semibold text-ink-950">Legal</h3>
+                    <h3 class="mb-3 font-semibold text-ink-950">{{ t('footer.legal') }}</h3>
                     <ul class="space-y-2 text-ink-500">
-                        <li><Link href="/privacy" class="hover:text-ink-900">Privacy policy</Link></li>
-                        <li><Link href="/terms" class="hover:text-ink-900">Terms of service</Link></li>
+                        <li><Link href="/privacy" class="hover:text-ink-900">{{ t('footer.privacy') }}</Link></li>
+                        <li><Link href="/terms" class="hover:text-ink-900">{{ t('footer.terms') }}</Link></li>
                     </ul>
                 </nav>
             </div>

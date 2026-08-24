@@ -19,7 +19,8 @@
     "audit": "Audit log",
     "reports": "Reports",
     "activity": "Activity",
-    "playground": "Playground"
+    "playground": "Playground",
+    "pricing": "Pricing"
   },
   "verification": {
     "banner": "Verify your email address to unlock all features.",
@@ -600,5 +601,12 @@
     "readyEmpty": "Your lab is empty. You can create prompts and benchmarks from the dashboard.",
     "startLab": "Start my lab",
     "finish": "Go to dashboard"
+  },
+  "footer": {
+    "product": "Product",
+    "legal": "Legal",
+    "privacy": "Privacy policy",
+    "terms": "Terms of service",
+    "tagline": "The prompt laboratory. Benchmark, evolve and fine-tune prompts — not models."
   }
 }

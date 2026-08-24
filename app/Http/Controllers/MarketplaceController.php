@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CopyMarketplaceItem;
 use App\Enums\MarketplaceItemType;
 use App\Models\Benchmark;
 use App\Models\MarketplaceItem;
@@ -10,7 +11,6 @@ use App\Models\Prompt;
 use App\Notifications\ListingUpdatedNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -63,91 +63,21 @@ class MarketplaceController extends Controller
         ]);
     }
 
-    public function install(Request $request, MarketplaceItem $item): RedirectResponse
+    public function install(Request $request, MarketplaceItem $item, CopyMarketplaceItem $copy): RedirectResponse
     {
         abort_if($item->published_at === null, 404);
 
         $user = $request->user();
 
-        DB::transaction(function () use ($item, $user) {
-            if ($item->item_type === MarketplaceItemType::Prompt) {
-                $copy = $user->prompts()->create([
-                    'name' => $item->title,
-                    'description' => $item->summary,
-                    'visibility' => 'private',
-                ]);
+        $copy($item, $user);
 
-                // Prefer the frozen snapshot so installs always yield the
-                // published content; fall back to the live source.
-                if ($content = data_get($item->snapshot, 'content')) {
-                    $version = $copy->versions()->create([
-                        'version' => 1,
-                        'content' => $content,
-                        'changelog' => "Installed from marketplace v{$item->version}",
-                        'created_at' => now(),
-                    ]);
-                } else {
-                    $v = $item->prompt?->currentVersion;
-                    $version = $copy->versions()->create([
-                        'version' => 1,
-                        'content' => $v?->content ?? '',
-                        'changelog' => 'Installed from marketplace',
-                        'created_at' => now(),
-                    ]);
-                }
+        // Track the installed version for update-available detection.
+        $user->marketplaceInstalls()->updateOrCreate(
+            ['marketplace_item_id' => $item->id],
+            ['version' => $item->version],
+        );
 
-                $copy->update(['current_version_id' => $version->id]);
-            } else {
-                $snapshot = $item->snapshot;
-                $source = $item->benchmark;
-
-                $copy = $user->benchmarks()->create([
-                    'name' => $item->title,
-                    'description' => $item->summary,
-                    'category' => data_get($snapshot, 'category', $source?->category->value ?? 'general'),
-                    'visibility' => 'private',
-                ]);
-
-                // Prefer snapshot cases; fall back to the live suite.
-                $cases = collect(data_get($snapshot, 'cases', []))
-                    ->whenEmpty(fn () => $source?->cases()->with('criteria')->get()->map(fn ($case) => [
-                        'title' => $case->title,
-                        'input' => $case->input,
-                        'weight' => (float) $case->weight,
-                        'criteria' => $case->criteria->map(fn ($c) => [
-                            'type' => $c->type->value,
-                            'label' => $c->label,
-                            'config' => $c->config,
-                        ])->all(),
-                    ]) ?? collect([]));
-
-                foreach ($cases as $i => $case) {
-                    $newCase = $copy->cases()->create([
-                        'title' => $case['title'],
-                        'input' => $case['input'],
-                        'weight' => $case['weight'] ?? 1,
-                        'position' => $i,
-                    ]);
-
-                    foreach ($case['criteria'] ?? [] as $j => $criterion) {
-                        $newCase->criteria()->create([
-                            'type' => $criterion['type'],
-                            'label' => $criterion['label'],
-                            'config' => $criterion['config'],
-                            'position' => $j,
-                        ]);
-                    }
-                }
-            }
-
-            // Track the installed version for update-available detection.
-            $user->marketplaceInstalls()->updateOrCreate(
-                ['marketplace_item_id' => $item->id],
-                ['version' => $item->version],
-            );
-
-            $item->increment('downloads');
-        });
+        $item->increment('downloads');
 
         $route = $item->item_type === MarketplaceItemType::Prompt ? 'prompts.index' : 'benchmarks.index';
 

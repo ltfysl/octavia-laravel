@@ -390,6 +390,7 @@ const runInsight = async () => {
                 <OButton variant="secondary" :disabled="form.processing" @click="publish">{{ t('marketplace.publish') }}</OButton>
                 <span class="mx-1 h-5 w-px bg-ink-100" aria-hidden="true" />
                 <OButton variant="secondary" :disabled="form.processing" @click="duplicate">{{ t('prompts.duplicate') }}</OButton>
+                <a :href="`/prompts/${props.prompt.id}/export`" download class="inline-flex items-center rounded-full border border-ink-100 bg-card px-3 py-1.5 text-xs font-medium text-ink-600 hover:bg-paper-50">{{ t('common.export') }}</a>
                 <span class="mx-1 h-5 w-px bg-ink-100" aria-hidden="true" />
                 <OButton variant="danger" @click="destroy">{{ t('prompts.delete') }}</OButton>
             </div>

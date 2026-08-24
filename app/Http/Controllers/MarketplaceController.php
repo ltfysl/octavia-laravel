@@ -25,9 +25,17 @@ class MarketplaceController extends Controller
             ? $request->user()->marketplaceInstalls()->pluck('version', 'marketplace_item_id')
             : collect();
 
+        $user = $request->user();
+
         $items = MarketplaceItem::query()
             ->listed()
             ->with('publisher:id,name')
+            ->when($user, function ($q) use ($user) {
+                $q->with([
+                    'starredBy' => fn ($q) => $q->where('users.id', $user->id),
+                    'forkedBy' => fn ($q) => $q->where('users.id', $user->id),
+                ]);
+            })
             ->when(in_array($type, ['prompt', 'benchmark'], true), fn ($q) => $q->where('item_type', $type))
             ->when($search !== '', function ($q) use ($search) {
                 $q->where(fn ($w) => $w
@@ -36,8 +44,7 @@ class MarketplaceController extends Controller
             })
             ->orderByDesc('featured')
             ->paginate(12)
-            ->through(function (MarketplaceItem $item) use ($request) {
-                $user = $request->user();
+            ->through(function (MarketplaceItem $item) use ($user) {
 
                 return [
                     'id' => $item->id,
@@ -48,8 +55,8 @@ class MarketplaceController extends Controller
                     'downloads' => $item->downloads,
                     'stars_count' => $item->stars_count,
                     'forks_count' => $item->forks_count,
-                    'has_starred' => $user ? $item->starredBy()->where('user_id', $user->id)->exists() : false,
-                    'has_forked' => $user ? $item->forkedBy()->where('user_id', $user->id)->exists() : false,
+                    'has_starred' => $user ? $item->starredBy->isNotEmpty() : false,
+                    'has_forked' => $user ? $item->forkedBy->isNotEmpty() : false,
                     'featured' => $item->featured,
                     'publisher' => $item->publisher?->name,
                     'published_at' => $item->published_at?->toIso8601String(),

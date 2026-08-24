@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::install
-* @see app/Http/Controllers/MarketplaceController.php:66
+* @see app/Http/Controllers/MarketplaceController.php:73
 * @route '/marketplace/{item}/install'
 */
 export const install = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +60,7 @@ install.definition = {
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::install
-* @see app/Http/Controllers/MarketplaceController.php:66
+* @see app/Http/Controllers/MarketplaceController.php:73
 * @route '/marketplace/{item}/install'
 */
 install.url = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -93,7 +93,7 @@ install.url = (args: { item: number | { id: number } } | [item: number | { id: n
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::install
-* @see app/Http/Controllers/MarketplaceController.php:66
+* @see app/Http/Controllers/MarketplaceController.php:73
 * @route '/marketplace/{item}/install'
 */
 install.post = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -103,7 +103,7 @@ install.post = (args: { item: number | { id: number } } | [item: number | { id: 
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::publish
-* @see app/Http/Controllers/MarketplaceController.php:124
+* @see app/Http/Controllers/MarketplaceController.php:131
 * @route '/marketplace/publish'
 */
 export const publish = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -118,7 +118,7 @@ publish.definition = {
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::publish
-* @see app/Http/Controllers/MarketplaceController.php:124
+* @see app/Http/Controllers/MarketplaceController.php:131
 * @route '/marketplace/publish'
 */
 publish.url = (options?: RouteQueryOptions) => {
@@ -127,7 +127,7 @@ publish.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::publish
-* @see app/Http/Controllers/MarketplaceController.php:124
+* @see app/Http/Controllers/MarketplaceController.php:131
 * @route '/marketplace/publish'
 */
 publish.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -137,7 +137,7 @@ publish.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::report
-* @see app/Http/Controllers/MarketplaceController.php:91
+* @see app/Http/Controllers/MarketplaceController.php:98
 * @route '/marketplace/{item}/report'
 */
 export const report = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -152,7 +152,7 @@ report.definition = {
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::report
-* @see app/Http/Controllers/MarketplaceController.php:91
+* @see app/Http/Controllers/MarketplaceController.php:98
 * @route '/marketplace/{item}/report'
 */
 report.url = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -185,7 +185,7 @@ report.url = (args: { item: number | { id: number } } | [item: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::report
-* @see app/Http/Controllers/MarketplaceController.php:91
+* @see app/Http/Controllers/MarketplaceController.php:98
 * @route '/marketplace/{item}/report'
 */
 report.post = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({

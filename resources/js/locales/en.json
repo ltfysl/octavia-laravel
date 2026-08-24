@@ -476,7 +476,25 @@
     "capabilitiesEyebrow": "Capabilities",
     "featuresSubtitle": "Six primitives that turn prompting from folklore into science.",
     "howSubtitle": "Three moves. No black boxes. Every mutation measured against your definition of good.",
-    "trustedBy": "Trusted by prompt teams"
+    "trustedBy": "TRUSTED BY",
+    "fieldStation": "Octavia Field Station",
+    "heroLine1": "The prompt",
+    "heroLine2": "laboratory",
+    "heroLine3": "for teams that",
+    "demoCompleted": "completed",
+    "bestScore": "BEST SCORE",
+    "steps": "STEPS",
+    "target": "TARGET",
+    "demoStep1": "initial prompt",
+    "demoStep2": "+ brand requirement",
+    "demoStep3": "+ length constraint",
+    "marquee": {
+      "benchmark": "BENCHMARK",
+      "evolve": "EVOLVE",
+      "fineTune": "FINE-TUNE"
+    },
+    "howItWorks": "How it works",
+    "questions": "Questions"
   },
   "common": {
     "loading": "Loading…",

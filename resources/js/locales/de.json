@@ -489,7 +489,25 @@
     "capabilitiesEyebrow": "Funktionen",
     "featuresSubtitle": "Sechs Bausteine, die Prompting von Folklore zu Wissenschaft machen.",
     "howSubtitle": "Drei Schritte. Keine Blackbox. Jede Mutation gegen deine Definition von gut gemessen.",
-    "trustedBy": "Vertraut von Prompt-Teams"
+    "trustedBy": "IM EINSATZ BEI",
+    "fieldStation": "Octavia Field Station",
+    "heroLine1": "Das Prompt-",
+    "heroLine2": "Laboratorium",
+    "heroLine3": "für Teams, die",
+    "demoCompleted": "abgeschlossen",
+    "bestScore": "BESTER SCORE",
+    "steps": "SCHRITTE",
+    "target": "ZIEL",
+    "demoStep1": "Ausgangsprompt",
+    "demoStep2": "+ Markenanforderung",
+    "demoStep3": "+ Längenbeschränkung",
+    "marquee": {
+      "benchmark": "BENCHMARK",
+      "evolve": "EVOLVIEREN",
+      "fineTune": "FEINTUNEN"
+    },
+    "howItWorks": "So funktioniert es",
+    "questions": "Fragen"
   },
   "common": {
     "loading": "Wird geladen…",

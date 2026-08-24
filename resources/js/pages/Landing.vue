@@ -155,13 +155,13 @@ const yearly = ref(false);
                         <span class="inline-flex h-2 w-2 animate-pulse rounded-full bg-[#22C55E]" aria-hidden="true" />
                         <span class="text-xs font-medium tracking-wide text-white/80">New — Evolution engine 2.0</span>
                         <span class="hidden sm:inline h-3 w-px bg-white/10" />
-                        <span class="hidden sm:inline font-mono text-xs text-white/40">Octavia Field Station</span>
+                        <span class="hidden sm:inline font-mono text-xs text-white/40">{{ t('landing.fieldStation') }}</span>
                     </div>
 
                     <h1 class="mt-6 font-display text-5xl font-bold leading-[0.9] tracking-tighter text-white md:text-6xl lg:text-[64px]">
-                        <span class="block">The prompt</span>
-                        <span class="block bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">laboratory</span>
-                        <span class="block text-2xl font-normal tracking-tight text-white/60 md:text-3xl">for teams that <span ref="scrambleRef" class="text-white">{{ scrambleText }}</span></span>
+                        <span class="block">{{ t('landing.heroLine1') }}</span>
+                        <span class="block bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">{{ t('landing.heroLine2') }}</span>
+                        <span class="block text-2xl font-normal tracking-tight text-white/60 md:text-3xl">{{ t('landing.heroLine3') }} <span ref="scrambleRef" class="text-white">{{ scrambleText }}</span></span>
                     </h1>
 
                     <p class="mt-5 max-w-[56ch] text-base leading-relaxed text-slate-300 md:text-lg">
@@ -188,7 +188,7 @@ const yearly = ref(false);
 
                     <!-- social proof logos -->
                     <div class="mt-8 flex flex-wrap items-center gap-6 border-t border-white/5 pt-6 opacity-60">
-                        <span class="font-mono text-xs tracking-widest text-white/30">TRUSTED BY</span>
+                        <span class="font-mono text-xs tracking-widest text-white/30">{{ t('landing.trustedBy') }}</span>
                         <div class="flex flex-wrap items-center gap-6 text-sm font-semibold tracking-tight text-white/50">
                             <span>Linear</span><span class="h-3 w-px bg-white/10" /><span>Perplexity</span><span class="h-3 w-px bg-white/10" /><span>Retool</span><span class="h-3 w-px bg-white/10" /><span>Vercel</span>
                         </div>
@@ -211,27 +211,27 @@ const yearly = ref(false);
                                     <span class="h-2.5 w-2.5 rounded-full bg-red-400" /><span class="h-2.5 w-2.5 rounded-full bg-yellow-400" /><span class="h-2.5 w-2.5 rounded-full bg-green-400" />
                                 </div>
                                 <span class="rounded-full bg-[#0F172A] px-2.5 py-1 font-mono text-xs text-slate-400">Run · Tagline writer × Tagline quality</span>
-                                <span class="rounded-full bg-[#22C55E]/15 px-2.5 py-1 text-xs font-medium text-[#22C55E]">completed</span>
+                                <span class="rounded-full bg-[#22C55E]/15 px-2.5 py-1 text-xs font-medium text-[#22C55E]">{{ t('landing.demoCompleted') }}</span>
                             </div>
                             <div class="p-4">
                                 <div class="grid grid-cols-3 gap-3 text-center">
                                     <div class="rounded-xl bg-[#1B2336] p-3">
-                                        <p class="font-mono text-xs tracking-wide text-slate-400">BEST SCORE</p>
+                                        <p class="font-mono text-xs tracking-wide text-slate-400">{{ t('landing.bestScore') }}</p>
                                         <p class="mt-1 font-display text-2xl font-bold text-white">100<span class="text-[#22C55E]">%</span></p>
                                     </div>
                                     <div class="rounded-xl bg-[#1B2336] p-3">
-                                        <p class="font-mono text-xs tracking-wide text-slate-400">STEPS</p>
+                                        <p class="font-mono text-xs tracking-wide text-slate-400">{{ t('landing.steps') }}</p>
                                         <p class="mt-1 font-display text-2xl font-bold text-white">3</p>
                                     </div>
                                     <div class="rounded-xl bg-[#1B2336] p-3">
-                                        <p class="font-mono text-xs tracking-wide text-slate-400">TARGET</p>
+                                        <p class="font-mono text-xs tracking-wide text-slate-400">{{ t('landing.target') }}</p>
                                         <p class="mt-1 font-display text-2xl font-bold text-white">95%</p>
                                     </div>
                                 </div>
                                 <div class="mt-4 space-y-2">
-                                    <div class="flex items-center gap-3 rounded-xl bg-[#1E293B] px-3 py-2.5"><span class="w-14 font-mono text-xs text-slate-400">step 1</span><span class="text-sm text-slate-200">initial prompt</span><span class="ml-auto rounded-full bg-red-500/90 px-2 py-1 text-xs font-medium text-white">33%</span></div>
-                                    <div class="flex items-center gap-3 rounded-xl bg-[#1E293B] px-3 py-2.5"><span class="w-14 font-mono text-xs text-slate-400">step 2</span><span class="text-sm text-slate-200">+ brand requirement</span><span class="ml-auto rounded-full bg-amber-500 px-2 py-1 text-xs font-medium text-white">67%</span></div>
-                                    <div class="flex items-center gap-3 rounded-xl bg-[#1E293B] px-3 py-2.5"><span class="w-14 font-mono text-xs text-slate-400">step 3</span><span class="text-sm text-slate-200">+ length constraint</span><span class="ml-auto rounded-full bg-[#22C55E] px-2 py-1 text-xs font-medium text-white">100%</span></div>
+                                    <div class="flex items-center gap-3 rounded-xl bg-[#1E293B] px-3 py-2.5"><span class="w-14 font-mono text-xs text-slate-400">step 1</span><span class="text-sm text-slate-200">{{ t('landing.demoStep1') }}</span><span class="ml-auto rounded-full bg-red-500/90 px-2 py-1 text-xs font-medium text-white">33%</span></div>
+                                    <div class="flex items-center gap-3 rounded-xl bg-[#1E293B] px-3 py-2.5"><span class="w-14 font-mono text-xs text-slate-400">step 2</span><span class="text-sm text-slate-200">{{ t('landing.demoStep2') }}</span><span class="ml-auto rounded-full bg-amber-500 px-2 py-1 text-xs font-medium text-white">67%</span></div>
+                                    <div class="flex items-center gap-3 rounded-xl bg-[#1E293B] px-3 py-2.5"><span class="w-14 font-mono text-xs text-slate-400">step 3</span><span class="text-sm text-slate-200">{{ t('landing.demoStep3') }}</span><span class="ml-auto rounded-full bg-[#22C55E] px-2 py-1 text-xs font-medium text-white">100%</span></div>
                                 </div>
                             </div>
                         </div>
@@ -245,7 +245,7 @@ const yearly = ref(false);
 
             <div class="absolute bottom-0 left-0 w-full border-t border-white/10 bg-black/20 py-3 backdrop-blur">
                 <div class="flex w-max animate-[marquee_28s_linear_infinite] gap-10 whitespace-nowrap font-mono text-xs tracking-widest text-white/45">
-                    <span v-for="i in 6" :key="i" class="flex items-center gap-10"><span>BENCHMARK</span><span class="h-1 w-1 rotate-45 bg-[#22C55E]" /><span>EVOLVE</span><span class="h-1 w-1 rotate-45 bg-white/30" /><span>FINE-TUNE</span><span class="h-1 w-1 rotate-45 bg-[#22C55E]" /></span>
+                    <span v-for="i in 6" :key="i" class="flex items-center gap-10"><span>{{ t('landing.marquee.benchmark') }}</span><span class="h-1 w-1 rotate-45 bg-[#22C55E]" /><span>{{ t('landing.marquee.evolve') }}</span><span class="h-1 w-1 rotate-45 bg-white/30" /><span>{{ t('landing.marquee.fineTune') }}</span><span class="h-1 w-1 rotate-45 bg-[#22C55E]" /></span>
                 </div>
             </div>
         </section>
@@ -301,7 +301,7 @@ const yearly = ref(false);
         <section id="how" class="border-y border-slate-200 bg-white py-16 md:py-24">
             <div class="mx-auto grid max-w-[1400px] gap-10 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.15fr] lg:px-8">
                 <div class="lg:sticky lg:top-24 lg:self-start">
-                    <p class="font-mono text-xs font-semibold uppercase tracking-widest text-[#22C55E]">How it works</p>
+                    <p class="font-mono text-xs font-semibold uppercase tracking-widest text-[#22C55E]">{{ t('landing.howItWorks') }}</p>
                     <h2 class="mt-2 font-display text-4xl font-bold tracking-tighter text-[#0F172A] md:text-5xl">{{ t('landing.howTitle') }}</h2>
                     <p class="mt-4 max-w-[42ch] text-sm leading-relaxed text-slate-500">{{ t('landing.howSubtitle') }}</p>
                     <div class="mt-6 hidden h-px w-full bg-gradient-to-r from-[#22C55E] to-transparent lg:block" />
@@ -363,7 +363,7 @@ const yearly = ref(false);
         <!-- FAQ — glass -->
         <section class="bg-white py-16 md:py-24">
             <div class="mx-auto max-w-3xl px-4 sm:px-6">
-                <p class="text-center font-mono text-xs font-semibold uppercase tracking-widest text-[#22C55E]">Questions</p>
+                <p class="text-center font-mono text-xs font-semibold uppercase tracking-widest text-[#22C55E]">{{ t('landing.questions') }}</p>
                 <h2 class="mt-2 text-center font-display text-4xl font-bold tracking-tighter text-[#0F172A]">{{ t('landing.faqTitle') }}</h2>
                 <div class="mt-10 space-y-3">
                     <details v-for="faq in faqs" :key="faq.q" class="group rounded-2xl border border-slate-200 bg-slate-50 px-6 py-4 open:bg-white open:shadow-[0_12px_32px_rgba(15,23,42,0.06)] transition">

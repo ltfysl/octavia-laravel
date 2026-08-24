@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import AppLayout from '../../layouts/AppLayout.vue';
 import OBadge from '../../components/ui/OBadge.vue';
+
+
+const { t } = useI18n();
 
 defineProps<{
     items: Array<{
@@ -26,24 +30,25 @@ const setListed = (id: number, listed: boolean) => {
             busyId.value = null;
         },
     });
+
 };
 
 </script>
 
 <template>
     <AppLayout>
-        <Head><title>Admin · Marketplace</title><meta name="robots" content="noindex" /></Head>
+        <Head><title>Admin · {{ t('admin.marketplace.title') }}</title><meta name="robots" content="noindex" /></Head>
 
-        <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">Marketplace</h1>
-        <p class="mt-1 text-sm text-ink-500">Moderate community listings. Unlisting hides an item from the marketplace without deleting it.</p>
+        <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">{{ t('admin.marketplace.title') }}</h1>
+        <p class="mt-1 text-sm text-ink-500">{{ t('admin.marketplace.subtitle') }}</p>
 
         <div class="mt-6 overflow-hidden rounded-card border border-ink-100 bg-card shadow-panel">
             <table class="w-full text-left text-sm">
                 <thead>
                     <tr class="border-b border-ink-100 text-xs uppercase tracking-wide text-ink-300">
-                        <th class="px-5 py-3 font-medium">Item</th>
-                        <th class="hidden px-5 py-3 font-medium sm:table-cell">Publisher</th>
-                        <th class="px-5 py-3 font-medium">Status</th>
+                        <th class="px-5 py-3 font-medium">{{ t('admin.marketplace.item') }}</th>
+                        <th class="hidden px-5 py-3 font-medium sm:table-cell">{{ t('admin.marketplace.publisher') }}</th>
+                        <th class="px-5 py-3 font-medium">{{ t('admin.marketplace.status') }}</th>
                         <th class="px-5 py-3 font-medium"></th>
                     </tr>
                 </thead>

@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import AppLayout from '../../layouts/AppLayout.vue';
 import OBadge from '../../components/ui/OBadge.vue';
+
+
+const { t } = useI18n();
 
 defineProps<{
     users: {
@@ -21,13 +25,14 @@ defineProps<{
     filters: { q: string };
 }>();
 
+
 const search = ref('');
 
 const doSearch = () => router.get('/admin/users', search.value ? { q: search.value } : {}, { preserveState: true });
 
 const toggleAdmin = (id: number) => router.post(`/admin/users/${id}/toggle-admin`);
 const destroy = (id: number) => {
-    if (confirm('Delete this user and all their data?')) {
+    if (confirm(t('admin.users.deleteConfirm'))) {
         router.delete(`/admin/users/${id}`);
     }
 };
@@ -35,10 +40,10 @@ const destroy = (id: number) => {
 
 <template>
     <AppLayout>
-        <Head><title>Admin · Users</title><meta name="robots" content="noindex" /></Head>
+        <Head><title>Admin · {{ t('admin.users.title') }}</title><meta name="robots" content="noindex" /></Head>
 
         <div class="flex flex-wrap items-center justify-between gap-4">
-            <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">Users</h1>
+            <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">{{ t('admin.users.title') }}</h1>
             <form class="flex gap-2" role="search" @submit.prevent="doSearch">
                 <input
                     v-model="search"
@@ -46,7 +51,7 @@ const destroy = (id: number) => {
                     placeholder="Name or email…"
                     class="w-56 rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500"
                 />
-                <button type="submit" class="rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm hover:bg-paper-100">Search</button>
+                <button type="submit" class="rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm hover:bg-paper-100">{{ t('common.search') }}</button>
             </form>
         </div>
 
@@ -54,9 +59,9 @@ const destroy = (id: number) => {
             <table class="w-full text-left text-sm">
                 <thead>
                     <tr class="border-b border-ink-100 text-xs uppercase tracking-wide text-ink-300">
-                        <th class="px-5 py-3 font-medium">User</th>
-                        <th class="hidden px-5 py-3 font-medium sm:table-cell">Content</th>
-                        <th class="px-5 py-3 font-medium">Role</th>
+                        <th class="px-5 py-3 font-medium">{{ t('admin.users.user') }}</th>
+                        <th class="hidden px-5 py-3 font-medium sm:table-cell">{{ t('admin.users.content') }}</th>
+                        <th class="px-5 py-3 font-medium">{{ t('admin.users.role') }}</th>
                         <th class="px-5 py-3 font-medium"></th>
                     </tr>
                 </thead>
@@ -76,7 +81,7 @@ const destroy = (id: number) => {
                             <button type="button" class="text-xs font-medium text-accent-600 hover:text-accent-700" @click="toggleAdmin(user.id)">
                                 {{ user.is_admin ? 'Revoke admin' : 'Make admin' }}
                             </button>
-                            <button type="button" class="ml-3 text-xs font-medium text-rose-450 hover:underline" @click="destroy(user.id)">Delete</button>
+                            <button type="button" class="ml-3 text-xs font-medium text-rose-450 hover:underline" @click="destroy(user.id)">{{ t('common.delete') }}</button>
                         </td>
                     </tr>
                 </tbody>

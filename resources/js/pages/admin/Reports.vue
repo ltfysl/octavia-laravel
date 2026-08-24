@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import AppLayout from '../../layouts/AppLayout.vue';
 import OBadge from '../../components/ui/OBadge.vue';
 import OEmptyState from '../../components/ui/OEmptyState.vue';
+
+
+const { t } = useI18n();
 
 defineProps<{
     reports: Array<{
@@ -28,17 +32,18 @@ const resolve = (id: number, action: 'dismiss' | 'unlist') => {
             busyId.value = null;
         },
     });
+
 };
 </script>
 
 <template>
     <AppLayout>
-        <Head><title>Admin · Reports</title><meta name="robots" content="noindex" /></Head>
+        <Head><title>{{ t('admin.title') }} · {{ t('admin.reports.title') }}</title><meta name="robots" content="noindex" /></Head>
 
-        <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">Reports</h1>
-        <p class="mt-1 text-sm text-ink-500">Open abuse reports on marketplace listings. Resolve dismisses the report; unlist also hides the item.</p>
+        <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">{{ t('admin.reports.title') }}</h1>
+        <p class="mt-1 text-sm text-ink-500">{{ t('admin.reports.subtitle') }}</p>
 
-        <OEmptyState v-if="reports.length === 0" class="mt-8" title="No open reports" />
+        <OEmptyState v-if="reports.length === 0" class="mt-8" title="{{ t('admin.reports.empty') }}" />
 
         <ul v-else class="mt-8 space-y-4">
             <li v-for="report in reports" :key="report.id">

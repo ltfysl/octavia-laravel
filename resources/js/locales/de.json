@@ -656,5 +656,35 @@
   "locales": {
     "en": "Englisch",
     "de": "Deutsch"
+  },
+  "admin": {
+    "title": "Admin",
+    "reports": {
+      "subtitle": "Offene Missbrauchsmeldungen zu Marktplatz-Einträgen. Ablehnen löst die Meldung auf; Entfernen blendet den Eintrag aus.",
+      "empty": "Keine offenen Meldungen",
+      "item": "Eintrag",
+      "publisher": "Herausgeber",
+      "status": "Status",
+      "title": "Meldungen"
+    },
+    "users": {
+      "title": "Benutzer",
+      "user": "Benutzer",
+      "content": "Inhalt",
+      "role": "Rolle",
+      "deleteConfirm": "Diesen Benutzer und alle seine Daten löschen?"
+    },
+    "marketplace": {
+      "title": "Marktplatz",
+      "subtitle": "Community-Einträge moderieren. Entfernen blendet einen Eintrag im Marktplatz aus, ohne ihn zu löschen.",
+      "item": "Eintrag",
+      "publisher": "Herausgeber",
+      "status": "Status"
+    },
+    "prompts": "Prompts",
+    "benchmarks": "Benchmarks",
+    "runs": "Runs",
+    "activeRuns": "Aktive Runs",
+    "failedRuns": "Fehlgeschlagene Runs"
   }
 }

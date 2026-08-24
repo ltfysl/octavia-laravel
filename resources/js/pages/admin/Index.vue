@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
 import { Head } from '@inertiajs/vue3';
 import AppLayout from '../../layouts/AppLayout.vue';
 import OPanel from '../../components/ui/OPanel.vue';
 import OBadge from '../../components/ui/OBadge.vue';
+
+const { t } = useI18n();
 
 const props = defineProps<{
     stats: {
@@ -23,9 +26,9 @@ const props = defineProps<{
 
 <template>
     <AppLayout>
-        <Head><title>Admin</title><meta name="robots" content="noindex" /></Head>
+        <Head><title>{{ t('admin.title') }}</title><meta name="robots" content="noindex" /></Head>
 
-        <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">Admin</h1>
+        <h1 class="font-display text-2xl font-bold tracking-tight text-ink-950">{{ t('admin.title') }}</h1>
 
         <div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
             <OPanel v-for="stat in [

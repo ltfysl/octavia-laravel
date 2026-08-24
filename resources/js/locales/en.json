@@ -643,5 +643,35 @@
   "locales": {
     "en": "English",
     "de": "German"
+  },
+  "admin": {
+    "title": "Admin",
+    "reports": {
+      "subtitle": "Open abuse reports on marketplace listings. Resolve dismisses the report; unlist also hides the item.",
+      "empty": "No open reports",
+      "item": "Item",
+      "publisher": "Publisher",
+      "status": "Status",
+      "title": "Reports"
+    },
+    "users": {
+      "title": "Users",
+      "user": "User",
+      "content": "Content",
+      "role": "Role",
+      "deleteConfirm": "Delete this user and all their data?"
+    },
+    "marketplace": {
+      "title": "Marketplace",
+      "subtitle": "Moderate community listings. Unlisting hides an item from the marketplace without deleting it.",
+      "item": "Item",
+      "publisher": "Publisher",
+      "status": "Status"
+    },
+    "prompts": "Prompts",
+    "benchmarks": "Benchmarks",
+    "runs": "Runs",
+    "activeRuns": "Active runs",
+    "failedRuns": "Failed runs"
   }
 }

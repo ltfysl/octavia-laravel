@@ -41,6 +41,12 @@ class RunController extends Controller
 
     public function create(Request $request): Response
     {
+        $providers = collect(config('llm.providers'))->map(fn ($config, $name) => [
+            'value' => $name,
+            'label' => $name,
+            'model' => $config['model'] ?? null,
+        ])->values();
+
         return Inertia::render('runs/Create', [
             'prompts' => Prompt::where('user_id', $request->user()->id)
                 ->with('currentVersion:id,prompt_id,version')
@@ -53,6 +59,9 @@ class RunController extends Controller
                 ->collections()
                 ->withCount('benchmarks')
                 ->get(['id', 'name', 'benchmarks_count']),
+            'providers' => $providers,
+            'costOptimized' => (bool) config('llm.cost_optimized.enabled'),
+            'defaultModel' => (string) config('llm.providers.'.config('llm.default').'.model'),
         ]);
     }
 
@@ -65,6 +74,8 @@ class RunController extends Controller
             'mode' => ['required', 'in:evaluate,optimize'],
             'max_steps' => ['nullable', 'integer', 'min:1', 'max:20'],
             'target_score' => ['nullable', 'numeric', 'min:0.1', 'max:1'],
+            'cost_optimized' => ['nullable', 'boolean'],
+            'model' => ['nullable', 'string', 'max:120'],
         ]);
 
         $prompt = Prompt::where('user_id', $request->user()->id)->findOrFail($validated['prompt_id']);
@@ -112,6 +123,8 @@ class RunController extends Controller
             'mode' => $validated['mode'],
             'status' => 'pending',
             'provider' => config('llm.default'),
+            'model' => $validated['model'] ?? null,
+            'cost_optimized' => $validated['cost_optimized'] ?? false,
             'max_steps' => $validated['max_steps'] ?? config('llm.evolution.max_steps'),
             'target_score' => $validated['target_score'] ?? config('llm.evolution.target_score'),
         ]);

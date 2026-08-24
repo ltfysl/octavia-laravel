@@ -284,7 +284,10 @@
     "diagnosisTitle": "KI-Diagnose",
     "diagnosisHint": "Analysiere, warum dieser Lauf stoppte, und was als Nächstes zu probieren ist.",
     "diagnosisButton": "Lauf diagnostizieren",
-    "exportLeaderboard": "Leaderboard exportieren"
+    "exportLeaderboard": "Leaderboard exportieren",
+    "model": "Modell",
+    "costOptimized": "Kostenoptimiert",
+    "costOptimizedHint": "Günstigeres Modell für Mutationen, ausgewähltes Modell für Evaluation."
   },
   "marketplace": {
     "title": "Marketplace",

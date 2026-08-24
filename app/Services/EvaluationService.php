@@ -29,7 +29,7 @@ class EvaluationService
     /** Marker that lets deterministic providers detect judge requests. */
     public const JUDGE_MARKER = '[OCTAVIA-JUDGE]';
 
-    public function evaluate(LlmProvider $provider, string $promptContent, iterable $benchmarks): EvaluationSummary
+    public function evaluate(LlmProvider $provider, string $promptContent, iterable $benchmarks, array $options = []): EvaluationSummary
     {
         $cases = [];
         $tokens = 0;
@@ -41,12 +41,19 @@ class EvaluationService
                 $weight = max($case->weight, 0.01);
                 $totalWeight += $weight;
 
+                $taskOptions = ['temperature' => 0.7];
+
+                if (isset($options['model'])) {
+                    $taskOptions['model'] = $options['model'];
+                }
+
                 $output = $provider->complete(
                     $this->taskMessages($promptContent, $case->input),
+                    $taskOptions,
                 );
                 $tokens += $output->totalTokens();
 
-                $outcome = $this->scoreCase($provider, $case, $output->content);
+                $outcome = $this->scoreCase($provider, $case, $output->content, $options['model'] ?? null);
                 $cases[] = $outcome;
                 $weightedScore += $outcome->score * $weight;
             }
@@ -57,13 +64,13 @@ class EvaluationService
         return new EvaluationSummary(round($score, 3), $cases, $tokens);
     }
 
-    private function scoreCase(LlmProvider $provider, BenchmarkCase $case, string $output): CaseOutcome
+    private function scoreCase(LlmProvider $provider, BenchmarkCase $case, string $output, ?string $model = null): CaseOutcome
     {
         $criteria = [];
         $criterionScores = [];
 
         foreach ($case->criteria as $criterion) {
-            $outcome = $this->scoreCriterion($provider, $criterion, $output);
+            $outcome = $this->scoreCriterion($provider, $criterion, $output, $model);
             $criteria[] = $outcome;
             $criterionScores[] = $outcome->score;
         }
@@ -83,13 +90,13 @@ class EvaluationService
         );
     }
 
-    private function scoreCriterion(LlmProvider $provider, BenchmarkCriterion $criterion, string $output): CriterionOutcome
+    private function scoreCriterion(LlmProvider $provider, BenchmarkCriterion $criterion, string $output, ?string $model = null): CriterionOutcome
     {
         return match ($criterion->type) {
             CriterionType::Contains => $this->scoreContains($criterion, $output, expected: true),
             CriterionType::NotContains => $this->scoreContains($criterion, $output, expected: false),
             CriterionType::Regex => $this->scoreRegex($criterion, $output),
-            CriterionType::LlmJudge => $this->scoreLlmJudge($provider, $criterion, $output),
+            CriterionType::LlmJudge => $this->scoreLlmJudge($provider, $criterion, $output, $model),
         };
     }
 
@@ -130,13 +137,17 @@ class EvaluationService
         return new CriterionOutcome($criterion->id, $criterion->label, $criterion->type->value, $matched, $matched ? 1.0 : 0.0);
     }
 
-    private function scoreLlmJudge(LlmProvider $provider, BenchmarkCriterion $criterion, string $output): CriterionOutcome
+    private function scoreLlmJudge(LlmProvider $provider, BenchmarkCriterion $criterion, string $output, ?string $model = null): CriterionOutcome
     {
         $description = (string) ($criterion->config['description'] ?? $criterion->label);
 
-        $response = $provider->complete($this->judgeMessages($description, $output), [
-            'temperature' => 0.0,
-        ]);
+        $judgeOptions = ['temperature' => 0.0];
+
+        if ($model !== null) {
+            $judgeOptions['model'] = $model;
+        }
+
+        $response = $provider->complete($this->judgeMessages($description, $output), $judgeOptions);
         $score = $this->parseJudgeScore($response->content);
 
         return new CriterionOutcome(

@@ -284,7 +284,10 @@
     "diagnosisTitle": "AI diagnosis",
     "diagnosisHint": "Analyse why this run stopped and what to try next.",
     "diagnosisButton": "Diagnose run",
-    "exportLeaderboard": "Export leaderboard"
+    "exportLeaderboard": "Export leaderboard",
+    "model": "Model",
+    "costOptimized": "Cost optimized",
+    "costOptimizedHint": "Use a cheaper model for mutations and the selected model for evaluation."
   },
   "marketplace": {
     "title": "Marketplace",

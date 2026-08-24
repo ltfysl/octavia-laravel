@@ -61,7 +61,7 @@ class ProcessRunJob implements ShouldQueue
         $run->update(['status' => RunStatus::Running, 'started_at' => now()]);
 
         $content = $run->prompt->currentContent() ?? '';
-        $summary = $evaluation->evaluate($provider, $content, $benchmarks);
+        $summary = $evaluation->evaluate($provider, $content, $benchmarks, ['model' => $run->evaluationModel()]);
 
         $step = $run->steps()->create([
             'number' => 1,

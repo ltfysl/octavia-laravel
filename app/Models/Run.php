@@ -26,6 +26,7 @@ class Run extends Model
         'max_steps',
         'target_score',
         'best_score',
+        'cost_optimized',
     ];
 
     protected function casts(): array
@@ -37,7 +38,27 @@ class Run extends Model
             'best_score' => 'float',
             'started_at' => 'datetime',
             'finished_at' => 'datetime',
+            'cost_optimized' => 'boolean',
         ];
+    }
+
+    public function usesCostOptimization(): bool
+    {
+        return $this->cost_optimized === true;
+    }
+
+    public function evaluationModel(): string
+    {
+        return $this->model ?? (string) config("llm.providers.{$this->provider}.model");
+    }
+
+    public function mutationModel(): string
+    {
+        if (! $this->usesCostOptimization()) {
+            return $this->evaluationModel();
+        }
+
+        return (string) config('llm.cost_optimized.mutation_model');
     }
 
     public function user(): BelongsTo

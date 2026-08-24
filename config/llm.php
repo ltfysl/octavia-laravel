@@ -50,4 +50,9 @@ return [
     // Credits: 1 credit = one engine step. Runs reserve max_steps up front.
     'signup_credits' => env('OCTAVIA_SIGNUP_CREDITS', 100),
 
+    'cost_optimized' => [
+        'enabled' => (bool) env('OCTAVIA_COST_OPTIMIZED', false),
+        'mutation_model' => env('OCTAVIA_CHEAP_MODEL', 'gpt-4o-mini'),
+        'evaluation_model' => env('OCTAVIA_STRONG_MODEL', 'gpt-4o'),
+    ],
 ];

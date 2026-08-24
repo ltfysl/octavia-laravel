@@ -74,7 +74,7 @@ class EvolutionService
                     return;
                 }
 
-                $summary = $this->evaluation->evaluate($provider, $currentPrompt, $benchmarks);
+                $summary = $this->evaluation->evaluate($provider, $currentPrompt, $benchmarks, ['model' => $run->evaluationModel()]);
                 $totalTokens += $summary->tokensUsed;
                 $number++;
 
@@ -132,7 +132,7 @@ class EvolutionService
                 // Cycle through 7 strategies — reference parity, better than single optimizer prompt
                 $strategies = array_keys(self::STRATEGIES);
                 $strategy = $strategies[($number - 1) % count($strategies)];
-                $proposal = $this->proposeImprovement($provider, $bestPrompt, $summary, $strategy);
+                $proposal = $this->proposeImprovement($provider, $bestPrompt, $summary, $strategy, $run);
                 $totalTokens += $proposal['tokens'];
 
                 RunStep::create([
@@ -165,7 +165,7 @@ class EvolutionService
     /**
      * @return array{prompt: string, rationale: string, tokens: int}
      */
-    private function proposeImprovement(LlmProvider $provider, string $prompt, EvaluationSummary $summary, string $strategy): array
+    private function proposeImprovement(LlmProvider $provider, string $prompt, EvaluationSummary $summary, string $strategy, Run $run): array
     {
         $strategyHint = self::STRATEGIES[$strategy] ?? self::STRATEGIES['mutation'];
         $failures = '';
@@ -182,10 +182,16 @@ class EvolutionService
             $failures .= "\n";
         }
 
+        $options = ['temperature' => 0.4];
+
+        if ($run->usesCostOptimization()) {
+            $options['model'] = $run->mutationModel();
+        }
+
         $response = $provider->complete([
             ['role' => 'system', 'content' => self::OPTIMIZER_MARKER." You are Octavia, an expert prompt engineer. Use strategy '{$strategy}' — {$strategyHint} Improve the given prompt so every unmet requirement is satisfied explicitly. Reply with a short rationale line, then the full improved prompt wrapped in <PROMPT>...</PROMPT> tags."],
             ['role' => 'user', 'content' => "Current prompt:\n<PROMPT>\n{$prompt}\n</PROMPT>\n\nUnmet benchmark requirements:\n{$failures}"],
-        ], ['temperature' => 0.4]);
+        ], $options);
 
         $improved = $prompt;
 

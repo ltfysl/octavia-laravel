@@ -11,6 +11,9 @@ const props = defineProps<{
     prompts: Array<{ id: number; name: string; version: number | null }>;
     benchmarks: Array<{ id: number; name: string; cases_count: number }>;
     collections?: Array<{ id: number; name: string; benchmarks_count: number }>;
+    providers: Array<{ value: string; label: string; model: string | null }>;
+    costOptimized: boolean;
+    defaultModel: string;
 }>();
 
 const { t } = useI18n();
@@ -22,6 +25,8 @@ const form = ref({
     mode: 'optimize' as 'evaluate' | 'optimize',
     max_steps: 8,
     target_score: 0.95,
+    cost_optimized: props.costOptimized,
+    model: props.defaultModel,
 });
 
 const submit = () => {
@@ -32,6 +37,8 @@ const submit = () => {
         mode: form.value.mode,
         max_steps: form.value.max_steps,
         target_score: form.value.target_score,
+        cost_optimized: form.value.cost_optimized,
+        model: form.value.model || undefined,
     });
 };
 
@@ -93,6 +100,20 @@ const canSubmit = computed(() => !! form.value.prompt_id && (!! form.value.bench
                     <OField label="Max steps" for="steps" :hint="'1 – 20'">
                         <input id="steps" v-model.number="form.max_steps" type="number" min="1" max="20" class="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm focus:border-accent-500" />
                     </OField>
+                </div>
+
+                <div v-if="form.mode === 'optimize'" class="mt-5 space-y-4">
+                    <OField :label="t('runs.model')" for="model">
+                        <input id="model" v-model="form.model" type="text" :placeholder="defaultModel" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" />
+                    </OField>
+
+                    <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-ink-200 bg-card p-3 transition hover:border-ink-300">
+                        <input v-model="form.cost_optimized" type="checkbox" class="h-4 w-4 rounded border-ink-300 text-accent-600 focus:ring-accent-500" />
+                        <div>
+                            <p class="text-sm font-medium text-ink-900">{{ t('runs.costOptimized') }}</p>
+                            <p class="text-xs text-ink-500">{{ t('runs.costOptimizedHint') }}</p>
+                        </div>
+                    </label>
                 </div>
             </OPanel>
 

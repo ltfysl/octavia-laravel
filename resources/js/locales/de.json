@@ -78,7 +78,10 @@
     },
     "distribution": {
       "title": "Verteilung"
-    }
+    },
+    "noExpeditions": "Noch keine Expeditionen",
+    "autoSorting": "auto-sortiert · KI priorisiert",
+    "idle": "Inaktiv — keine laufenden Expeditionen"
   },
   "prompts": {
     "title": "Prompts",

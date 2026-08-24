@@ -78,7 +78,10 @@
     },
     "distribution": {
       "title": "Distribution"
-    }
+    },
+    "noExpeditions": "No expeditions yet",
+    "autoSorting": "auto-sorting · AI prioritized",
+    "idle": "Idle — no active expeditions"
   },
   "prompts": {
     "title": "Prompts",

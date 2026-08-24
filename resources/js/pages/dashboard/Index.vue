@@ -289,9 +289,9 @@ onMounted(() => {
                             <span class="min-w-0 flex-1 truncate text-sm font-medium text-ink-900">{{ run.name }}</span>
                             <OBadge :tone="statusTone[run.status] ?? 'neutral'" class="!px-1.5 !py-0 text-[11px]">{{ run.status }}</OBadge>
                         </li>
-                        <li v-if="recentRuns.length===0" class="rounded-2xl border border-dashed border-ink-200 px-3 py-6 text-center text-sm text-ink-400">No expeditions yet</li>
+                        <li v-if="recentRuns.length===0" class="rounded-2xl border border-dashed border-ink-200 px-3 py-6 text-center text-sm text-ink-400">{{ t('dashboard.noExpeditions') }}</li>
                     </ul>
-                    <p class="mt-3 font-mono text-xs text-ink-300">auto-sorting · AI prioritized</p>
+                    <p class="mt-3 font-mono text-xs text-ink-300">{{ t('dashboard.autoSorting') }}</p>
                 </div>
 
                 <!-- Command Input — Typewriter -->
@@ -327,7 +327,7 @@ onMounted(() => {
                             <span class="min-w-0 flex-1 truncate text-sm font-medium">{{ run.name }}</span>
                             <span class="font-mono text-xs text-white/60">{{ run.score !== null ? Math.round(run.score*100)+'%' : '…' }}</span>
                         </div>
-                        <div v-if="recentRuns.length===0" class="rounded-2xl border border-white/10 px-3 py-6 text-center text-sm text-white/60">Idle — no active expeditions</div>
+                        <div v-if="recentRuns.length===0" class="rounded-2xl border border-white/10 px-3 py-6 text-center text-sm text-white/60">{{ t('dashboard.idle') }}</div>
                     </div>
                     <div class="mt-4 flex items-center gap-2 rounded-full bg-card/10 px-3 py-2 text-xs">
                         <span class="h-2 w-2 rounded-full bg-emerald-400" /> {{ animated.activeRuns }} climbing

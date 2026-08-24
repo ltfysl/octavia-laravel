@@ -64,4 +64,5 @@
 - [x] Round 22d: add `category` column to `prompts` with index/fillable/migration
 - [x] Round 22e: prompt templates gallery with category/search filters and create-from-template flow
 - [x] Round 22f: marketplace star/fork counts + toggle + fork-to-workspace actions
-- [x] **161 Pest tests / 588 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
+- [x] Round 22g: webhooks + deliveries for run events (create/activate/delete, HMAC-signed POST with retry)
+- [x] **165 Pest tests / 594 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green

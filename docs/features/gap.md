@@ -39,9 +39,9 @@
 - **Prompt/skill analytics** — per-prompt run stats, score over time
 - **Skill templates** — reusable starting prompt templates ✓
 - **Gallery star/fork** — star count, fork count in marketplace ✓
-- **Webhooks + deliveries** — outbound webhooks for run events
+- **Webhooks + deliveries** — outbound webhooks for run events ✓
 - **API keys + usage tracking** — workspace API keys, call logs, token usage
-- **Multi-model tournament** — run same prompt/benchmark across several providers
+- **Multi-model tournament** — run same prompt/benchmark across several providers ✓
 - **Cost optimizer** — cheaper model for generation, stronger for evaluation
 - **Onboarding wizard** — multi-step first-run flow beyond current welcome page
 - **Real-time WebSocket progress** — currently polling (Reverb wired but not universal)

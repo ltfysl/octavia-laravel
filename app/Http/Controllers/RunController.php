@@ -175,6 +175,7 @@ class RunController extends Controller
                         'title' => $result->benchmarkCase?->title ?? __('Deleted case'),
                         'score' => (float) $result->score,
                         'passed' => $result->passed,
+                        'input' => $result->benchmarkCase?->input ?? '',
                         'output' => $result->output,
                         'criteria' => $result->criteriaResults->map(fn ($c) => [
                             'label' => $c->criterion_label,

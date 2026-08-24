@@ -191,7 +191,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\RunController::status
-* @see app/Http/Controllers/RunController.php:191
+* @see app/Http/Controllers/RunController.php:192
 * @route '/runs/{run}/status'
 */
 export const status = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -206,7 +206,7 @@ status.definition = {
 
 /**
 * @see \App\Http\Controllers\RunController::status
-* @see app/Http/Controllers/RunController.php:191
+* @see app/Http/Controllers/RunController.php:192
 * @route '/runs/{run}/status'
 */
 status.url = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -239,7 +239,7 @@ status.url = (args: { run: number | { id: number } } | [run: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\RunController::status
-* @see app/Http/Controllers/RunController.php:191
+* @see app/Http/Controllers/RunController.php:192
 * @route '/runs/{run}/status'
 */
 status.get = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -249,7 +249,7 @@ status.get = (args: { run: number | { id: number } } | [run: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\RunController::status
-* @see app/Http/Controllers/RunController.php:191
+* @see app/Http/Controllers/RunController.php:192
 * @route '/runs/{run}/status'
 */
 status.head = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -259,7 +259,7 @@ status.head = (args: { run: number | { id: number } } | [run: number | { id: num
 
 /**
 * @see \App\Http\Controllers\RunController::cancel
-* @see app/Http/Controllers/RunController.php:202
+* @see app/Http/Controllers/RunController.php:203
 * @route '/runs/{run}/cancel'
 */
 export const cancel = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -274,7 +274,7 @@ cancel.definition = {
 
 /**
 * @see \App\Http\Controllers\RunController::cancel
-* @see app/Http/Controllers/RunController.php:202
+* @see app/Http/Controllers/RunController.php:203
 * @route '/runs/{run}/cancel'
 */
 cancel.url = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -307,7 +307,7 @@ cancel.url = (args: { run: number | { id: number } } | [run: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\RunController::cancel
-* @see app/Http/Controllers/RunController.php:202
+* @see app/Http/Controllers/RunController.php:203
 * @route '/runs/{run}/cancel'
 */
 cancel.post = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -317,7 +317,7 @@ cancel.post = (args: { run: number | { id: number } } | [run: number | { id: num
 
 /**
 * @see \App\Http\Controllers\RunController::retry
-* @see app/Http/Controllers/RunController.php:215
+* @see app/Http/Controllers/RunController.php:216
 * @route '/runs/{run}/retry'
 */
 export const retry = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -332,7 +332,7 @@ retry.definition = {
 
 /**
 * @see \App\Http\Controllers\RunController::retry
-* @see app/Http/Controllers/RunController.php:215
+* @see app/Http/Controllers/RunController.php:216
 * @route '/runs/{run}/retry'
 */
 retry.url = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -365,7 +365,7 @@ retry.url = (args: { run: number | { id: number } } | [run: number | { id: numbe
 
 /**
 * @see \App\Http\Controllers\RunController::retry
-* @see app/Http/Controllers/RunController.php:215
+* @see app/Http/Controllers/RunController.php:216
 * @route '/runs/{run}/retry'
 */
 retry.post = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({

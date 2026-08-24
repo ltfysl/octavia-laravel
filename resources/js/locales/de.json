@@ -356,7 +356,8 @@
     "dateLabel": "Datum",
     "evaluationsLabel": "Evaluationen",
     "retry": "Wiederholen",
-    "retryError": "Run ist noch aktiv."
+    "retryError": "Run ist noch aktiv.",
+    "input": "Eingabe"
   },
   "marketplace": {
     "title": "Marketplace",

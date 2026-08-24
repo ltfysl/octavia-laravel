@@ -15,6 +15,7 @@ interface StepCase {
     score: number;
     passed: boolean;
     output: string | null;
+    input: string;
     criteria: Array<{ label: string; passed: boolean; detail: Record<string, unknown> | null }>;
 }
 
@@ -312,6 +313,20 @@ const runDiagnosis = async () => {
                                     <span :class="cr.passed ? 'text-ink-700' : 'text-rose-450'">{{ cr.label }}</span>
                                 </li>
                             </ul>
+
+                            <details class="mt-2">
+                                <summary class="flex cursor-pointer items-center justify-between text-xs font-medium text-ink-400 hover:text-ink-600">
+                                    <span>{{ t('runs.input') }}</span>
+                                    <button
+                                        type="button"
+                                        class="text-[11px] text-ink-400 hover:text-ink-600"
+                                        @click.stop="copyOutput(c.input, `in-${selectedStep.number}-${i}`)"
+                                    >
+                                        {{ copiedOutput === `in-${selectedStep.number}-${i}` ? t('common.copied') : t('common.copy') }}
+                                    </button>
+                                </summary>
+                                <pre class="mt-2 max-h-32 overflow-auto whitespace-pre-wrap rounded-lg bg-paper-100 p-3 font-mono text-xs leading-relaxed text-ink-700 scroll-thin">{{ c.input }}</pre>
+                            </details>
 
                             <details class="mt-3">
                                 <summary class="flex cursor-pointer items-center justify-between text-xs font-medium text-accent-600 hover:text-accent-700">

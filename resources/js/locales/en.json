@@ -356,7 +356,8 @@
     "dateLabel": "date",
     "evaluationsLabel": "evaluations",
     "retry": "Retry",
-    "retryError": "Run is still active."
+    "retryError": "Run is still active.",
+    "input": "Input"
   },
   "marketplace": {
     "title": "Marketplace",

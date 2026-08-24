@@ -26,7 +26,7 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
-const tab = ref<'editor' | 'versions' | 'analytics' | 'abTest'>('editor');
+const tab = ref<'editor' | 'versions' | 'analytics' | 'abTest' | 'regression'>('editor');
 
 const form = useForm({
     name: props.prompt.name,
@@ -200,6 +200,51 @@ const runAbTest = async () => {
     }
 };
 
+
+interface RegressionResult {
+    results: Array<{
+        benchmark_id: number;
+        benchmark_name: string;
+        category: string;
+        status: 'pass' | 'fail';
+        score: number;
+        cases: Array<{ case_id: number; title: string; score: number; passed: boolean; output: string }>;
+    }>;
+    summary: { total: number; passed: number; failed: number; errors: number; avg_score: number };
+}
+
+const regressionBenchmarkIds = ref<number[]>([]);
+const regressionSample = ref('');
+const regressionResult = ref<RegressionResult | null>(null);
+const regressionLoading = ref(false);
+const regressionError = ref('');
+
+const runRegression = async () => {
+    regressionLoading.value = true;
+    regressionError.value = '';
+    regressionResult.value = null;
+    try {
+        const res = await fetch(`/prompts/${props.prompt.id}/regression-test`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content ?? '',
+                Accept: 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                benchmark_ids: regressionBenchmarkIds.value.length ? regressionBenchmarkIds.value : null,
+                sample_input: regressionSample.value || null,
+            }),
+        });
+        if (! res.ok) throw new Error();
+        regressionResult.value = await res.json();
+    } catch {
+        regressionError.value = t('common.error');
+    } finally {
+        regressionLoading.value = false;
+    }
+};
 const startRun = (mode: 'evaluate' | 'optimize') => {
     if (! selectedBenchmarkId.value) return;
     router.post('/runs', {
@@ -283,13 +328,13 @@ const runInsight = async () => {
         <!-- Tabs -->
         <div class="mt-6 flex gap-1 border-b border-ink-100" role="tablist">
             <button
-                v-for="tb in [{ id: 'editor', label: t('prompts.content') }, { id: 'versions', label: t('prompts.versions') }, { id: 'analytics', label: t('prompts.analytics.title') }, { id: 'abTest', label: t('prompts.abTest.title') }]"
+                v-for="tb in [{ id: 'editor', label: t('prompts.content') }, { id: 'versions', label: t('prompts.versions') }, { id: 'analytics', label: t('prompts.analytics.title') }, { id: 'abTest', label: t('prompts.abTest.title') }, { id: 'regression', label: t('prompts.regression.title') }]"
                 :key="tb.id"
                 role="tab"
                 :aria-selected="tab === tb.id"
                 class="-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors"
                 :class="tab === tb.id ? 'border-accent-600 text-accent-700' : 'border-transparent text-ink-500 hover:text-ink-900'"
-                @click="tab = tb.id as 'editor' | 'versions' | 'analytics' | 'abTest'; if (tab === 'analytics') loadAnalytics()"
+                @click="tab = tb.id as 'editor' | 'versions' | 'analytics' | 'abTest' | 'regression'; if (tab === 'analytics') loadAnalytics()"
             >
                 {{ tb.label }}
             </button>
@@ -601,6 +646,41 @@ const runInsight = async () => {
                         <p class="eyebrow">{{ t('prompts.abTest.winner') }}</p>
                         <p class="mt-1 font-display text-3xl font-semibold text-ink-950">{{ t('prompts.abTest.tie') }}</p>
                     </OPanel>
+                </div>
+            </OPanel>
+        </div>
+
+        <!-- Regression test tab -->
+        <div v-else-if="tab === 'regression'" class="mt-6">
+            <OPanel :title="t('prompts.regression.title')">
+                <p class="mb-3 text-xs leading-relaxed text-ink-500">{{ t('prompts.regression.hint') }}</p>
+                <OField :label="t('prompts.regression.benchmarks')" for="regBenchmarks">
+                    <select id="regBenchmarks" v-model="regressionBenchmarkIds" multiple class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" size="4">
+                        <option v-for="b in benchmarks" :key="b.id" :value="b.id">{{ b.name }} ({{ b.cases_count }} cases)</option>
+                    </select>
+                    <p class="mt-1 text-xs text-ink-400">{{ t('prompts.regression.benchmarksHint') }}</p>
+                </OField>
+                <OField :label="t('prompts.regression.sampleInput')" for="regSample" class="mt-3">
+                    <OInput id="regSample" v-model="regressionSample" :placeholder="t('prompts.regression.sampleInputHint')" />
+                </OField>
+                <OButton class="mt-4" :disabled="regressionLoading" @click="runRegression">
+                    {{ regressionLoading ? t('common.loading') : t('prompts.regression.run') }}
+                </OButton>
+                <p v-if="regressionError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ regressionError }}</p>
+                <div v-if="regressionResult" class="mt-6 space-y-4">
+                    <div class="grid gap-4 sm:grid-cols-4">
+                        <OPanel><p class="eyebrow">{{ t('prompts.regression.total') }}</p><p class="mt-1 font-display text-2xl font-semibold text-ink-950">{{ regressionResult.summary.total }}</p></OPanel>
+                        <OPanel><p class="eyebrow">{{ t('prompts.regression.passed') }}</p><p class="mt-1 font-display text-2xl font-semibold text-mint-600">{{ regressionResult.summary.passed }}</p></OPanel>
+                        <OPanel><p class="eyebrow">{{ t('prompts.regression.failed') }}</p><p class="mt-1 font-display text-2xl font-semibold text-rose-600">{{ regressionResult.summary.failed }}</p></OPanel>
+                        <OPanel><p class="eyebrow">{{ t('prompts.regression.avgScore') }}</p><p class="mt-1 font-display text-2xl font-semibold text-ink-950">{{ Math.round(regressionResult.summary.avg_score * 100) }}%</p></OPanel>
+                    </div>
+                    <div v-for="r in regressionResult.results" :key="r.benchmark_id" class="rounded-2xl border border-ink-100 bg-card p-4">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-semibold text-ink-950">{{ r.benchmark_name }}</h4>
+                            <OBadge :tone="r.status === 'pass' ? 'mint' : 'rose'">{{ r.status === 'pass' ? t('prompts.regression.pass') : t('prompts.regression.fail') }}</OBadge>
+                        </div>
+                        <p class="text-xs text-ink-400">{{ Math.round(r.score * 100) }}% · {{ r.category }}</p>
+                    </div>
                 </div>
             </OPanel>
         </div>

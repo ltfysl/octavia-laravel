@@ -122,6 +122,21 @@
             "run": "A/B-Test starten",
             "winner": "Gewinner",
             "tie": "Unentschieden"
+        },
+        "regression": {
+            "title": "Regressionstest",
+            "hint": "Teste den aktuellen Prompt gegen ausgewählte Benchmarks. Leer lassen, um alle Benchmarks der gleichen Kategorie zu testen.",
+            "benchmarks": "Benchmarks",
+            "benchmarksHint": "Leer lassen, um alle Benchmarks der Prompt-Kategorie zu nutzen.",
+            "sampleInput": "Beispiel-Eingabe",
+            "sampleInputHint": "Optional: überschreibe jede Case-Eingabe mit diesem Wert",
+            "run": "Regressionstest starten",
+            "total": "Gesamt",
+            "passed": "Bestanden",
+            "failed": "Fehlgeschlagen",
+            "pass": "Bestanden",
+            "fail": "Fehlgeschlagen",
+            "avgScore": "Ø-Score"
         }
     },
     "benchmarks": {

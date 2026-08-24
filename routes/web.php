@@ -23,6 +23,7 @@ use App\Http\Controllers\PromptController;
 use App\Http\Controllers\PromptExportController;
 use App\Http\Controllers\PromptImportController;
 use App\Http\Controllers\PromptInsightController;
+use App\Http\Controllers\PromptRegressionTestController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\RunDiagnosisController;
@@ -98,6 +99,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/prompts/{prompt}/ab-test', PromptAbTestController::class)
         ->middleware('throttle:runs')
         ->name('prompts.ab-test');
+    Route::post('/prompts/{prompt}/regression-test', PromptRegressionTestController::class)
+        ->middleware('throttle:runs')
+        ->name('prompts.regression-test');
     Route::post('/prompts/{prompt}/versions/{version}/restore', [PromptController::class, 'restoreVersion'])
         ->name('prompts.restore');
     Route::get('/prompts/{prompt}/export', PromptExportController::class)->name('prompts.export');

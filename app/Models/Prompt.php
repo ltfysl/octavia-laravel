@@ -18,6 +18,7 @@ class Prompt extends Model
     protected $fillable = [
         'name',
         'description',
+        'category',
         'visibility',
         'current_version_id',
     ];

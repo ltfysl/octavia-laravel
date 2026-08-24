@@ -111,6 +111,21 @@
             "benchmarkName": "Benchmark",
             "empty": "No completed runs yet."
         },
+        "regression": {
+            "title": "Regression test",
+            "hint": "Run the current prompt against selected benchmarks to verify it does not break existing cases. Leave benchmarks empty to test all benchmarks in the same category.",
+            "benchmarks": "Benchmarks",
+            "benchmarksHint": "Leave empty to use all benchmarks in the prompt category.",
+            "sampleInput": "Sample input",
+            "sampleInputHint": "Optional: override every case input with this value",
+            "run": "Run regression test",
+            "total": "Total",
+            "passed": "Passed",
+            "failed": "Failed",
+            "pass": "Pass",
+            "fail": "Fail",
+            "avgScore": "Avg. score"
+        },
         "abTest": {
             "title": "A/B test",
             "hint": "Compare two prompt versions against the same benchmark.",

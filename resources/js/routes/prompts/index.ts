@@ -626,6 +626,64 @@ abTest.post = (args: { prompt: number | { id: number } } | [prompt: number | { i
 })
 
 /**
+* @see \App\Http\Controllers\PromptRegressionTestController::__invoke
+* @see app/Http/Controllers/PromptRegressionTestController.php:13
+* @route '/prompts/{prompt}/regression-test'
+*/
+export const regressionTest = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: regressionTest.url(args, options),
+    method: 'post',
+})
+
+regressionTest.definition = {
+    methods: ["post"],
+    url: '/prompts/{prompt}/regression-test',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\PromptRegressionTestController::__invoke
+* @see app/Http/Controllers/PromptRegressionTestController.php:13
+* @route '/prompts/{prompt}/regression-test'
+*/
+regressionTest.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { prompt: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { prompt: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            prompt: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        prompt: typeof args.prompt === 'object'
+        ? args.prompt.id
+        : args.prompt,
+    }
+
+    return regressionTest.definition.url
+            .replace('{prompt}', parsedArgs.prompt.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\PromptRegressionTestController::__invoke
+* @see app/Http/Controllers/PromptRegressionTestController.php:13
+* @route '/prompts/{prompt}/regression-test'
+*/
+regressionTest.post = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: regressionTest.url(args, options),
+    method: 'post',
+})
+
+/**
 * @see \App\Http\Controllers\PromptController::restore
 * @see app/Http/Controllers/PromptController.php:164
 * @route '/prompts/{prompt}/versions/{version}/restore'
@@ -794,6 +852,7 @@ const prompts = {
     analytics: Object.assign(analytics, analytics),
     insight: Object.assign(insight, insight),
     abTest: Object.assign(abTest, abTest),
+    regressionTest: Object.assign(regressionTest, regressionTest),
     restore: Object.assign(restore, restore),
     export: Object.assign(exportMethod, exportMethod),
     import: Object.assign(importMethod, importMethod),

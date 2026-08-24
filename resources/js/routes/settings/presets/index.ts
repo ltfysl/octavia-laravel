@@ -38,7 +38,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 * @see app/Http/Controllers/ConfigPresetController.php:37
 * @route '/settings/presets/{preset}'
 */
-export const update = (args: { preset: string | number | { id: string | number } } | [preset: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+export const update = (args: { preset: number | { id: number } } | [preset: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -53,7 +53,7 @@ update.definition = {
 * @see app/Http/Controllers/ConfigPresetController.php:37
 * @route '/settings/presets/{preset}'
 */
-update.url = (args: { preset: string | number | { id: string | number } } | [preset: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { preset: number | { id: number } } | [preset: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { preset: args }
     }
@@ -86,7 +86,7 @@ update.url = (args: { preset: string | number | { id: string | number } } | [pre
 * @see app/Http/Controllers/ConfigPresetController.php:37
 * @route '/settings/presets/{preset}'
 */
-update.patch = (args: { preset: string | number | { id: string | number } } | [preset: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { preset: number | { id: number } } | [preset: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -96,7 +96,7 @@ update.patch = (args: { preset: string | number | { id: string | number } } | [p
 * @see app/Http/Controllers/ConfigPresetController.php:52
 * @route '/settings/presets/{preset}'
 */
-export const destroy = (args: { preset: string | number | { id: string | number } } | [preset: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { preset: number | { id: number } } | [preset: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -111,7 +111,7 @@ destroy.definition = {
 * @see app/Http/Controllers/ConfigPresetController.php:52
 * @route '/settings/presets/{preset}'
 */
-destroy.url = (args: { preset: string | number | { id: string | number } } | [preset: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { preset: number | { id: number } } | [preset: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { preset: args }
     }
@@ -144,7 +144,7 @@ destroy.url = (args: { preset: string | number | { id: string | number } } | [pr
 * @see app/Http/Controllers/ConfigPresetController.php:52
 * @route '/settings/presets/{preset}'
 */
-destroy.delete = (args: { preset: string | number | { id: string | number } } | [preset: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { preset: number | { id: number } } | [preset: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })

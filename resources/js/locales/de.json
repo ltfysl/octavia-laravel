@@ -581,5 +581,14 @@
     "messagePlaceholder": "Nachricht eingeben...",
     "send": "Senden",
     "clear": "Leeren"
+  },
+  "onboarding": {
+    "addStarter": "Starter-Inhalte hinzufügen",
+    "starterHint": "Erstellt einen Beispiel-Prompt und einen Benchmark, um sofort den ersten Optimierungslauf zu starten.",
+    "ready": "Bereit zum Start",
+    "readySample": "Octavia erstellt einen Beispiel-Prompt und einen Benchmark und bringt dich zum Dashboard, wo du den ersten Lauf starten kannst.",
+    "readyEmpty": "Dein Labor ist leer. Du kannst Prompts und Benchmarks über das Dashboard erstellen.",
+    "startLab": "Labor starten",
+    "finish": "Zum Dashboard"
   }
 }

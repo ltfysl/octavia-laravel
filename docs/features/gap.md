@@ -43,5 +43,5 @@
 - **API keys + usage tracking** — create/revoke scopes, per-key call logs ✓
 - **Multi-model tournament** — run same prompt/benchmark across several providers ✓
 - **Cost optimizer** — cheaper model for generation, stronger for evaluation ✓
-- **Onboarding wizard** — multi-step first-run flow beyond current welcome page
+- **Onboarding wizard** — multi-step first-run flow with locale, sample toggle and ready-check ✓
 - **Real-time WebSocket progress** — currently polling (Reverb wired but not universal)

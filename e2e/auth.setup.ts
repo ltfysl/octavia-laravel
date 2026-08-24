@@ -27,6 +27,7 @@ test('authenticate and onboard', async ({ page }) => {
     // Choose German + starter content
     await page.click('button:has-text("Deutsch")');
     await page.click('button:has-text("Weiter")');
+    await page.getByTestId('finish-onboarding').click();
 
     await page.waitForURL('**/dashboard');
     // WOW hero replaced the plain "Dashboard" h1 — assert on the hero text

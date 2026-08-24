@@ -568,5 +568,14 @@
     "messagePlaceholder": "Type a message...",
     "send": "Send",
     "clear": "Clear"
+  },
+  "onboarding": {
+    "addStarter": "Add starter content",
+    "starterHint": "Creates an example prompt and a runnable benchmark so you can start your first optimization run immediately.",
+    "ready": "Ready for takeoff",
+    "readySample": "Octavia will create an example prompt and a benchmark, then drop you on the dashboard where you can launch your first run.",
+    "readyEmpty": "Your lab is empty. You can create prompts and benchmarks from the dashboard.",
+    "startLab": "Start my lab",
+    "finish": "Go to dashboard"
   }
 }

@@ -42,6 +42,7 @@ class SettingsController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'locale' => ['required', 'in:en,de'],
             'notify_run_completed_mail' => ['sometimes', 'boolean'],
+            'notify_listing_updates_mail' => ['sometimes', 'boolean'],
         ]);
 
         $request->user()->update($validated);

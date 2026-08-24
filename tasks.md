@@ -9,7 +9,7 @@
 - [ ] Billing tiers tied to token scopes (prerequisite done in round 21)
 
 ## Later
-- [ ] "Update available" notification when publisher republishes at new version (email channel)
+- [x] "Update available" notification when publisher republishes at new version (email channel) — opt-in/out preference
 
 ## Human Action Required
 - [ ] Provide an OpenAI-compatible API key to test real-model runs (`OPENAI_API_KEY` in `.env`)

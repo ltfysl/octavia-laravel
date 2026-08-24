@@ -458,7 +458,9 @@
     "workspaceCreate": "Create a team",
     "workspaceList": "Your teams",
     "workspaceMembers": "members",
-    "workspaceEmpty": "You are not in any workspace yet."
+    "workspaceEmpty": "You are not in any workspace yet.",
+    "notifyListingUpdates": "Marketplace listing updates",
+    "notifyListingUpdatesHint": "Receive an email when a prompt or benchmark you installed is republished."
   },
   "landing": {
     "cta": "Start optimizing — free",

@@ -471,7 +471,9 @@
     "workspaceCreate": "Team erstellen",
     "workspaceList": "Deine Teams",
     "workspaceMembers": "Mitglieder",
-    "workspaceEmpty": "Du bist noch in keinem Arbeitsbereich."
+    "workspaceEmpty": "Du bist noch in keinem Arbeitsbereich.",
+    "notifyListingUpdates": "Marketplace-Listing-Updates",
+    "notifyListingUpdatesHint": "Erhalte eine Mail, wenn ein installiertes Prompt oder Benchmark neu veröffentlicht wird."
   },
   "landing": {
     "cta": "Kostenlos optimieren",

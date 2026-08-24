@@ -123,7 +123,7 @@ updateProfile.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> =>
 
 /**
 * @see \App\Http\Controllers\SettingsController::updatePassword
-* @see app/Http/Controllers/SettingsController.php:52
+* @see app/Http/Controllers/SettingsController.php:53
 * @route '/settings/password'
 */
 export const updatePassword = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -138,7 +138,7 @@ updatePassword.definition = {
 
 /**
 * @see \App\Http\Controllers\SettingsController::updatePassword
-* @see app/Http/Controllers/SettingsController.php:52
+* @see app/Http/Controllers/SettingsController.php:53
 * @route '/settings/password'
 */
 updatePassword.url = (options?: RouteQueryOptions) => {
@@ -147,7 +147,7 @@ updatePassword.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\SettingsController::updatePassword
-* @see app/Http/Controllers/SettingsController.php:52
+* @see app/Http/Controllers/SettingsController.php:53
 * @route '/settings/password'
 */
 updatePassword.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -157,7 +157,7 @@ updatePassword.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> =
 
 /**
 * @see \App\Http\Controllers\SettingsController::logoutOthers
-* @see app/Http/Controllers/SettingsController.php:64
+* @see app/Http/Controllers/SettingsController.php:65
 * @route '/settings/logout-others'
 */
 export const logoutOthers = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -172,7 +172,7 @@ logoutOthers.definition = {
 
 /**
 * @see \App\Http\Controllers\SettingsController::logoutOthers
-* @see app/Http/Controllers/SettingsController.php:64
+* @see app/Http/Controllers/SettingsController.php:65
 * @route '/settings/logout-others'
 */
 logoutOthers.url = (options?: RouteQueryOptions) => {
@@ -181,7 +181,7 @@ logoutOthers.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\SettingsController::logoutOthers
-* @see app/Http/Controllers/SettingsController.php:64
+* @see app/Http/Controllers/SettingsController.php:65
 * @route '/settings/logout-others'
 */
 logoutOthers.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({

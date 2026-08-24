@@ -14,12 +14,13 @@ defineProps<{
 
 const { t, locale } = useI18n();
 const page = usePage();
-const user = computed(() => (page.props as unknown as { auth: { user: { name: string; email: string; locale: string; notify_run_completed_mail: boolean } } }).auth.user);
+const user = computed(() => (page.props as unknown as { auth: { user: { name: string; email: string; locale: string; notify_run_completed_mail: boolean; notify_listing_updates_mail: boolean } } }).auth.user);
 
 const profileForm = useForm({
     name: user.value.name,
     locale: user.value.locale,
     notify_run_completed_mail: user.value.notify_run_completed_mail ?? true,
+    notify_listing_updates_mail: user.value.notify_listing_updates_mail ?? true,
 });
 
 const passwordForm = useForm({

@@ -315,7 +315,7 @@ workspace.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\SettingsController::logoutOthers
-* @see app/Http/Controllers/SettingsController.php:64
+* @see app/Http/Controllers/SettingsController.php:65
 * @route '/settings/logout-others'
 */
 export const logoutOthers = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -330,7 +330,7 @@ logoutOthers.definition = {
 
 /**
 * @see \App\Http\Controllers\SettingsController::logoutOthers
-* @see app/Http/Controllers/SettingsController.php:64
+* @see app/Http/Controllers/SettingsController.php:65
 * @route '/settings/logout-others'
 */
 logoutOthers.url = (options?: RouteQueryOptions) => {
@@ -339,7 +339,7 @@ logoutOthers.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\SettingsController::logoutOthers
-* @see app/Http/Controllers/SettingsController.php:64
+* @see app/Http/Controllers/SettingsController.php:65
 * @route '/settings/logout-others'
 */
 logoutOthers.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({

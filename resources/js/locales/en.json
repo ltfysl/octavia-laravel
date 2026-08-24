@@ -63,7 +63,22 @@
       "best": "Best",
       "avg": "Avg"
     },
-    "emptyRuns": "No runs yet. Start by optimizing a prompt against a benchmark."
+    "emptyRuns": "No runs yet. Start by optimizing a prompt against a benchmark.",
+    "candidates": {
+      "title": "Leaderboard",
+      "heading": "Top candidates",
+      "candidate": "Candidate",
+      "run": "Run",
+      "score": "Score",
+      "strategy": "Strategy"
+    },
+    "categories": {
+      "prompts": "Prompts",
+      "benchmarks": "Benchmarks"
+    },
+    "distribution": {
+      "title": "Distribution"
+    }
   },
   "prompts": {
     "title": "Prompts",

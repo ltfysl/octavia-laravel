@@ -24,7 +24,7 @@
 
 ## Partially present / needs polish
 
-- Dashboard: no charts or leaderboard; missing score-distribution/sparkline
+- Dashboard: **score trend chart**, **leaderboard**, **category breakdown**, and **score distribution** ✓; sparkline still basic
 - Activity timeline: global feed exists at /activity and /api/v1/activity ✓
 - Settings: **Provider Keys** ✓; no Workspace; **API key management + usage tracking** ✓
 - Export: prompt index has CSV export; **leaderboard CSV export** ✓; still missing dashboard/benchmark/runs leaderboards

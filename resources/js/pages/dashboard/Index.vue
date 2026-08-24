@@ -22,6 +22,10 @@ const props = defineProps<{
         benchmark?: { id: number; name: string } | null;
         created_at: string;
     }>;
+    leaderboard: Array<{ rank: number; id: number; run_id: number; run_name: string; prompt_content: string; score: number; strategy: string }>;
+    promptCategories: Array<{ label: string; count: number; fill: number }>;
+    benchmarkCategories: Array<{ label: string; count: number; fill: number }>;
+    scoreDistribution: Array<{ range: string; count: number }>;
 }>();
 
 const { t } = useI18n();
@@ -101,6 +105,7 @@ onUnmounted(() => window.clearTimeout(typeTimer));
 
 // Live status pulse - derived
 const liveRuns = computed(() => props.recentRuns.filter(r => r.status === 'running').slice(0, 3));
+const maxScoreDistribution = computed(() => Math.max(1, ...props.scoreDistribution.map(b => b.count)));
 
 // Chart — score trend with fallback width (fixes chartWidth 0 bug from test)
 const chartData = computed(() => props.scoreHistory.map((h) => Math.round(h.score * 100)));
@@ -450,6 +455,97 @@ onMounted(() => {
                         <p class="mt-3 font-display text-sm font-semibold text-ink-950">{{ act.title }}</p>
                         <p class="mt-1 text-xs text-ink-500">{{ act.desc }}</p>
                     </Link>
+                </div>
+            </section>
+
+
+            <!-- Leaderboard — top candidates -->
+            <section v-if="leaderboard.length" class="mt-4 overflow-hidden rounded-[2rem] border border-slate-200 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="eyebrow">{{ t('dashboard.candidates.title') }}</p>
+                        <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.candidates.heading') }}</h3>
+                    </div>
+                    <span class="rounded-full bg-ink-950 px-3 py-1 font-mono text-xs text-white">{{ leaderboard.length }}</span>
+                </div>
+                <div class="mt-4 overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-ink-100 text-left text-xs text-ink-400">
+                                <th class="pb-2 font-medium">#</th>
+                                <th class="pb-2 font-medium">{{ t('dashboard.candidates.candidate') }}</th>
+                                <th class="pb-2 font-medium">{{ t('dashboard.candidates.run') }}</th>
+                                <th class="pb-2 pr-4 text-right font-medium">{{ t('dashboard.candidates.score') }}</th>
+                                <th class="pb-2 text-right font-medium">{{ t('dashboard.candidates.strategy') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="step in leaderboard" :key="step.id" class="border-b border-ink-50 last:border-0">
+                                <td class="py-3 font-mono text-ink-400">{{ step.rank }}</td>
+                                <td class="py-3">
+                                    <span class="font-medium text-ink-900">{{ step.prompt_content }}</span>
+                                </td>
+                                <td class="py-3">
+                                    <Link :href="`/runs/${step.run_id}`" class="text-ink-600 hover:text-accent-700">{{ step.run_name }}</Link>
+                                </td>
+                                <td class="py-3 pr-4 text-right font-mono text-ink-950">{{ step.score }}%</td>
+                                <td class="py-3 text-right">
+                                    <span class="rounded-full bg-paper-100 px-2 py-0.5 text-xs text-ink-600">{{ step.strategy }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Category breakdown + score distribution bento -->
+            <section v-if="promptCategories.length || benchmarkCategories.length || scoreDistribution.length" class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div v-if="promptCategories.length" class="overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+                    <p class="eyebrow">{{ t('dashboard.categories.prompts') }}</p>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Specimens by field</h3>
+                    <div class="mt-4 space-y-3">
+                        <div v-for="cat in promptCategories" :key="cat.label" class="space-y-1">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="font-medium text-ink-900">{{ cat.label }}</span>
+                                <span class="font-mono text-xs text-ink-500">{{ cat.count }}</span>
+                            </div>
+                            <div class="h-2 overflow-hidden rounded-full bg-ink-100">
+                                <div class="h-full rounded-full bg-accent-500" :style="`width:${cat.fill}%`" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="benchmarkCategories.length" class="overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+                    <p class="eyebrow">{{ t('dashboard.categories.benchmarks') }}</p>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Suites by field</h3>
+                    <div class="mt-4 space-y-3">
+                        <div v-for="cat in benchmarkCategories" :key="cat.label" class="space-y-1">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="font-medium text-ink-900">{{ cat.label }}</span>
+                                <span class="font-mono text-xs text-ink-500">{{ cat.count }}</span>
+                            </div>
+                            <div class="h-2 overflow-hidden rounded-full bg-ink-100">
+                                <div class="h-full rounded-full bg-emerald-500" :style="`width:${cat.fill}%`" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="scoreDistribution.length" class="overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+                    <p class="eyebrow">{{ t('dashboard.distribution.title') }}</p>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Score ranges</h3>
+                    <div class="mt-4 space-y-3">
+                        <div v-for="bucket in scoreDistribution" :key="bucket.range" class="space-y-1">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="font-medium text-ink-900">{{ bucket.range }}</span>
+                                <span class="font-mono text-xs text-ink-500">{{ bucket.count }}</span>
+                            </div>
+                            <div class="h-2 overflow-hidden rounded-full bg-ink-100">
+                                <div class="h-full rounded-full bg-ink-900" :style="`width:${Math.min(100, bucket.count * 100 / maxScoreDistribution)}%`" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 

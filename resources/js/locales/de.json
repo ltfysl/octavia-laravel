@@ -63,6 +63,21 @@
       "heading": "Beste Prompts",
       "best": "Beste",
       "avg": "Ø"
+    },
+    "candidates": {
+      "title": "Rangliste",
+      "heading": "Top-Kandidaten",
+      "candidate": "Kandidat",
+      "run": "Run",
+      "score": "Score",
+      "strategy": "Strategie"
+    },
+    "categories": {
+      "prompts": "Prompts",
+      "benchmarks": "Benchmarks"
+    },
+    "distribution": {
+      "title": "Verteilung"
     }
   },
   "prompts": {

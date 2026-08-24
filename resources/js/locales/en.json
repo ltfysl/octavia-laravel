@@ -195,7 +195,8 @@
     "marketplace": "marketplace",
     "searchPlaceholder": "Search prompts…",
     "noSearchMatches": "No prompts match",
-    "noSearchHint": "Try a different search or clear filters."
+    "noSearchHint": "Try a different search or clear filters.",
+    "duplicate": "Duplicate"
   },
   "benchmarks": {
     "title": "Benchmarks",

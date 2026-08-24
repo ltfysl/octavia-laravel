@@ -14,4 +14,6 @@ return [
     'runActive' => 'Dieser Run ist noch aktiv und kann noch nicht wiederholt werden.',
 
     'runCancelled' => 'Run abgebrochen.',
+
+    'promptDuplicated' => 'Prompt dupliziert.',
 ];

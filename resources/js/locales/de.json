@@ -195,7 +195,8 @@
     "marketplace": "Marktplatz",
     "searchPlaceholder": "Prompts durchsuchen…",
     "noSearchMatches": "Keine Prompts passen zu",
-    "noSearchHint": "Probiere eine andere Suche oder lösche die Filter."
+    "noSearchHint": "Probiere eine andere Suche oder lösche die Filter.",
+    "duplicate": "Duplizieren"
   },
   "benchmarks": {
     "title": "Benchmarks",

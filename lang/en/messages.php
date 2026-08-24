@@ -12,4 +12,6 @@ return [
     'providerKeySaved' => 'Provider key saved.',
     'providerKeyUpdated' => 'Provider key updated.',
     'providerKeyDeleted' => 'Provider key deleted.',
+
+    'promptDuplicated' => 'Prompt duplicated.',
 ];

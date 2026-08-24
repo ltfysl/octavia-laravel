@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\RunPlayground;
 use App\Actions\RunPlaygroundChat;
 use App\Enums\RunStatus;
+use App\Enums\Visibility;
 use App\Http\Requests\StorePromptRequest;
 use App\Http\Requests\UpdatePromptRequest;
 use App\Models\AuditLog;
@@ -231,6 +232,31 @@ class PromptController extends Controller
         AuditLog::record('prompt.deleted', 'prompts', 'Prompt deleted', 'prompt', $id, $name, 'warning');
 
         return redirect()->route('prompts.index')->with('success', __('messages.promptDeleted'));
+    }
+
+    public function duplicate(Request $request, Prompt $prompt): RedirectResponse
+    {
+        abort_unless($prompt->user_id === $request->user()->id || $prompt->visibility === Visibility::Public, 404);
+
+        $copy = $request->user()->prompts()->create([
+            'name' => $prompt->name.' (copy)',
+            'description' => $prompt->description,
+            'category' => $prompt->category,
+            'visibility' => Visibility::Private,
+        ]);
+
+        $version = $copy->versions()->create([
+            'version' => 1,
+            'content' => $prompt->currentContent() ?? '',
+            'changelog' => 'Duplicated from '.$prompt->name,
+            'created_at' => now(),
+        ]);
+
+        $copy->update(['current_version_id' => $version->id]);
+
+        AuditLog::record('prompt.created', 'prompts', 'Prompt duplicated', 'prompt', (string) $copy->id, $copy->name);
+
+        return redirect()->route('prompts.show', $copy)->with('success', __('messages.promptDuplicated'));
     }
 
     /**

@@ -159,10 +159,63 @@ cancel.post = (args: { run: number | { id: number } } | [run: number | { id: num
     method: 'post',
 })
 
+/**
+* @see \App\Http\Controllers\Api\RunController::retry
+* @see app/Http/Controllers/Api/RunController.php:0
+* @route '/api/v1/runs/{run}/retry'
+*/
+export const retry = (args: { run: string | number } | [run: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: retry.url(args, options),
+    method: 'post',
+})
+
+retry.definition = {
+    methods: ["post"],
+    url: '/api/v1/runs/{run}/retry',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Api\RunController::retry
+* @see app/Http/Controllers/Api/RunController.php:0
+* @route '/api/v1/runs/{run}/retry'
+*/
+retry.url = (args: { run: string | number } | [run: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { run: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            run: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        run: args.run,
+    }
+
+    return retry.definition.url
+            .replace('{run}', parsedArgs.run.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Api\RunController::retry
+* @see app/Http/Controllers/Api/RunController.php:0
+* @route '/api/v1/runs/{run}/retry'
+*/
+retry.post = (args: { run: string | number } | [run: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: retry.url(args, options),
+    method: 'post',
+})
+
 const runs = {
     store: Object.assign(store, store),
     show: Object.assign(show, show),
     cancel: Object.assign(cancel, cancel),
+    retry: Object.assign(retry, retry),
 }
 
 export default runs

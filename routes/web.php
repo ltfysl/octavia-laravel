@@ -121,6 +121,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/prompts/{prompt}/regression-test', PromptRegressionTestController::class)
         ->middleware('throttle:runs')
         ->name('prompts.regression-test');
+    Route::post('/prompts/{prompt}/duplicate', [PromptController::class, 'duplicate'])->name('prompts.duplicate');
     Route::post('/prompts/{prompt}/versions/{version}/restore', [PromptController::class, 'restoreVersion'])
         ->name('prompts.restore');
     Route::get('/prompts/{prompt}/export', PromptExportController::class)->name('prompts.export');

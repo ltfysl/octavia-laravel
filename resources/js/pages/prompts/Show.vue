@@ -311,6 +311,10 @@ const restore = (versionId: number) => {
     router.post(`/prompts/${props.prompt.id}/versions/${versionId}/restore`);
 };
 
+const duplicate = () => {
+    router.post(`/prompts/${props.prompt.id}/duplicate`);
+};
+
 const destroy = () => {
     if (confirm(t('prompts.deleteConfirm'))) {
         router.delete(`/prompts/${props.prompt.id}`);
@@ -373,6 +377,8 @@ const runInsight = async () => {
                 <Link href="/prompts" class="self-center text-sm text-ink-500 hover:text-ink-900">{{ t('common.back') }}</Link>
                 <span class="mx-1 h-5 w-px bg-ink-100" aria-hidden="true" />
                 <OButton variant="secondary" :disabled="form.processing" @click="publish">{{ t('marketplace.publish') }}</OButton>
+                <span class="mx-1 h-5 w-px bg-ink-100" aria-hidden="true" />
+                <OButton variant="secondary" :disabled="form.processing" @click="duplicate">{{ t('prompts.duplicate') }}</OButton>
                 <span class="mx-1 h-5 w-px bg-ink-100" aria-hidden="true" />
                 <OButton variant="danger" @click="destroy">{{ t('prompts.delete') }}</OButton>
             </div>

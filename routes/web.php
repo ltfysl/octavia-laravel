@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\ApiKeyController;
 use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -155,6 +156,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{id}/unread', [NotificationController::class, 'markUnread'])
         ->name('notifications.unread');
+    Route::get('/settings/api-keys', [ApiKeyController::class, 'index'])->name('settings.api-keys');
+    Route::post('/settings/api-keys', [ApiKeyController::class, 'store'])->name('settings.api-keys.store');
+    Route::delete('/settings/api-keys/{token}', [ApiKeyController::class, 'destroy'])->name('settings.api-keys.destroy');
+
     Route::get('/settings/webhooks', [WebhookController::class, 'index'])->name('settings.webhooks');
     Route::post('/settings/webhooks', [WebhookController::class, 'store'])->name('settings.webhooks.store');
     Route::patch('/settings/webhooks/{webhook}', [WebhookController::class, 'update'])->name('settings.webhooks.update');

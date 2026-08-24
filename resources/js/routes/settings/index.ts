@@ -1,8 +1,53 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import apiKeys9055d4 from './api-keys'
 import webhooksCea6cd from './webhooks'
 import profile937a89 from './profile'
 import presets728a1d from './presets'
 import password from './password'
+/**
+* @see \App\Http\Controllers\ApiKeyController::apiKeys
+* @see app/Http/Controllers/ApiKeyController.php:15
+* @route '/settings/api-keys'
+*/
+export const apiKeys = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: apiKeys.url(options),
+    method: 'get',
+})
+
+apiKeys.definition = {
+    methods: ["get","head"],
+    url: '/settings/api-keys',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\ApiKeyController::apiKeys
+* @see app/Http/Controllers/ApiKeyController.php:15
+* @route '/settings/api-keys'
+*/
+apiKeys.url = (options?: RouteQueryOptions) => {
+    return apiKeys.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\ApiKeyController::apiKeys
+* @see app/Http/Controllers/ApiKeyController.php:15
+* @route '/settings/api-keys'
+*/
+apiKeys.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: apiKeys.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\ApiKeyController::apiKeys
+* @see app/Http/Controllers/ApiKeyController.php:15
+* @route '/settings/api-keys'
+*/
+apiKeys.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: apiKeys.url(options),
+    method: 'head',
+})
+
 /**
 * @see \App\Http\Controllers\WebhookController::webhooks
 * @see app/Http/Controllers/WebhookController.php:15
@@ -214,6 +259,7 @@ logoutOthers.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 const settings = {
+    apiKeys: Object.assign(apiKeys, apiKeys9055d4),
     webhooks: Object.assign(webhooks, webhooksCea6cd),
     profile: Object.assign(profile, profile937a89),
     billing: Object.assign(billing, billing),

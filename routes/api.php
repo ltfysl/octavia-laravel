@@ -23,7 +23,7 @@ Route::prefix('v1')->group(function () {
         ->middleware('throttle:6,1')
         ->name('api.auth.token');
 
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware(['auth:sanctum', 'log.api.usage'])->group(function () {
         Route::delete('/auth/token', [AuthTokenController::class, 'destroy'])->name('api.auth.logout');
 
         Route::get('/me', fn (Request $request) => $request->user()->only(['id', 'name', 'email']))

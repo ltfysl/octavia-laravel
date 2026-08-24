@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\EnsureTokenHasScope;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\LogApiUsage;
 use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
@@ -33,6 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
             'scope' => EnsureTokenHasScope::class,
+            'log.api.usage' => LogApiUsage::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -26,7 +26,7 @@
 
 - Dashboard: no charts or leaderboard; missing score-distribution/sparkline
 - Activity timeline: only credit history, no global activity feed
-- Settings: no Provider Keys, Workspace, or API key management
+- Settings: no Provider Keys or Workspace; **API key management + usage tracking** ✓
 - Export: prompt index has CSV export; missing export for dashboard/benchmark/runs leaderboards
 - Playground: exists on prompt detail, but no standalone playground view with chat history
 - Version diff: works, but no AI diff explanation
@@ -40,7 +40,7 @@
 - **Skill templates** — reusable starting prompt templates ✓
 - **Gallery star/fork** — star count, fork count in marketplace ✓
 - **Webhooks + deliveries** — outbound webhooks for run events ✓
-- **API keys + usage tracking** — workspace API keys, call logs, token usage
+- **API keys + usage tracking** — create/revoke scopes, per-key call logs ✓
 - **Multi-model tournament** — run same prompt/benchmark across several providers ✓
 - **Cost optimizer** — cheaper model for generation, stronger for evaluation
 - **Onboarding wizard** — multi-step first-run flow beyond current welcome page

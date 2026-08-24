@@ -63,4 +63,5 @@
 - [x] Round 22d: regression testing for prompts (test current version against all/category benchmarks; optional sample-input override; per-benchmark pass/fail results)
 - [x] Round 22d: add `category` column to `prompts` with index/fillable/migration
 - [x] Round 22e: prompt templates gallery with category/search filters and create-from-template flow
-- [x] **158 Pest tests / 578 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
+- [x] Round 22f: marketplace star/fork counts + toggle + fork-to-workspace actions
+- [x] **161 Pest tests / 588 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green

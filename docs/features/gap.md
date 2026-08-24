@@ -38,7 +38,7 @@
 - **Regression testing** — verify a new version does not break existing cases
 - **Prompt/skill analytics** — per-prompt run stats, score over time
 - **Skill templates** — reusable starting prompt templates ✓
-- **Gallery star/fork** — star count, fork count in marketplace
+- **Gallery star/fork** — star count, fork count in marketplace ✓
 - **Webhooks + deliveries** — outbound webhooks for run events
 - **API keys + usage tracking** — workspace API keys, call logs, token usage
 - **Multi-model tournament** — run same prompt/benchmark across several providers

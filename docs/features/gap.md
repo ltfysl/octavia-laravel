@@ -30,7 +30,7 @@
 - Export: prompt index CSV; **leaderboard CSV export with benchmark/run filters** ✓; dashboard export link ✓
 - Playground: **standalone chat playground at /playground** ✓; prompt detail now has **multi-turn chat playground** ✓
 - Version diff: works; **AI diff explanation** ✓
-- Prompt analytics: per-prompt runs, average/best score, score-over-time sparkline, per-benchmark breakdown — basic version on prompt detail
+- Prompt analytics: per-prompt runs, average/best score, score-over-time sparkline, per-benchmark breakdown, score distribution, recent runs ✓
 
 ## Missing (candidate backlog)
 

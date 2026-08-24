@@ -181,6 +181,16 @@ interface PromptAnalytics {
     best_score: number | null;
     history: Array<{ at: string; score: number }>;
     by_benchmark: Array<{ name: string; runs_count: number; avg_score: number | null; best_score: number | null }>;
+    recent_runs: Array<{
+        id: number;
+        name: string;
+        status: string;
+        mode: string;
+        best_score: number | null;
+        benchmark: { id: number; name: string } | null;
+        created_at: string;
+    }>;
+    score_distribution: Array<{ range: string; count: number }>;
 }
 
 const analytics = ref<PromptAnalytics | null>(null);

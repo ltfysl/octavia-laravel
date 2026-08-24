@@ -128,7 +128,9 @@
       "history": "Score over time",
       "byBenchmark": "By benchmark",
       "benchmarkName": "Benchmark",
-      "empty": "No completed runs yet."
+      "empty": "No completed runs yet.",
+      "scoreDistribution": "Score distribution",
+      "recentRuns": "Recent runs"
     },
     "regression": {
       "title": "Regression test",

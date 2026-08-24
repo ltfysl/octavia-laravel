@@ -128,7 +128,9 @@
       "history": "Score über Zeit",
       "byBenchmark": "Nach Benchmark",
       "benchmarkName": "Benchmark",
-      "empty": "Noch keine abgeschlossenen Läufe."
+      "empty": "Noch keine abgeschlossenen Läufe.",
+      "scoreDistribution": "Score-Verteilung",
+      "recentRuns": "Letzte Runs"
     },
     "abTest": {
       "title": "A/B-Test",

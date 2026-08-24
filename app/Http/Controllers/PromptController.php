@@ -260,6 +260,42 @@ class PromptController extends Controller
             ->orderByDesc('avg_score')
             ->get();
 
+        $recentRuns = $prompt->runs()
+            ->with('benchmark:id,name')
+            ->orderByDesc('created_at')
+            ->limit(10)
+            ->get(['id', 'benchmark_id', 'name', 'status', 'best_score', 'mode', 'created_at'])
+            ->map(fn ($run) => [
+                'id' => $run->id,
+                'name' => $run->name,
+                'status' => $run->status->value,
+                'mode' => $run->mode->value,
+                'best_score' => $run->best_score ? round($run->best_score * 100, 1) : null,
+                'benchmark' => $run->benchmark?->only(['id', 'name']),
+                'created_at' => $run->created_at->toIso8601String(),
+            ]);
+
+        $scoreDistribution = $prompt->runs()
+            ->where('status', RunStatus::Completed->value)
+            ->whereNotNull('best_score')
+            ->selectRaw(<<<'SQL'
+                CASE
+                    WHEN best_score >= 0.9 THEN '90–100%'
+                    WHEN best_score >= 0.7 THEN '70–89%'
+                    WHEN best_score >= 0.5 THEN '50–69%'
+                    WHEN best_score >= 0.3 THEN '30–49%'
+                    ELSE '0–29%'
+                END as `range`,
+                count(*) as count
+            SQL)
+            ->groupBy('range')
+            ->orderByDesc('count')
+            ->get()
+            ->map(fn ($row) => [
+                'range' => $row->range,
+                'count' => (int) $row->count,
+            ]);
+
         return response()->json([
             'runs_count' => $prompt->runs()->count(),
             'completed_count' => $runs->count(),
@@ -272,6 +308,8 @@ class PromptController extends Controller
                 'avg_score' => $b->avg_score !== null ? round((float) $b->avg_score * 100, 1) : null,
                 'best_score' => $b->best_score !== null ? round((float) $b->best_score * 100, 1) : null,
             ]),
+            'recent_runs' => $recentRuns,
+            'score_distribution' => $scoreDistribution,
         ]);
     }
 }

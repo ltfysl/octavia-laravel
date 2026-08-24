@@ -28,10 +28,9 @@ class WelcomeNotification extends Notification
 
         return (new MailMessage)
             ->subject(__('notifications.welcome.subject', [], $locale))
-            ->greeting(__('notifications.welcome.greeting', ['name' => $notifiable->name], $locale))
-            ->line(__('notifications.welcome.line1', [], $locale))
-            ->line(__('notifications.welcome.line2', [], $locale))
-            ->action(__('notifications.welcome.cta'), url('/dashboard'))
-            ->line(__('notifications.welcome.footer', [], $locale));
+            ->markdown('emails.welcome', [
+                'name' => $notifiable->name,
+                'locale' => $locale,
+            ]);
     }
 }

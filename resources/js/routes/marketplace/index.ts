@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::install
-* @see app/Http/Controllers/MarketplaceController.php:58
+* @see app/Http/Controllers/MarketplaceController.php:66
 * @route '/marketplace/{item}/install'
 */
 export const install = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +60,7 @@ install.definition = {
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::install
-* @see app/Http/Controllers/MarketplaceController.php:58
+* @see app/Http/Controllers/MarketplaceController.php:66
 * @route '/marketplace/{item}/install'
 */
 install.url = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -93,7 +93,7 @@ install.url = (args: { item: number | { id: number } } | [item: number | { id: n
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::install
-* @see app/Http/Controllers/MarketplaceController.php:58
+* @see app/Http/Controllers/MarketplaceController.php:66
 * @route '/marketplace/{item}/install'
 */
 install.post = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -103,7 +103,7 @@ install.post = (args: { item: number | { id: number } } | [item: number | { id: 
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::publish
-* @see app/Http/Controllers/MarketplaceController.php:186
+* @see app/Http/Controllers/MarketplaceController.php:194
 * @route '/marketplace/publish'
 */
 export const publish = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -118,7 +118,7 @@ publish.definition = {
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::publish
-* @see app/Http/Controllers/MarketplaceController.php:186
+* @see app/Http/Controllers/MarketplaceController.php:194
 * @route '/marketplace/publish'
 */
 publish.url = (options?: RouteQueryOptions) => {
@@ -127,7 +127,7 @@ publish.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::publish
-* @see app/Http/Controllers/MarketplaceController.php:186
+* @see app/Http/Controllers/MarketplaceController.php:194
 * @route '/marketplace/publish'
 */
 publish.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -137,7 +137,7 @@ publish.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::report
-* @see app/Http/Controllers/MarketplaceController.php:153
+* @see app/Http/Controllers/MarketplaceController.php:161
 * @route '/marketplace/{item}/report'
 */
 export const report = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -152,7 +152,7 @@ report.definition = {
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::report
-* @see app/Http/Controllers/MarketplaceController.php:153
+* @see app/Http/Controllers/MarketplaceController.php:161
 * @route '/marketplace/{item}/report'
 */
 report.url = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -185,11 +185,127 @@ report.url = (args: { item: number | { id: number } } | [item: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\MarketplaceController::report
-* @see app/Http/Controllers/MarketplaceController.php:153
+* @see app/Http/Controllers/MarketplaceController.php:161
 * @route '/marketplace/{item}/report'
 */
 report.post = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: report.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\MarketplaceStarController::__invoke
+* @see app/Http/Controllers/MarketplaceStarController.php:12
+* @route '/marketplace/{item}/star'
+*/
+export const star = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: star.url(args, options),
+    method: 'post',
+})
+
+star.definition = {
+    methods: ["post"],
+    url: '/marketplace/{item}/star',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\MarketplaceStarController::__invoke
+* @see app/Http/Controllers/MarketplaceStarController.php:12
+* @route '/marketplace/{item}/star'
+*/
+star.url = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { item: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { item: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            item: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        item: typeof args.item === 'object'
+        ? args.item.id
+        : args.item,
+    }
+
+    return star.definition.url
+            .replace('{item}', parsedArgs.item.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\MarketplaceStarController::__invoke
+* @see app/Http/Controllers/MarketplaceStarController.php:12
+* @route '/marketplace/{item}/star'
+*/
+star.post = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: star.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\MarketplaceForkController::__invoke
+* @see app/Http/Controllers/MarketplaceForkController.php:13
+* @route '/marketplace/{item}/fork'
+*/
+export const fork = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: fork.url(args, options),
+    method: 'post',
+})
+
+fork.definition = {
+    methods: ["post"],
+    url: '/marketplace/{item}/fork',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\MarketplaceForkController::__invoke
+* @see app/Http/Controllers/MarketplaceForkController.php:13
+* @route '/marketplace/{item}/fork'
+*/
+fork.url = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { item: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { item: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            item: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        item: typeof args.item === 'object'
+        ? args.item.id
+        : args.item,
+    }
+
+    return fork.definition.url
+            .replace('{item}', parsedArgs.item.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\MarketplaceForkController::__invoke
+* @see app/Http/Controllers/MarketplaceForkController.php:13
+* @route '/marketplace/{item}/fork'
+*/
+fork.post = (args: { item: number | { id: number } } | [item: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: fork.url(args, options),
     method: 'post',
 })
 
@@ -198,6 +314,8 @@ const marketplace = {
     install: Object.assign(install, install),
     publish: Object.assign(publish, publish),
     report: Object.assign(report, report),
+    star: Object.assign(star, star),
+    fork: Object.assign(fork, fork),
 }
 
 export default marketplace

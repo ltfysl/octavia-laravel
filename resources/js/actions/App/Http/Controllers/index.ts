@@ -23,6 +23,8 @@ import ReportController from './ReportController'
 import AuditLogController from './AuditLogController'
 import TournamentController from './TournamentController'
 import MarketplaceController from './MarketplaceController'
+import MarketplaceStarController from './MarketplaceStarController'
+import MarketplaceForkController from './MarketplaceForkController'
 import NotificationController from './NotificationController'
 import SettingsController from './SettingsController'
 import ConfigPresetController from './ConfigPresetController'
@@ -56,6 +58,8 @@ const Controllers = {
     AuditLogController: Object.assign(AuditLogController, AuditLogController),
     TournamentController: Object.assign(TournamentController, TournamentController),
     MarketplaceController: Object.assign(MarketplaceController, MarketplaceController),
+    MarketplaceStarController: Object.assign(MarketplaceStarController, MarketplaceStarController),
+    MarketplaceForkController: Object.assign(MarketplaceForkController, MarketplaceForkController),
     NotificationController: Object.assign(NotificationController, NotificationController),
     SettingsController: Object.assign(SettingsController, SettingsController),
     ConfigPresetController: Object.assign(ConfigPresetController, ConfigPresetController),

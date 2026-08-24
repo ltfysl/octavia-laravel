@@ -288,7 +288,10 @@
             "other": "Sonstiges"
         },
         "updateAvailable": "Update auf v{version} verfügbar",
-        "update": "Aktualisieren"
+        "update": "Aktualisieren",
+        "star": "Merken",
+        "unstar": "Nicht mehr merken",
+        "fork": "Forken"
     },
     "settings": {
         "title": "Einstellungen",

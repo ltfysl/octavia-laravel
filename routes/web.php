@@ -16,6 +16,8 @@ use App\Http\Controllers\ConfigPresetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MarketplaceController;
+use App\Http\Controllers\MarketplaceForkController;
+use App\Http\Controllers\MarketplaceStarController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PromptAbTestController;
@@ -146,6 +148,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/marketplace/{item}/report', [MarketplaceController::class, 'report'])
         ->middleware('throttle:10,1')
         ->name('marketplace.report');
+    Route::post('/marketplace/{item}/star', MarketplaceStarController::class)->name('marketplace.star');
+    Route::post('/marketplace/{item}/fork', MarketplaceForkController::class)->name('marketplace.fork');
 
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{id}/unread', [NotificationController::class, 'markUnread'])

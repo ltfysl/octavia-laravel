@@ -36,18 +36,26 @@ class MarketplaceController extends Controller
             })
             ->orderByDesc('featured')
             ->paginate(12)
-            ->through(fn (MarketplaceItem $item) => [
-                'id' => $item->id,
-                'item_type' => $item->item_type->value,
-                'title' => $item->title,
-                'summary' => $item->summary,
-                'version' => $item->version,
-                'downloads' => $item->downloads,
-                'featured' => $item->featured,
-                'publisher' => $item->publisher?->name,
-                'published_at' => $item->published_at?->toIso8601String(),
-                'installed_version' => $installs[$item->id] ?? null,
-            ]);
+            ->through(function (MarketplaceItem $item) use ($request) {
+                $user = $request->user();
+
+                return [
+                    'id' => $item->id,
+                    'item_type' => $item->item_type->value,
+                    'title' => $item->title,
+                    'summary' => $item->summary,
+                    'version' => $item->version,
+                    'downloads' => $item->downloads,
+                    'stars_count' => $item->stars_count,
+                    'forks_count' => $item->forks_count,
+                    'has_starred' => $user ? $item->starredBy()->where('user_id', $user->id)->exists() : false,
+                    'has_forked' => $user ? $item->forkedBy()->where('user_id', $user->id)->exists() : false,
+                    'featured' => $item->featured,
+                    'publisher' => $item->publisher?->name,
+                    'published_at' => $item->published_at?->toIso8601String(),
+                    'installed_version' => $installs[$item->id] ?? null,
+                ];
+            });
 
         return Inertia::render('marketplace/Index', [
             'items' => $items,

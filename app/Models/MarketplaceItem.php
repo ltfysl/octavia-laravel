@@ -6,6 +6,7 @@ use App\Enums\MarketplaceItemType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MarketplaceItem extends Model
@@ -21,6 +22,8 @@ class MarketplaceItem extends Model
         'version',
         'featured',
         'downloads',
+        'stars_count',
+        'forks_count',
         'published_at',
     ];
 
@@ -32,6 +35,8 @@ class MarketplaceItem extends Model
             'version' => 'integer',
             'featured' => 'boolean',
             'published_at' => 'datetime',
+            'stars_count' => 'integer',
+            'forks_count' => 'integer',
         ];
     }
 
@@ -58,6 +63,16 @@ class MarketplaceItem extends Model
     public function scopeListed(Builder $query): Builder
     {
         return $query->whereNotNull('published_at')->orderByDesc('published_at');
+    }
+
+    public function starredBy(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'marketplace_item_stars')->withTimestamps();
+    }
+
+    public function forkedBy(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'marketplace_item_forks')->withTimestamps();
     }
 
     public function item(): Prompt|Benchmark|null

@@ -20,6 +20,10 @@ defineProps<{
             featured: boolean;
             publisher: string | null;
             installed_version: number | null;
+            stars_count: number;
+            forks_count: number;
+            has_starred: boolean;
+            has_forked: boolean;
         }>;
         links: Array<{ url: string | null; label: string; active: boolean }>;
     };
@@ -34,6 +38,39 @@ const applyFilter = (type: string | null) => {
     router.get('/marketplace', type ? { type } : {}, { preserveState: true });
 };
 
+
+const star = async (item: any) => {
+    const res = await fetch(`/marketplace/${item.id}/star`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content ?? '',
+        },
+        credentials: 'include',
+    });
+    if (res.ok) {
+        const data = await res.json();
+        item.stars_count = data.stars_count;
+        item.has_starred = data.starred;
+    }
+};
+
+const fork = async (item: any) => {
+    const res = await fetch(`/marketplace/${item.id}/fork`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content ?? '',
+        },
+        credentials: 'include',
+    });
+    if (res.ok) {
+        const data = await res.json();
+        item.forks_count = data.forks_count;
+        item.has_forked = true;
+        router.visit(`/${data.type === 'prompt' ? 'prompts' : 'benchmarks'}/${data.id}`);
+    }
+};
 const doSearch = () => {
     router.get('/marketplace', search.value ? { q: search.value } : {}, { preserveState: true });
 };
@@ -105,7 +142,11 @@ const submitReport = (id: number) => {
                     <p class="mt-1.5 line-clamp-3 flex-1 text-sm text-ink-500">{{ item.summary ?? '—' }}</p>
                     <div class="mt-4 flex items-center justify-between border-t border-ink-100 pt-3 text-xs text-ink-300">
                         <span>{{ t('marketplace.byAuthor', { author: item.publisher ?? '?' }) }} · v{{ item.version }}</span>
-                        <span>{{ t('marketplace.downloads', { count: item.downloads }) }}</span>
+                        <span class="flex items-center gap-3">
+                            <button type="button" :class="item.has_starred ? 'text-amber-450' : 'text-ink-300 hover:text-amber-450'" @click="star(item)">★ {{ item.stars_count }}</button>
+                            <button type="button" :class="item.has_forked ? 'text-accent-600' : 'text-ink-300 hover:text-accent-600'" @click="fork(item)">⎘ {{ item.forks_count }}</button>
+                            <span>{{ t('marketplace.downloads', { count: item.downloads }) }}</span>
+                        </span>
                     </div>
                     <OBadge
                         v-if="item.installed_version !== null && item.installed_version < item.version"

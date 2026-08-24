@@ -19,6 +19,7 @@ class DashboardService
 
         return [
             'stats' => $this->stats($user),
+            'latestPrompt' => fn () => $this->latestPrompt($user),
             'scoreHistory' => fn () => $this->scoreHistory($user),
             'topPrompts' => fn () => $this->topPrompts($user),
             'recentRuns' => fn () => $this->recentRuns($user),
@@ -81,6 +82,27 @@ class DashboardService
                 'best_score' => $prompt->best_score ? round($prompt->best_score * 100, 1) : null,
             ])
             ->all();
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    private function latestPrompt(User $user): ?array
+    {
+        $prompt = $user->prompts()
+            ->with('currentVersion:id,prompt_id,content')
+            ->latest()
+            ->first();
+
+        if (! $prompt) {
+            return null;
+        }
+
+        return [
+            'id' => $prompt->id,
+            'name' => $prompt->name,
+            'content' => $prompt->currentContent() ?? '',
+        ];
     }
 
     /**

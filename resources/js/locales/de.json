@@ -112,7 +112,8 @@
       "newSpecimen": "Neues Exemplar",
       "buildSuite": "Suite bauen",
       "community": "Community"
-    }
+    },
+    "noCurrentPrompt": "Noch kein Prompt ausgewählt — erstelle einen, um fokussiert zu arbeiten."
   },
   "prompts": {
     "title": "Prompts",

@@ -112,7 +112,8 @@
       "newSpecimen": "New specimen",
       "buildSuite": "Build suite",
       "community": "Community"
-    }
+    },
+    "noCurrentPrompt": "No prompt selected yet — create one to focus."
   },
   "prompts": {
     "title": "Prompts",

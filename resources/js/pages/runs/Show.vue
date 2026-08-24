@@ -114,6 +114,7 @@ onBeforeUnmount(() => {
 
  const cancel = () => router.post(`/runs/${props.run.id}/cancel`);
 const retry = () => router.post(`/runs/${props.run.id}/retry`);
+const exportRun = () => { window.location.href = `/runs/${props.run.id}/export`; };
 
 const diagnosis = ref<string | null>(null);
 const diagnosisLoading = ref(false);
@@ -180,6 +181,7 @@ const runDiagnosis = async () => {
                 </a>
                 <OButton v-if="isRunning" variant="secondary" @click="cancel">{{ t('runs.cancel') }}</OButton>
                 <OButton v-if="canRetry" variant="secondary" @click="retry">{{ t('runs.retry') }}</OButton>
+                <OButton variant="ghost" @click="exportRun">{{ t('runs.export') }}</OButton>
                 <Link href="/runs" class="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-900">{{ t('common.back') }} <span aria-hidden="true">→</span></Link>
             </div>
         </div>

@@ -188,6 +188,63 @@ class RunController extends Controller
         ]);
     }
 
+    /**
+     * Export a run as a JSON file for archiving or further processing.
+     */
+    public function export(Request $request, Run $run): JsonResponse
+    {
+        $this->authorize('view', $run);
+
+        $run->load([
+            'prompt:id,name',
+            'benchmark:id,name',
+            'steps.caseResults.benchmarkCase:id,title',
+            'steps.caseResults.criteriaResults',
+        ]);
+
+        $payload = [
+            'id' => $run->id,
+            'name' => $run->name,
+            'status' => $run->status->value,
+            'mode' => $run->mode->value,
+            'best_score' => $run->best_score,
+            'target_score' => $run->target_score,
+            'error' => $run->error,
+            'regression_report' => $run->regression_report,
+            'prompt' => $run->prompt?->only(['id', 'name']),
+            'benchmark' => $run->benchmark?->only(['id', 'name']),
+            'created_at' => $run->created_at?->toIso8601String(),
+            'finished_at' => $run->finished_at?->toIso8601String(),
+            'steps' => $run->steps->map(fn ($step) => [
+                'id' => $step->id,
+                'number' => $step->number,
+                'phase' => $step->phase->value,
+                'score' => $step->score,
+                'mutation_type' => $step->mutation_type,
+                'rationale' => $step->rationale,
+                'tokens_used' => $step->tokens_used,
+                'prompt_content' => $step->prompt_content,
+                'cases' => $step->caseResults->map(fn ($result) => [
+                    'id' => $result->id,
+                    'title' => $result->benchmarkCase?->title ?? 'Deleted case',
+                    'score' => (float) $result->score,
+                    'passed' => $result->passed,
+                    'input' => $result->benchmarkCase?->input ?? '',
+                    'output' => $result->output,
+                    'criteria' => $result->criteriaResults->map(fn ($c) => [
+                        'label' => $c->criterion_label,
+                        'passed' => $c->passed,
+                        'detail' => $c->detail,
+                    ]),
+                ]),
+            ]),
+        ];
+
+        return response()->json($payload, 200, [
+            'Content-Disposition' => 'attachment; filename="'.($run->name ? str_replace('"', '', $run->name) : 'run-'.$run->id).'.json"',
+        ]);
+    }
+
     /** Lightweight polling endpoint for in-progress runs. */
     public function status(Request $request, Run $run): JsonResponse
     {

@@ -357,7 +357,8 @@
     "evaluationsLabel": "evaluations",
     "retry": "Retry",
     "retryError": "Run is still active.",
-    "input": "Input"
+    "input": "Input",
+    "export": "Export"
   },
   "marketplace": {
     "title": "Marketplace",

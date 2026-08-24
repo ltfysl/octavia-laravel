@@ -84,3 +84,21 @@ test('a failed job marks the run as failed', function () {
         ->and($run->error)->toBe('Provider timeout')
         ->and($run->finished_at)->not->toBeNull();
 });
+
+test('run can be exported as JSON', function () {
+    $user = User::factory()->create(['credits_balance' => 100]);
+    $prompt = Prompt::factory()->for($user)->withContent('Test.')->create();
+    $run = $user->runs()->create([
+        'prompt_id' => $prompt->id,
+        'name' => 'Exportable run',
+        'mode' => 'evaluate',
+        'status' => 'completed',
+        'provider' => 'mock',
+    ]);
+
+    $response = $this->actingAs($user)->get("/runs/{$run->id}/export");
+
+    $response->assertOk()
+        ->assertHeader('Content-Disposition', 'attachment; filename="Exportable run.json"')
+        ->assertJsonPath('name', 'Exportable run');
+});

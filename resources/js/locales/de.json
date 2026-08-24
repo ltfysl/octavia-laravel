@@ -357,7 +357,8 @@
     "evaluationsLabel": "Evaluationen",
     "retry": "Wiederholen",
     "retryError": "Run ist noch aktiv.",
-    "input": "Eingabe"
+    "input": "Eingabe",
+    "export": "Exportieren"
   },
   "marketplace": {
     "title": "Marketplace",

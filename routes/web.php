@@ -144,6 +144,7 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:runs')
         ->name('runs.store');
     Route::get('/runs/{run}/status', [RunController::class, 'status'])->name('runs.status');
+    Route::get('/runs/{run}/export', [RunController::class, 'export'])->name('runs.export');
     Route::post('/assistant/chat', AssistantController::class)
         ->middleware('throttle:assistant')
         ->name('assistant.chat');

@@ -39,6 +39,8 @@ Route::prefix('v1')->group(function () {
             ->middleware('scope:prompts:read')->name('api.prompts.show');
         Route::get('/prompts/{prompt}/diff', [PromptController::class, 'diff'])
             ->middleware('scope:prompts:read')->name('api.prompts.diff');
+        Route::post('/prompts/{prompt}/duplicate', [PromptController::class, 'duplicate'])
+            ->middleware('scope:prompts:write')->name('api.prompts.duplicate');
         Route::post('/prompts/{prompt}/evaluate', [PromptController::class, 'evaluate'])
             ->middleware(['scope:prompts:read', 'throttle:30,1'])
             ->name('api.prompts.evaluate');

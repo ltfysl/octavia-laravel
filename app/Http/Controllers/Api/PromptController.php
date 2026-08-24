@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\Visibility;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PromptResource;
 use App\Models\Benchmark;
@@ -120,5 +121,28 @@ class PromptController extends Controller
             'from' => ['version' => $from->version, 'content' => $from->content],
             'to' => ['version' => $to->version, 'content' => $to->content],
         ]);
+    }
+
+    public function duplicate(Request $request, Prompt $prompt): PromptResource
+    {
+        abort_unless($prompt->user_id === $request->user()->id || $prompt->visibility === Visibility::Public, 404);
+
+        $copy = $request->user()->prompts()->create([
+            'name' => $prompt->name.' (copy)',
+            'description' => $prompt->description,
+            'category' => $prompt->category,
+            'visibility' => Visibility::Private,
+        ]);
+
+        $version = $copy->versions()->create([
+            'version' => 1,
+            'content' => $prompt->currentContent() ?? '',
+            'changelog' => 'Duplicated from '.$prompt->name,
+            'created_at' => now(),
+        ]);
+
+        $copy->update(['current_version_id' => $version->id]);
+
+        return new PromptResource($copy);
     }
 }

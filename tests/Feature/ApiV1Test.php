@@ -153,3 +153,26 @@ it('blocks run creation for read-only tokens', function () {
 
     Queue::assertNothingPushed();
 });
+
+it('duplicates a prompt via the API', function () {
+    $user = User::factory()->create(['credits_balance' => 10]);
+    $prompt = Prompt::factory()->for($user)->create();
+    $prompt->versions()->create(['version' => 1, 'content' => 'Original.', 'changelog' => 'Initial']);
+    $prompt->update(['current_version_id' => $prompt->versions->first()->id]);
+
+    apiUserWithAbilities($user, ['read', 'write']);
+
+    $this->postJson("/api/v1/prompts/{$prompt->id}/duplicate")
+        ->assertCreated()
+        ->assertJsonPath('data.name', $prompt->name.' (copy)');
+});
+
+it('rejects prompt duplication without write scope', function () {
+    $user = User::factory()->create(['credits_balance' => 10]);
+    $prompt = Prompt::factory()->for($user)->create();
+
+    apiUserWithAbilities($user, ['read']);
+
+    $this->postJson("/api/v1/prompts/{$prompt->id}/duplicate")
+        ->assertForbidden();
+});

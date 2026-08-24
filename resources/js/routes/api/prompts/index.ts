@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Api\PromptController::index
-* @see app/Http/Controllers/Api/PromptController.php:18
+* @see app/Http/Controllers/Api/PromptController.php:19
 * @route '/api/v1/prompts'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::index
-* @see app/Http/Controllers/Api/PromptController.php:18
+* @see app/Http/Controllers/Api/PromptController.php:19
 * @route '/api/v1/prompts'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::index
-* @see app/Http/Controllers/Api/PromptController.php:18
+* @see app/Http/Controllers/Api/PromptController.php:19
 * @route '/api/v1/prompts'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::index
-* @see app/Http/Controllers/Api/PromptController.php:18
+* @see app/Http/Controllers/Api/PromptController.php:19
 * @route '/api/v1/prompts'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::store
-* @see app/Http/Controllers/Api/PromptController.php:35
+* @see app/Http/Controllers/Api/PromptController.php:36
 * @route '/api/v1/prompts'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +60,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::store
-* @see app/Http/Controllers/Api/PromptController.php:35
+* @see app/Http/Controllers/Api/PromptController.php:36
 * @route '/api/v1/prompts'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -69,7 +69,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::store
-* @see app/Http/Controllers/Api/PromptController.php:35
+* @see app/Http/Controllers/Api/PromptController.php:36
 * @route '/api/v1/prompts'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -79,7 +79,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::show
-* @see app/Http/Controllers/Api/PromptController.php:28
+* @see app/Http/Controllers/Api/PromptController.php:29
 * @route '/api/v1/prompts/{prompt}'
 */
 export const show = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,7 +94,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::show
-* @see app/Http/Controllers/Api/PromptController.php:28
+* @see app/Http/Controllers/Api/PromptController.php:29
 * @route '/api/v1/prompts/{prompt}'
 */
 show.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -127,7 +127,7 @@ show.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::show
-* @see app/Http/Controllers/Api/PromptController.php:28
+* @see app/Http/Controllers/Api/PromptController.php:29
 * @route '/api/v1/prompts/{prompt}'
 */
 show.get = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -137,7 +137,7 @@ show.get = (args: { prompt: number | { id: number } } | [prompt: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::show
-* @see app/Http/Controllers/Api/PromptController.php:28
+* @see app/Http/Controllers/Api/PromptController.php:29
 * @route '/api/v1/prompts/{prompt}'
 */
 show.head = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -147,7 +147,7 @@ show.head = (args: { prompt: number | { id: number } } | [prompt: number | { id:
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::diff
-* @see app/Http/Controllers/Api/PromptController.php:90
+* @see app/Http/Controllers/Api/PromptController.php:91
 * @route '/api/v1/prompts/{prompt}/diff'
 */
 export const diff = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -162,7 +162,7 @@ diff.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::diff
-* @see app/Http/Controllers/Api/PromptController.php:90
+* @see app/Http/Controllers/Api/PromptController.php:91
 * @route '/api/v1/prompts/{prompt}/diff'
 */
 diff.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -195,7 +195,7 @@ diff.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::diff
-* @see app/Http/Controllers/Api/PromptController.php:90
+* @see app/Http/Controllers/Api/PromptController.php:91
 * @route '/api/v1/prompts/{prompt}/diff'
 */
 diff.get = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -205,7 +205,7 @@ diff.get = (args: { prompt: number | { id: number } } | [prompt: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::diff
-* @see app/Http/Controllers/Api/PromptController.php:90
+* @see app/Http/Controllers/Api/PromptController.php:91
 * @route '/api/v1/prompts/{prompt}/diff'
 */
 diff.head = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -214,8 +214,66 @@ diff.head = (args: { prompt: number | { id: number } } | [prompt: number | { id:
 })
 
 /**
+* @see \App\Http\Controllers\Api\PromptController::duplicate
+* @see app/Http/Controllers/Api/PromptController.php:126
+* @route '/api/v1/prompts/{prompt}/duplicate'
+*/
+export const duplicate = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: duplicate.url(args, options),
+    method: 'post',
+})
+
+duplicate.definition = {
+    methods: ["post"],
+    url: '/api/v1/prompts/{prompt}/duplicate',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Api\PromptController::duplicate
+* @see app/Http/Controllers/Api/PromptController.php:126
+* @route '/api/v1/prompts/{prompt}/duplicate'
+*/
+duplicate.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { prompt: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { prompt: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            prompt: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        prompt: typeof args.prompt === 'object'
+        ? args.prompt.id
+        : args.prompt,
+    }
+
+    return duplicate.definition.url
+            .replace('{prompt}', parsedArgs.prompt.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Api\PromptController::duplicate
+* @see app/Http/Controllers/Api/PromptController.php:126
+* @route '/api/v1/prompts/{prompt}/duplicate'
+*/
+duplicate.post = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: duplicate.url(args, options),
+    method: 'post',
+})
+
+/**
 * @see \App\Http\Controllers\Api\PromptController::evaluate
-* @see app/Http/Controllers/Api/PromptController.php:62
+* @see app/Http/Controllers/Api/PromptController.php:63
 * @route '/api/v1/prompts/{prompt}/evaluate'
 */
 export const evaluate = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -230,7 +288,7 @@ evaluate.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::evaluate
-* @see app/Http/Controllers/Api/PromptController.php:62
+* @see app/Http/Controllers/Api/PromptController.php:63
 * @route '/api/v1/prompts/{prompt}/evaluate'
 */
 evaluate.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -263,7 +321,7 @@ evaluate.url = (args: { prompt: number | { id: number } } | [prompt: number | { 
 
 /**
 * @see \App\Http\Controllers\Api\PromptController::evaluate
-* @see app/Http/Controllers/Api/PromptController.php:62
+* @see app/Http/Controllers/Api/PromptController.php:63
 * @route '/api/v1/prompts/{prompt}/evaluate'
 */
 evaluate.post = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -276,6 +334,7 @@ const prompts = {
     store: Object.assign(store, store),
     show: Object.assign(show, show),
     diff: Object.assign(diff, diff),
+    duplicate: Object.assign(duplicate, duplicate),
     evaluate: Object.assign(evaluate, evaluate),
 }
 

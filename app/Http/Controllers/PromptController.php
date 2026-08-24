@@ -8,6 +8,7 @@ use App\Enums\RunStatus;
 use App\Enums\Visibility;
 use App\Http\Requests\StorePromptRequest;
 use App\Http\Requests\UpdatePromptRequest;
+use App\Http\Resources\PromptResource;
 use App\Models\AuditLog;
 use App\Models\Prompt;
 use App\Models\PromptTemplate;
@@ -255,6 +256,10 @@ class PromptController extends Controller
         $copy->update(['current_version_id' => $version->id]);
 
         AuditLog::record('prompt.created', 'prompts', 'Prompt duplicated', 'prompt', (string) $copy->id, $copy->name);
+
+        if ($request->expectsJson()) {
+            return new PromptResource($copy);
+        }
 
         return redirect()->route('prompts.show', $copy)->with('success', __('messages.promptDuplicated'));
     }

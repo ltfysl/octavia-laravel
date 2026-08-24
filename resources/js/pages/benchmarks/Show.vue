@@ -57,6 +57,17 @@ const insight = ref<string | null>(null);
 const insightLoading = ref(false);
 const insightError = ref('');
 
+const copiedCase = ref<string | null>(null);
+const copyCaseInput = async (text: string, key: string) => {
+    try {
+        await navigator.clipboard.writeText(text);
+        copiedCase.value = key;
+        setTimeout(() => copiedCase.value = null, 2000);
+    } catch {
+        // ignore
+    }
+};
+
 const runInsight = async () => {
     insightLoading.value = true;
     insightError.value = '';
@@ -174,6 +185,15 @@ const runInsight = async () => {
                         <span class="font-mono text-xs text-ink-300">#{{ i + 1 }}</span>
                     </template>
                     <p class="text-sm font-medium text-ink-950">{{ c.title }}</p>
+                    <div class="mt-2 flex items-center justify-between">
+                        <button
+                            type="button"
+                            class="text-[11px] text-ink-400 hover:text-ink-600"
+                            @click="copyCaseInput(c.input, String(c.id))"
+                        >
+                            {{ copiedCase === String(c.id) ? t('common.copied') : t('common.copy') }}
+                        </button>
+                    </div>
                     <pre class="mt-2 whitespace-pre-wrap rounded-lg bg-paper-100 p-3 font-mono text-xs leading-relaxed text-ink-700">{{ c.input }}</pre>
                     <ul class="mt-3 space-y-1.5">
                         <li v-for="cr in c.criteria" :key="cr.id" class="flex items-center gap-2 text-sm text-ink-700">

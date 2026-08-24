@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
 import AppLayout from '../../layouts/AppLayout.vue';
@@ -61,6 +61,8 @@ const exportCsv = () => {
     a.click();
     URL.revokeObjectURL(url);
 };
+
+const duplicateBenchmark = (id: number) => router.post(`/benchmarks/${id}/duplicate`);
 </script>
 
 <template>
@@ -149,7 +151,12 @@ const exportCsv = () => {
                         <p class="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-ink-500">{{ benchmark.description ?? '—' }}</p>
                         <div class="mt-4 flex items-center justify-between border-t border-dashed border-ink-100 pt-3">
                             <span class="inline-flex items-center gap-1.5 rounded-md bg-paper-100 px-2 py-1 font-mono text-xs text-ink-600">{{ t('benchmarks.caseCount', { count: benchmark.cases_count }) }}</span>
-                            <span class="font-mono text-xs text-ink-300">v{{ benchmark.version }} · {{ d(new Date(benchmark.updated_at), 'short') }}</span>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-xs text-ink-300">v{{ benchmark.version }} · {{ d(new Date(benchmark.updated_at), 'short') }}</span>
+                                <button type="button" :title="t('common.duplicate')" class="rounded-md p-1 text-ink-400 transition hover:bg-paper-100 hover:text-ink-700" @click.stop.prevent="duplicateBenchmark(benchmark.id)">
+                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.76a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" /></svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </Link>

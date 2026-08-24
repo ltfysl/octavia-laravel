@@ -9,6 +9,7 @@ import LeaderboardExportController from './LeaderboardExportController'
 import OnboardingController from './OnboardingController'
 import PromptController from './PromptController'
 import PromptTemplateController from './PromptTemplateController'
+import PromptDiffExplainController from './PromptDiffExplainController'
 import PromptInsightController from './PromptInsightController'
 import PromptAbTestController from './PromptAbTestController'
 import PromptRegressionTestController from './PromptRegressionTestController'
@@ -50,6 +51,7 @@ const Controllers = {
     OnboardingController: Object.assign(OnboardingController, OnboardingController),
     PromptController: Object.assign(PromptController, PromptController),
     PromptTemplateController: Object.assign(PromptTemplateController, PromptTemplateController),
+    PromptDiffExplainController: Object.assign(PromptDiffExplainController, PromptDiffExplainController),
     PromptInsightController: Object.assign(PromptInsightController, PromptInsightController),
     PromptAbTestController: Object.assign(PromptAbTestController, PromptAbTestController),
     PromptRegressionTestController: Object.assign(PromptRegressionTestController, PromptRegressionTestController),

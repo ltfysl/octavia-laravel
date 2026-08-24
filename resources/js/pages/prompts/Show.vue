@@ -55,6 +55,8 @@ const diffTo = ref<number | null>(null);
 const diffOps = ref<Array<{ op: string; text: string }> | null>(null);
 const diffMeta = ref<{ from: number; to: number } | null>(null);
 const diffLoading = ref(false);
+const diffExplainLoading = ref(false);
+const diffExplain = ref<{ summary: string; changes: Array<{ type: string; description: string; impact: string }>; recommendation: string } | null>(null);
 
 const loadDiff = async () => {
     if (!diffFrom.value || !diffTo.value || diffFrom.value === diffTo.value) return;
@@ -73,6 +75,32 @@ const loadDiff = async () => {
         diffMeta.value = null;
     } finally {
         diffLoading.value = false;
+    }
+};
+
+const explainDiff = async () => {
+    if (!diffFrom.value || !diffTo.value || diffFrom.value === diffTo.value) return;
+    diffExplainLoading.value = true;
+    try {
+        const res = await fetch(`/prompts/${props.prompt.id}/diff-explain`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content ?? '',
+                Accept: 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                from_version_id: diffFrom.value,
+                to_version_id: diffTo.value,
+            }),
+        });
+        if (!res.ok) throw new Error();
+        diffExplain.value = await res.json();
+    } catch {
+        diffExplain.value = null;
+    } finally {
+        diffExplainLoading.value = false;
     }
 };
 
@@ -488,6 +516,20 @@ const runInsight = async () => {
                     </div>
                 </div>
                 <p v-else class="mt-3 text-center font-mono text-xs text-ink-300">{{ t('prompts.diff.pickTwo') }}</p>
+
+                <div v-if="diffFrom && diffTo && diffFrom !== diffTo" class="mt-3">
+                    <OButton size="sm" :disabled="diffExplainLoading" @click="explainDiff">{{ diffExplainLoading ? t('common.loading') : t('prompts.diff.explain') }}</OButton>
+                </div>
+
+                <div v-if="diffExplain" class="mt-3 rounded-xl border border-ink-100 bg-paper-50 p-3">
+                    <p class="text-sm font-semibold text-ink-900">{{ diffExplain.summary }}</p>
+                    <ul class="mt-2 space-y-1">
+                        <li v-for="(change, i) in diffExplain.changes" :key="i" class="text-sm text-ink-700">
+                            <span class="font-semibold" :class="change.impact === 'positive' ? 'text-mint-600' : change.impact === 'negative' ? 'text-rose-600' : 'text-ink-500'">{{ change.type }}</span>: {{ change.description }}
+                        </li>
+                    </ul>
+                    <p class="mt-2 text-sm text-ink-500">{{ t('prompts.diff.recommendation') }}: {{ diffExplain.recommendation }}</p>
+                </div>
             </OPanel>
             <OPanel v-for="version in prompt.versions" :key="version.id">
                 <template #actions>

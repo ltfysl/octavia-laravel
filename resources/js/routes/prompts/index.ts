@@ -487,6 +487,64 @@ diff.head = (args: { prompt: number | { id: number } } | [prompt: number | { id:
 })
 
 /**
+* @see \App\Http\Controllers\PromptDiffExplainController::__invoke
+* @see app/Http/Controllers/PromptDiffExplainController.php:14
+* @route '/prompts/{prompt}/diff-explain'
+*/
+export const diffExplain = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: diffExplain.url(args, options),
+    method: 'post',
+})
+
+diffExplain.definition = {
+    methods: ["post"],
+    url: '/prompts/{prompt}/diff-explain',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\PromptDiffExplainController::__invoke
+* @see app/Http/Controllers/PromptDiffExplainController.php:14
+* @route '/prompts/{prompt}/diff-explain'
+*/
+diffExplain.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { prompt: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { prompt: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            prompt: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        prompt: typeof args.prompt === 'object'
+        ? args.prompt.id
+        : args.prompt,
+    }
+
+    return diffExplain.definition.url
+            .replace('{prompt}', parsedArgs.prompt.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\PromptDiffExplainController::__invoke
+* @see app/Http/Controllers/PromptDiffExplainController.php:14
+* @route '/prompts/{prompt}/diff-explain'
+*/
+diffExplain.post = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: diffExplain.url(args, options),
+    method: 'post',
+})
+
+/**
 * @see \App\Http\Controllers\PromptController::analytics
 * @see app/Http/Controllers/PromptController.php:217
 * @route '/prompts/{prompt}/analytics'
@@ -895,6 +953,7 @@ const prompts = {
     destroy: Object.assign(destroy, destroy),
     playground: Object.assign(playground, playground),
     diff: Object.assign(diff, diff),
+    diffExplain: Object.assign(diffExplain, diffExplain),
     analytics: Object.assign(analytics, analytics),
     insight: Object.assign(insight, insight),
     abTest: Object.assign(abTest, abTest),

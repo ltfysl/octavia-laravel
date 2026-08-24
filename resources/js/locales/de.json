@@ -96,7 +96,9 @@
       "hideCompare": "Vergleich ausblenden",
       "baseLabel": "Basisversion",
       "compareLabel": "Vergleichsversion",
-      "pickTwo": "— zwei Versionen wählen —"
+      "pickTwo": "— zwei Versionen wählen —",
+      "explain": "Diff erklären",
+      "recommendation": "Empfehlung"
     },
     "playgroundHistory": "Verlauf · letzte {n}",
     "insightTitle": "KI-Review",

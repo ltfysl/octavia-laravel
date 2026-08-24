@@ -29,7 +29,7 @@
 - Settings: **Provider Keys** ✓; no Workspace; **API key management + usage tracking** ✓
 - Export: prompt index has CSV export; **leaderboard CSV export** ✓; still missing dashboard/benchmark/runs leaderboards
 - Playground: **standalone chat playground at /playground** ✓; prompt detail still has ad-hoc single-input playground
-- Version diff: works, but no AI diff explanation
+- Version diff: works; **AI diff explanation** ✓
 - Prompt analytics: per-prompt runs, average/best score, score-over-time sparkline, per-benchmark breakdown — basic version on prompt detail
 
 ## Missing (candidate backlog)

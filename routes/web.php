@@ -26,6 +26,7 @@ use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PlaygroundController;
 use App\Http\Controllers\PromptAbTestController;
 use App\Http\Controllers\PromptController;
+use App\Http\Controllers\PromptDiffExplainController;
 use App\Http\Controllers\PromptExportController;
 use App\Http\Controllers\PromptImportController;
 use App\Http\Controllers\PromptInsightController;
@@ -108,6 +109,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/prompts/templates/{template}', [PromptTemplateController::class, 'show'])->name('prompts.templates.show');
     Route::post('/prompts/{prompt}/playground', [PromptController::class, 'playground'])->name('prompts.playground');
     Route::get('/prompts/{prompt}/diff', [PromptController::class, 'diff'])->name('prompts.diff');
+    Route::post('/prompts/{prompt}/diff-explain', PromptDiffExplainController::class)->middleware('throttle:assistant')->name('prompts.diff-explain');
     Route::get('/prompts/{prompt}/analytics', [PromptController::class, 'analytics'])->name('prompts.analytics');
     Route::post('/prompts/{prompt}/insight', PromptInsightController::class)
         ->middleware('throttle:assistant')

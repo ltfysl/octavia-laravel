@@ -260,7 +260,8 @@
     "quotaWarning": "Daily quota almost used up: {used} of {limit} runs today. The quota resets at midnight.",
     "diagnosisTitle": "AI diagnosis",
     "diagnosisHint": "Analyse why this run stopped and what to try next.",
-    "diagnosisButton": "Diagnose run"
+    "diagnosisButton": "Diagnose run",
+    "exportLeaderboard": "Export leaderboard"
   },
   "marketplace": {
     "title": "Marketplace",

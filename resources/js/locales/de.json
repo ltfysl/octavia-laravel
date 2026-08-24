@@ -260,7 +260,8 @@
     "quotaWarning": "Tageskontingent fast aufgebraucht: {used} von {limit} Läufen heute. Das Kontingent setzt sich um Mitternacht zurück.",
     "diagnosisTitle": "KI-Diagnose",
     "diagnosisHint": "Analysiere, warum dieser Lauf stoppte, und was als Nächstes zu probieren ist.",
-    "diagnosisButton": "Lauf diagnostizieren"
+    "diagnosisButton": "Lauf diagnostizieren",
+    "exportLeaderboard": "Leaderboard exportieren"
   },
   "marketplace": {
     "title": "Marketplace",

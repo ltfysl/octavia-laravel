@@ -17,6 +17,7 @@ use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ConfigPresetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\LeaderboardExportController;
 use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\MarketplaceForkController;
 use App\Http\Controllers\MarketplaceStarController;
@@ -91,6 +92,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/export/leaderboard', LeaderboardExportController::class)->name('export.leaderboard');
     Route::get('/activity', [ActivityController::class, 'index'])->name('activity');
 
     Route::get('/welcome', [OnboardingController::class, 'welcome'])->name('onboarding.welcome');

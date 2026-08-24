@@ -290,7 +290,16 @@ const runDiagnosis = async () => {
                         <span class="font-medium text-ink-900">{{ t('runs.rationale') }}:</span> {{ selectedStep.rationale }}
                     </p>
                     <div class="mt-3">
-                        <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-300">{{ t('runs.promptUsed') }}</p>
+                        <div class="mb-1 flex items-center justify-between">
+                            <p class="text-xs font-semibold uppercase tracking-wide text-ink-300">{{ t('runs.promptUsed') }}</p>
+                            <button
+                                type="button"
+                                class="text-[11px] text-ink-400 hover:text-ink-600"
+                                @click="copyOutput(selectedStep.prompt_content, `prompt-${selectedStep.number}`)"
+                            >
+                                {{ copiedOutput === `prompt-${selectedStep.number}` ? t('common.copied') : t('common.copy') }}
+                            </button>
+                        </div>
                         <pre class="max-h-64 overflow-auto whitespace-pre-wrap rounded-lg pinned-dark p-4 font-mono text-xs leading-relaxed text-ink-100 dark:text-ink-900 scroll-thin">{{ selectedStep.prompt_content }}</pre>
                     </div>
                 </OPanel>

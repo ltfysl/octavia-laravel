@@ -25,7 +25,10 @@ class RunProgress implements ShouldBroadcast
 
     public function broadcastOn(): array
     {
-        return [new PrivateChannel('runs.'.$this->run->id)];
+        return [
+            new PrivateChannel('runs.'.$this->run->id),
+            new PrivateChannel('App.Models.User.'.$this->run->user_id),
+        ];
     }
 
     public function broadcastAs(): string

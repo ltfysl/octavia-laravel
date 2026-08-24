@@ -44,4 +44,4 @@
 - **Multi-model tournament** — run same prompt/benchmark across several providers ✓
 - **Cost optimizer** — cheaper model for generation, stronger for evaluation ✓
 - **Onboarding wizard** — multi-step first-run flow with locale, sample toggle and ready-check ✓
-- **Real-time WebSocket progress** — currently polling (Reverb wired but not universal)
+- **Real-time WebSocket progress** — Reverb broadcasts on run + user channel; dashboard and runs index subscribe ✓

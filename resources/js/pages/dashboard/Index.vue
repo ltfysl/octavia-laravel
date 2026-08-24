@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
+import { useEcho } from '../../echo';
 import { useI18n } from 'vue-i18n';
 import { onMounted, onUnmounted, ref, computed } from 'vue';
 import AppLayout from '../../layouts/AppLayout.vue';
@@ -136,7 +137,15 @@ const animateTo = (target: number, setter: (v: number) => void, duration = 900) 
     };
     requestAnimationFrame(tick);
 };
+const page = usePage<{ auth: { user: { id: number } } }>();
+
 onMounted(() => {
+    const echo = useEcho();
+    const userId = page.props.auth?.user?.id;
+    if (echo && userId) {
+        echo.private(`App.Models.User.${userId}`).listen('.progress', () => router.reload({ only: ['recentRuns', 'stats', 'scoreHistory', 'topPrompts', 'leaderboard'] }));
+    }
+
     animateTo(props.stats.prompts, (v) => (animated.value.prompts = v));
     animateTo(props.stats.benchmarks, (v) => (animated.value.benchmarks = v));
     animateTo(props.stats.activeRuns, (v) => (animated.value.activeRuns = v));

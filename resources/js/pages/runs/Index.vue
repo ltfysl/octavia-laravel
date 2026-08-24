@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
+import { useEcho } from '../../echo';
 import { useI18n } from 'vue-i18n';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import AppLayout from '../../layouts/AppLayout.vue';
 import OEmptyState from '../../components/ui/OEmptyState.vue';
 import OBadge from '../../components/ui/OBadge.vue';
@@ -43,6 +44,16 @@ const statusCounts = computed(() => {
     const counts: Record<string, number> = {};
     for (const run of props.runs.data) counts[run.status] = (counts[run.status] ?? 0) + 1;
     return counts;
+});
+
+const page = usePage<{ auth: { user: { id: number } } }>();
+
+onMounted(() => {
+    const echo = useEcho();
+    const userId = page.props.auth?.user?.id;
+    if (echo && userId) {
+        echo.private(`App.Models.User.${userId}`).listen('.progress', () => router.reload({ only: ['runs'] }));
+    }
 });
 
 const visibleRuns = computed(() => {

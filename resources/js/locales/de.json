@@ -363,6 +363,13 @@
         "read": "Lesen",
         "write": "Schreiben"
       }
+    },
+    "providerKeys": {
+      "title": "Provider-Keys",
+      "provider": "Provider",
+      "apiKey": "API-Key",
+      "save": "Key speichern",
+      "deleteConfirm": "Diesen Provider-Key löschen?"
     }
   },
   "landing": {
@@ -395,7 +402,11 @@
     "optional": "optional",
     "skipTour": "Tour überspringen",
     "nextTip": "Nächster Tipp",
-    "name": "Name"
+    "name": "Name",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "activate": "Aktivieren",
+    "deactivate": "Deaktivieren"
   },
   "notifications": {
     "unreadCount": "{count} ungelesen",

@@ -65,9 +65,10 @@
 - [x] Round 22e: prompt templates gallery with category/search filters and create-from-template flow
 - [x] Round 22f: marketplace star/fork counts + toggle + fork-to-workspace actions
 - [x] Round 22g: webhooks + deliveries for run events (create/activate/delete, HMAC-signed POST with retry)
-- [x] **171 Pest tests / 623 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
+- [x] **175 Pest tests / 637 assertions green**, Playwright E2E 7 passed, Pint clean, vue-tsc clean, build green
 - [x] Round 23: API keys management + usage tracking
 - [x] Round 23b: global activity timeline
 - [x] Round 23c: leaderboard CSV export
 - [x] Round 23d: standalone chat playground (/playground)
+- [x] Round 23e: per-user provider keys (settings, LlmManager override, ProcessRunJob wiring)
 - [x] Round 23b: global activity timeline (/activity + /api/v1/activity) (`personal_access_tokens` uses log, /settings/api-keys, EN/DE i18n, LogApiUsage middleware)

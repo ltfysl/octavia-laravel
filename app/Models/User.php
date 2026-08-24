@@ -98,6 +98,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(ConfigPreset::class);
     }
 
+    public function providerKeys(): HasMany
+    {
+        return $this->hasMany(ProviderKey::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->is_admin;

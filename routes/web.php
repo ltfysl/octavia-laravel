@@ -31,6 +31,7 @@ use App\Http\Controllers\PromptImportController;
 use App\Http\Controllers\PromptInsightController;
 use App\Http\Controllers\PromptRegressionTestController;
 use App\Http\Controllers\PromptTemplateController;
+use App\Http\Controllers\ProviderKeyController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\RunDiagnosisController;
@@ -164,6 +165,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/{id}/unread', [NotificationController::class, 'markUnread'])
         ->name('notifications.unread');
     Route::get('/settings/api-keys', [ApiKeyController::class, 'index'])->name('settings.api-keys');
+    Route::get('/settings/provider-keys', [ProviderKeyController::class, 'index'])->name('settings.provider-keys');
+    Route::post('/settings/provider-keys', [ProviderKeyController::class, 'store'])->name('settings.provider-keys.store');
+    Route::patch('/settings/provider-keys/{providerKey}', [ProviderKeyController::class, 'update'])->name('settings.provider-keys.update');
+    Route::delete('/settings/provider-keys/{providerKey}', [ProviderKeyController::class, 'destroy'])->name('settings.provider-keys.destroy');
+
     Route::post('/settings/api-keys', [ApiKeyController::class, 'store'])->name('settings.api-keys.store');
     Route::delete('/settings/api-keys/{token}', [ApiKeyController::class, 'destroy'])->name('settings.api-keys.destroy');
 

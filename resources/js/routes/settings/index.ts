@@ -1,5 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
 import apiKeys9055d4 from './api-keys'
+import providerKeys9d79ec from './provider-keys'
 import webhooksCea6cd from './webhooks'
 import profile937a89 from './profile'
 import presets728a1d from './presets'
@@ -45,6 +46,50 @@ apiKeys.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 */
 apiKeys.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: apiKeys.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\ProviderKeyController::providerKeys
+* @see app/Http/Controllers/ProviderKeyController.php:14
+* @route '/settings/provider-keys'
+*/
+export const providerKeys = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: providerKeys.url(options),
+    method: 'get',
+})
+
+providerKeys.definition = {
+    methods: ["get","head"],
+    url: '/settings/provider-keys',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\ProviderKeyController::providerKeys
+* @see app/Http/Controllers/ProviderKeyController.php:14
+* @route '/settings/provider-keys'
+*/
+providerKeys.url = (options?: RouteQueryOptions) => {
+    return providerKeys.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\ProviderKeyController::providerKeys
+* @see app/Http/Controllers/ProviderKeyController.php:14
+* @route '/settings/provider-keys'
+*/
+providerKeys.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: providerKeys.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\ProviderKeyController::providerKeys
+* @see app/Http/Controllers/ProviderKeyController.php:14
+* @route '/settings/provider-keys'
+*/
+providerKeys.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: providerKeys.url(options),
     method: 'head',
 })
 
@@ -260,6 +305,7 @@ logoutOthers.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 const settings = {
     apiKeys: Object.assign(apiKeys, apiKeys9055d4),
+    providerKeys: Object.assign(providerKeys, providerKeys9d79ec),
     webhooks: Object.assign(webhooks, webhooksCea6cd),
     profile: Object.assign(profile, profile937a89),
     billing: Object.assign(billing, billing),

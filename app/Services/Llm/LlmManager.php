@@ -2,6 +2,8 @@
 
 namespace App\Services\Llm;
 
+use App\Models\ProviderKey;
+use App\Models\User;
 use App\Services\Llm\Contracts\LlmProvider;
 use App\Services\Llm\Providers\MockLlmProvider;
 use App\Services\Llm\Providers\OpenAiCompatibleProvider;
@@ -10,7 +12,7 @@ use RuntimeException;
 
 class LlmManager
 {
-    public function provider(?string $name = null): LlmProvider
+    public function provider(?string $name = null, ?User $user = null): LlmProvider
     {
         $name ??= config('llm.default');
         $config = config("llm.providers.{$name}");
@@ -19,10 +21,19 @@ class LlmManager
             throw new InvalidArgumentException("Unknown LLM provider [{$name}].");
         }
 
+        $apiKey = null;
+        if ($user !== null && $config['driver'] === 'openai') {
+            $providerKey = ProviderKey::forUser($user)->active()->where('provider', $name)->first();
+            if ($providerKey !== null) {
+                $apiKey = $providerKey->api_key;
+                $providerKey->markUsed();
+            }
+        }
+
         return match ($config['driver']) {
             'mock' => new MockLlmProvider,
             'openai' => new OpenAiCompatibleProvider(
-                apiKey: (string) $config['key'],
+                apiKey: $apiKey ?? (string) $config['key'],
                 baseUrl: (string) $config['base_url'],
                 model: (string) $config['model'],
                 timeout: (int) $config['timeout'],

@@ -35,7 +35,7 @@ class ProcessRunJob implements ShouldQueue
         }
 
         try {
-            $provider = $manager->provider($run->provider);
+            $provider = $manager->provider($run->provider, $run->user);
         } catch (Throwable $e) {
             $this->fail($run, $e->getMessage());
 

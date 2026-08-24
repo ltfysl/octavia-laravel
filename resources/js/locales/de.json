@@ -554,7 +554,8 @@
     "clearFilters": "Filter löschen",
     "exportCsv": "CSV exportieren",
     "total": "Gesamt",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "duplicate": "Duplizieren"
   },
   "notifications": {
     "unreadCount": "{count} ungelesen",

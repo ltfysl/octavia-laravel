@@ -25,8 +25,8 @@ test('authenticate and onboard', async ({ page }) => {
     await expect(page.getByRole('heading', { name: /Welcome to your prompt lab/i })).toBeVisible();
 
     // Choose German + starter content
-    await page.click('button:has-text("Deutsch")');
-    await page.click('button:has-text("Weiter")');
+    await page.getByTestId('locale-de').click();
+    await page.getByTestId('onboarding-next').click();
     await page.getByTestId('finish-onboarding').click();
 
     await page.waitForURL('**/dashboard');

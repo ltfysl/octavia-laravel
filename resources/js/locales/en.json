@@ -625,7 +625,10 @@
     "readySample": "Octavia will create an example prompt and a benchmark, then drop you on the dashboard where you can launch your first run.",
     "readyEmpty": "Your lab is empty. You can create prompts and benchmarks from the dashboard.",
     "startLab": "Start my lab",
-    "finish": "Go to dashboard"
+    "finish": "Go to dashboard",
+    "title": "Welcome",
+    "heading": "Welcome to your prompt lab",
+    "body": "Octavia benchmarks prompts against test suites and evolves them automatically. Two quick choices and you're in."
   },
   "footer": {
     "product": "Product",

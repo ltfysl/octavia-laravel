@@ -638,7 +638,10 @@
     "readySample": "Octavia erstellt einen Beispiel-Prompt und einen Benchmark und bringt dich zum Dashboard, wo du den ersten Lauf starten kannst.",
     "readyEmpty": "Dein Labor ist leer. Du kannst Prompts und Benchmarks über das Dashboard erstellen.",
     "startLab": "Labor starten",
-    "finish": "Zum Dashboard"
+    "finish": "Zum Dashboard",
+    "title": "Willkommen",
+    "heading": "Willkommen in deinem Prompt-Labor",
+    "body": "Octavia benchmarkt Prompts gegen Test-Suites und entwickelt sie automatisch weiter. Zwei kurze Entscheidungen und du bist drin."
   },
   "footer": {
     "product": "Produkt",

@@ -201,12 +201,12 @@ const runDiagnosis = async () => {
                 <div class="border-l border-ink-100 pl-6 max-sm:border-l-0 max-sm:border-t max-sm:pl-0 max-sm:pt-4">
                     <p class="eyebrow">{{ t('runs.target') }}</p>
                     <p class="display-hero mt-1 text-3xl font-bold tracking-tight text-ink-950">{{ Math.round(run.target_score * 100) }}<span class="text-accent-600">%</span></p>
-                    <p class="mt-1 font-mono text-xs text-ink-400">datum</p>
+                    <p class="mt-1 font-mono text-xs text-ink-400">{{ t('runs.dateLabel') }}</p>
                 </div>
                 <div class="border-l border-ink-100 pl-6 max-sm:border-l-0 max-sm:border-t max-sm:pl-0 max-sm:pt-4">
                     <p class="eyebrow">{{ t('runs.steps') }}</p>
                     <p class="display-hero mt-1 text-3xl font-bold tracking-tight text-ink-950">{{ evalSteps.length }}</p>
-                    <p class="mt-1 font-mono text-xs text-ink-400">evaluations</p>
+                    <p class="mt-1 font-mono text-xs text-ink-400">{{ t('runs.evaluationsLabel') }}</p>
                 </div>
             </div>
             <div class="border-t border-ink-100 bg-card px-6 py-4">

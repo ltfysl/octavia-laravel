@@ -321,7 +321,9 @@
       "delta": "Delta"
     },
     "mode.optimizeHint": "Verbessere den Prompt durch iterative Mutation.",
-    "mode.evaluateHint": "Bewerte den Prompt einmalig gegen einen Benchmark."
+    "mode.evaluateHint": "Bewerte den Prompt einmalig gegen einen Benchmark.",
+    "dateLabel": "Datum",
+    "evaluationsLabel": "Evaluationen"
   },
   "marketplace": {
     "title": "Marketplace",

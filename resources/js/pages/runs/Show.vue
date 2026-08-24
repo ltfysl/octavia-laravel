@@ -144,6 +144,14 @@ const runDiagnosis = async () => {
                 </p>
             </div>
             <div class="flex items-center gap-2">
+                <a
+                    :href="`/export/leaderboard?run_id=${run.id}`"
+                    class="inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-card px-3.5 py-2 text-sm font-medium text-ink-700 shadow-sm transition hover:bg-paper-100 hover:text-ink-900"
+                    download
+                >
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                    {{ t('common.leaderboard') }}
+                </a>
                 <OButton v-if="isRunning" variant="secondary" @click="cancel">{{ t('runs.cancel') }}</OButton>
                 <Link href="/runs" class="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-900">{{ t('common.back') }} <span aria-hidden="true">→</span></Link>
             </div>

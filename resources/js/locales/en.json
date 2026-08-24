@@ -411,7 +411,9 @@
     "active": "Active",
     "inactive": "Inactive",
     "activate": "Activate",
-    "deactivate": "Deactivate"
+    "deactivate": "Deactivate",
+    "export": "Export",
+    "leaderboard": "Leaderboard"
   },
   "notifications": {
     "unreadCount": "{count} unread",

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Benchmark;
+use App\Models\Run;
 use App\Models\RunStep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response as ResponseFacade;
@@ -13,16 +15,46 @@ class LeaderboardExportController extends Controller
     {
         $user = $request->user();
         $limit = min(max((int) $request->input('limit', 50), 1), 1000);
+        $runId = $request->input('run_id') !== null ? (int) $request->input('run_id') : null;
+        $benchmarkId = $request->input('benchmark_id') !== null ? (int) $request->input('benchmark_id') : null;
+
+        if ($runId !== null) {
+            $this->authorize('view', Run::findOrFail($runId));
+        }
+
+        if ($benchmarkId !== null) {
+            $this->authorize('view', Benchmark::findOrFail($benchmarkId));
+        }
 
         $steps = RunStep::with('run')
-            ->whereHas('run', fn ($q) => $q->visibleTo($user))
+            ->whereHas('run', function ($query) use ($user, $runId, $benchmarkId) {
+                $query->visibleTo($user);
+
+                if ($runId !== null) {
+                    $query->where('id', $runId);
+                }
+
+                if ($benchmarkId !== null) {
+                    $query->where('benchmark_id', $benchmarkId);
+                }
+            })
             ->whereNotNull('score')
             ->where('score', '>', 0)
             ->orderByDesc('score')
             ->take($limit)
             ->get(['id', 'run_id', 'number', 'prompt_content', 'score', 'mutation_type', 'tokens_used', 'created_at']);
 
-        $filename = 'leaderboard-'.now()->toDateString().'.csv';
+        $filenameParts = ['leaderboard'];
+
+        if ($benchmarkId !== null) {
+            $filenameParts[] = 'benchmark-'.$benchmarkId;
+        }
+
+        if ($runId !== null) {
+            $filenameParts[] = 'run-'.$runId;
+        }
+
+        $filename = implode('-', $filenameParts).'-'.now()->toDateString().'.csv';
 
         return ResponseFacade::stream(function () use ($steps) {
             $handle = fopen('php://output', 'w');

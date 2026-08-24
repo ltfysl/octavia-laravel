@@ -423,7 +423,9 @@
     "active": "Aktiv",
     "inactive": "Inaktiv",
     "activate": "Aktivieren",
-    "deactivate": "Deaktivieren"
+    "deactivate": "Deaktivieren",
+    "export": "Exportieren",
+    "leaderboard": "Rangliste"
   },
   "notifications": {
     "unreadCount": "{count} ungelesen",

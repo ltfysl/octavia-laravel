@@ -413,7 +413,10 @@ onMounted(() => {
                         <p class="eyebrow">{{ t('dashboard.leaderboard.title') }}</p>
                         <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.leaderboard.heading') }}</h3>
                     </div>
-                    <span class="rounded-full bg-ink-950 px-3 py-1 font-mono text-xs text-white">{{ topPrompts.length }}</span>
+                    <div class="flex items-center gap-2">
+                        <a href="/export/leaderboard" class="rounded-full border border-ink-100 bg-card px-3 py-1 text-xs font-medium text-ink-600 hover:border-ink-200 hover:text-ink-900">{{ t('common.export') }}</a>
+                        <span class="rounded-full bg-ink-950 px-3 py-1 font-mono text-xs text-white">{{ topPrompts.length }}</span>
+                    </div>
                 </div>
                 <div class="mt-4 overflow-x-auto">
                     <table class="w-full text-sm">

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\LeaderboardExportController::__invoke
-* @see app/Http/Controllers/LeaderboardExportController.php:12
+* @see app/Http/Controllers/LeaderboardExportController.php:14
 * @route '/export/leaderboard'
 */
 const LeaderboardExportController = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ LeaderboardExportController.definition = {
 
 /**
 * @see \App\Http\Controllers\LeaderboardExportController::__invoke
-* @see app/Http/Controllers/LeaderboardExportController.php:12
+* @see app/Http/Controllers/LeaderboardExportController.php:14
 * @route '/export/leaderboard'
 */
 LeaderboardExportController.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ LeaderboardExportController.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\LeaderboardExportController::__invoke
-* @see app/Http/Controllers/LeaderboardExportController.php:12
+* @see app/Http/Controllers/LeaderboardExportController.php:14
 * @route '/export/leaderboard'
 */
 LeaderboardExportController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ LeaderboardExportController.get = (options?: RouteQueryOptions): RouteDefinition
 
 /**
 * @see \App\Http\Controllers\LeaderboardExportController::__invoke
-* @see app/Http/Controllers/LeaderboardExportController.php:12
+* @see app/Http/Controllers/LeaderboardExportController.php:14
 * @route '/export/leaderboard'
 */
 LeaderboardExportController.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({

@@ -27,7 +27,7 @@
 - Dashboard: **score trend chart**, **leaderboard**, **category breakdown**, and **score distribution** ✓; sparkline still basic
 - Activity timeline: global feed exists at /activity and /api/v1/activity ✓
 - Settings: **Provider Keys** ✓; no Workspace; **API key management + usage tracking** ✓
-- Export: prompt index has CSV export; **leaderboard CSV export** ✓; still missing dashboard/benchmark/runs leaderboards
+- Export: prompt index CSV; **leaderboard CSV export with benchmark/run filters** ✓; dashboard export link ✓
 - Playground: **standalone chat playground at /playground** ✓; prompt detail still has ad-hoc single-input playground
 - Version diff: works; **AI diff explanation** ✓
 - Prompt analytics: per-prompt runs, average/best score, score-over-time sparkline, per-benchmark breakdown — basic version on prompt detail

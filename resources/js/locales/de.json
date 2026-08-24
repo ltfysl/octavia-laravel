@@ -179,7 +179,14 @@
     },
     "playgroundChatHint": "Chat mit dem aktuellen Entwurf. Die letzte Nachricht wird zusammen mit dem Prompt als Systemkontext gesendet.",
     "playgroundEmpty": "Starte das Gespräch…",
-    "playgroundInput": "Nachricht eingeben und Enter drücken…"
+    "playgroundInput": "Nachricht eingeben und Enter drücken…",
+    "specimenLibrary": "Prompt-Bibliothek",
+    "specimens": "Prompts",
+    "onlyYou": "nur du",
+    "marketplace": "Marktplatz",
+    "searchPlaceholder": "Prompts durchsuchen…",
+    "noSearchMatches": "Keine Prompts passen zu",
+    "noSearchHint": "Probiere eine andere Suche oder lösche die Filter."
   },
   "benchmarks": {
     "title": "Benchmarks",
@@ -207,7 +214,7 @@
       "reviewHint": "Prüfe deinen Benchmark vor dem Speichern. Du kannst später jederzeit weitere Fälle ergänzen.",
       "finish": "Benchmark speichern"
     },
-    "cases": "Testfälle",
+    "cases": "Fälle",
     "caseCount": "{count} Fälle",
     "run": "Benchmark ausführen",
     "delete": "Benchmark löschen",
@@ -244,7 +251,15 @@
     "clearFilters": "Filter zurücksetzen",
     "insightTitle": "KI-Review",
     "insightHint": "Prüfe die Suite auf Vielfalt, Messbarkeit und Abdeckung.",
-    "insightButton": "Benchmark bewerten"
+    "insightButton": "Benchmark bewerten",
+    "testSuites": "Test-Suites",
+    "suites": "Suites",
+    "testCases": "Test-Fälle",
+    "onlyYou": "nur du",
+    "marketplace": "Marktplatz",
+    "searchPlaceholder": "Benchmarks durchsuchen…",
+    "noSearchMatches": "Keine Benchmarks passen zu",
+    "noSearchHint": "Probiere eine andere Suche oder lösche die Filter."
   },
   "runs": {
     "title": "Läufe",
@@ -463,7 +478,13 @@
     "searchPlaceholder": "Navigation, Prompts, Benchmarks durchsuchen…",
     "noResults": "Keine Ergebnisse — versuche “prompts” oder “benchmarks”",
     "pressEnter": "↵ zum Navigieren",
-    "help": "? für Hilfe · ⌘K zum Umschalten"
+    "help": "? für Hilfe · ⌘K zum Umschalten",
+    "all": "Alle",
+    "private": "Privat",
+    "public": "Öffentlich",
+    "clearFilters": "Filter löschen",
+    "exportCsv": "CSV exportieren",
+    "total": "Gesamt"
   },
   "notifications": {
     "unreadCount": "{count} ungelesen",

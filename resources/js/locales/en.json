@@ -179,7 +179,14 @@
     },
     "playgroundChatHint": "Chat against the current draft. The last message is sent to the model with the prompt as system context.",
     "playgroundEmpty": "Start the conversation…",
-    "playgroundInput": "Type a message and press Enter…"
+    "playgroundInput": "Type a message and press Enter…",
+    "specimenLibrary": "Specimen library",
+    "specimens": "specimens",
+    "onlyYou": "only you",
+    "marketplace": "marketplace",
+    "searchPlaceholder": "Search prompts…",
+    "noSearchMatches": "No prompts match",
+    "noSearchHint": "Try a different search or clear filters."
   },
   "benchmarks": {
     "title": "Benchmarks",
@@ -207,7 +214,7 @@
       "reviewHint": "Review your benchmark before saving. You can always add more cases later.",
       "finish": "Save benchmark"
     },
-    "cases": "Test cases",
+    "cases": "Cases",
     "caseCount": "{count} cases",
     "run": "Run benchmark",
     "delete": "Delete benchmark",
@@ -244,7 +251,15 @@
     "clearFilters": "Clear filters",
     "insightTitle": "AI review",
     "insightHint": "Check the suite for variety, measurability and coverage.",
-    "insightButton": "Review benchmark"
+    "insightButton": "Review benchmark",
+    "testSuites": "Test suites",
+    "suites": "suites",
+    "testCases": "test cases",
+    "onlyYou": "only you",
+    "marketplace": "marketplace",
+    "searchPlaceholder": "Search benchmarks…",
+    "noSearchMatches": "No benchmarks match",
+    "noSearchHint": "Try a different search or clear filters."
   },
   "runs": {
     "title": "Runs",
@@ -450,7 +465,13 @@
     "searchPlaceholder": "Search navigation, prompts, benchmarks…",
     "noResults": "No results — try “prompts” or “benchmarks”",
     "pressEnter": "Press ↵ to navigate",
-    "help": "? for help · ⌘K to toggle"
+    "help": "? for help · ⌘K to toggle",
+    "all": "All",
+    "private": "Private",
+    "public": "Public",
+    "clearFilters": "Clear filters",
+    "exportCsv": "Export CSV",
+    "total": "Total"
   },
   "notifications": {
     "unreadCount": "{count} unread",

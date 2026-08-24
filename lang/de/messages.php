@@ -10,4 +10,8 @@ return [
     'providerKeySaved' => 'Provider-Key gespeichert.',
     'providerKeyUpdated' => 'Provider-Key aktualisiert.',
     'providerKeyDeleted' => 'Provider-Key gelöscht.',
+
+    'runActive' => 'Dieser Run ist noch aktiv und kann noch nicht wiederholt werden.',
+
+    'runCancelled' => 'Run abgebrochen.',
 ];

@@ -146,6 +146,7 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:assistant')
         ->name('assistant.chat');
     Route::post('/runs/{run}/cancel', [RunController::class, 'cancel'])->name('runs.cancel');
+    Route::post('/runs/{run}/retry', [RunController::class, 'retry'])->middleware('throttle:runs')->name('runs.retry');
     Route::post('/runs/{run}/diagnosis', RunDiagnosisController::class)
         ->middleware('throttle:assistant')
         ->name('runs.diagnosis');

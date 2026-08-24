@@ -330,7 +330,9 @@
     "mode.optimizeHint": "Verbessere den Prompt durch iterative Mutation.",
     "mode.evaluateHint": "Bewerte den Prompt einmalig gegen einen Benchmark.",
     "dateLabel": "Datum",
-    "evaluationsLabel": "Evaluationen"
+    "evaluationsLabel": "Evaluationen",
+    "retry": "Wiederholen",
+    "retryError": "Run ist noch aktiv."
   },
   "marketplace": {
     "title": "Marketplace",

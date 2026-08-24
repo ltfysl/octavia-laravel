@@ -330,7 +330,9 @@
     "mode.optimizeHint": "Improve the prompt through iterative mutation.",
     "mode.evaluateHint": "Score the prompt once against a benchmark.",
     "dateLabel": "date",
-    "evaluationsLabel": "evaluations"
+    "evaluationsLabel": "evaluations",
+    "retry": "Retry",
+    "retryError": "Run is still active."
   },
   "marketplace": {
     "title": "Marketplace",

@@ -101,12 +101,14 @@ onBeforeUnmount(() => {
 });
 
  const cancel = () => router.post(`/runs/${props.run.id}/cancel`);
+const retry = () => router.post(`/runs/${props.run.id}/retry`);
 
 const diagnosis = ref<string | null>(null);
 const diagnosisLoading = ref(false);
 const diagnosisError = ref('');
 
 const isTerminal = computed(() => ['failed', 'cancelled'].includes(props.run.status));
+const canRetry = computed(() => ['completed', 'failed', 'cancelled'].includes(props.run.status) && ! isRunning.value);
 
 const runDiagnosis = async () => {
     diagnosisLoading.value = true;
@@ -165,6 +167,7 @@ const runDiagnosis = async () => {
                     {{ t('common.leaderboard') }}
                 </a>
                 <OButton v-if="isRunning" variant="secondary" @click="cancel">{{ t('runs.cancel') }}</OButton>
+                <OButton v-if="canRetry" variant="secondary" @click="retry">{{ t('runs.retry') }}</OButton>
                 <Link href="/runs" class="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-900">{{ t('common.back') }} <span aria-hidden="true">→</span></Link>
             </div>
         </div>

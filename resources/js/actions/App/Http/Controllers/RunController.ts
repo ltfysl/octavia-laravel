@@ -315,6 +315,64 @@ cancel.post = (args: { run: number | { id: number } } | [run: number | { id: num
     method: 'post',
 })
 
-const RunController = { index, create, show, store, status, cancel }
+/**
+* @see \App\Http\Controllers\RunController::retry
+* @see app/Http/Controllers/RunController.php:215
+* @route '/runs/{run}/retry'
+*/
+export const retry = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: retry.url(args, options),
+    method: 'post',
+})
+
+retry.definition = {
+    methods: ["post"],
+    url: '/runs/{run}/retry',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\RunController::retry
+* @see app/Http/Controllers/RunController.php:215
+* @route '/runs/{run}/retry'
+*/
+retry.url = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { run: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { run: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            run: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        run: typeof args.run === 'object'
+        ? args.run.id
+        : args.run,
+    }
+
+    return retry.definition.url
+            .replace('{run}', parsedArgs.run.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\RunController::retry
+* @see app/Http/Controllers/RunController.php:215
+* @route '/runs/{run}/retry'
+*/
+retry.post = (args: { run: number | { id: number } } | [run: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: retry.url(args, options),
+    method: 'post',
+})
+
+const RunController = { index, create, show, store, status, cancel, retry }
 
 export default RunController

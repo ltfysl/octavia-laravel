@@ -201,7 +201,7 @@ class RunController extends Controller
 
     public function cancel(Request $request, Run $run): RedirectResponse
     {
-        $this->authorize('update', $run);
+        abort_unless($run->user_id === $request->user()->id, 404);
 
         if (! $run->isFinished()) {
             $run->forceFill(['status' => 'cancelled', 'finished_at' => now()])->save();
@@ -209,6 +209,53 @@ class RunController extends Controller
             AuditLog::record('run.cancelled', 'runs', 'Run cancelled', 'run', (string) $run->id, $run->name, 'warning');
         }
 
-        return back()->with('success', __('Run cancelled.'));
+        return back()->with('success', __('messages.runCancelled'));
+    }
+
+    public function retry(Request $request, Run $run): RedirectResponse
+    {
+        abort_unless($run->user_id === $request->user()->id, 404);
+
+        if (! $run->isFinished()) {
+            return back()->withErrors(['run' => __('messages.runActive')]);
+        }
+
+        $reserved = $run->mode->value === 'evaluate' ? 1 : $run->max_steps;
+
+        try {
+            app(CreditService::class)->consume(
+                $request->user(),
+                $reserved,
+                CreditService::REASON_RUN_RESERVED,
+                ['run_name' => $run->name],
+            );
+        } catch (InsufficientCreditsException $e) {
+            return back()->withErrors([
+                'credits' => __('billing.insufficient', [
+                    'balance' => $e->balance,
+                    'needed' => $e->requested,
+                ]),
+            ]);
+        }
+
+        $newRun = $request->user()->runs()->create([
+            'prompt_id' => $run->prompt_id,
+            'benchmark_id' => $run->benchmark_id,
+            'collection_id' => $run->collection_id,
+            'name' => $run->name.' (retry)',
+            'mode' => $run->mode,
+            'status' => 'pending',
+            'provider' => $run->provider ?? config('llm.default'),
+            'model' => $run->model,
+            'cost_optimized' => $run->cost_optimized,
+            'max_steps' => $run->max_steps,
+            'target_score' => $run->target_score,
+        ]);
+
+        AuditLog::record('run.started', 'runs', 'Run retried ('.($newRun->mode->value ?? 'evaluate').')', 'run', (string) $newRun->id, $newRun->name);
+
+        ProcessRunJob::dispatch($newRun->id);
+
+        return redirect()->route('runs.show', $newRun);
     }
 }

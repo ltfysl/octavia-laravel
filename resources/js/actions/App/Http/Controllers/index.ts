@@ -5,6 +5,7 @@ import Auth from './Auth'
 import DashboardController from './DashboardController'
 import OnboardingController from './OnboardingController'
 import PromptController from './PromptController'
+import PromptTemplateController from './PromptTemplateController'
 import PromptInsightController from './PromptInsightController'
 import PromptAbTestController from './PromptAbTestController'
 import PromptRegressionTestController from './PromptRegressionTestController'
@@ -37,6 +38,7 @@ const Controllers = {
     DashboardController: Object.assign(DashboardController, DashboardController),
     OnboardingController: Object.assign(OnboardingController, OnboardingController),
     PromptController: Object.assign(PromptController, PromptController),
+    PromptTemplateController: Object.assign(PromptTemplateController, PromptTemplateController),
     PromptInsightController: Object.assign(PromptInsightController, PromptInsightController),
     PromptAbTestController: Object.assign(PromptAbTestController, PromptAbTestController),
     PromptRegressionTestController: Object.assign(PromptRegressionTestController, PromptRegressionTestController),

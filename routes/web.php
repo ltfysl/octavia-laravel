@@ -24,6 +24,7 @@ use App\Http\Controllers\PromptExportController;
 use App\Http\Controllers\PromptImportController;
 use App\Http\Controllers\PromptInsightController;
 use App\Http\Controllers\PromptRegressionTestController;
+use App\Http\Controllers\PromptTemplateController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\RunDiagnosisController;
@@ -89,7 +90,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/welcome', [OnboardingController::class, 'welcome'])->name('onboarding.welcome');
     Route::post('/welcome/complete', [OnboardingController::class, 'complete'])->name('onboarding.complete');
 
+    Route::get('/prompts/templates', [PromptController::class, 'templates'])->name('prompts.templates');
     Route::resource('prompts', PromptController::class)->only(['index', 'create', 'store', 'show', 'update', 'destroy']);
+    Route::get('/prompts/templates/list', [PromptTemplateController::class, 'index'])->name('prompts.templates.index');
+    Route::get('/prompts/templates/{template}', [PromptTemplateController::class, 'show'])->name('prompts.templates.show');
     Route::post('/prompts/{prompt}/playground', [PromptController::class, 'playground'])->name('prompts.playground');
     Route::get('/prompts/{prompt}/diff', [PromptController::class, 'diff'])->name('prompts.diff');
     Route::get('/prompts/{prompt}/analytics', [PromptController::class, 'analytics'])->name('prompts.analytics');

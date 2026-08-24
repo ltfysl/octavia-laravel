@@ -1,7 +1,51 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
+* @see \App\Http\Controllers\PromptController::templates
+* @see app/Http/Controllers/PromptController.php:60
+* @route '/prompts/templates'
+*/
+export const templates = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: templates.url(options),
+    method: 'get',
+})
+
+templates.definition = {
+    methods: ["get","head"],
+    url: '/prompts/templates',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\PromptController::templates
+* @see app/Http/Controllers/PromptController.php:60
+* @route '/prompts/templates'
+*/
+templates.url = (options?: RouteQueryOptions) => {
+    return templates.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\PromptController::templates
+* @see app/Http/Controllers/PromptController.php:60
+* @route '/prompts/templates'
+*/
+templates.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: templates.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\PromptController::templates
+* @see app/Http/Controllers/PromptController.php:60
+* @route '/prompts/templates'
+*/
+templates.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: templates.url(options),
+    method: 'head',
+})
+
+/**
 * @see \App\Http\Controllers\PromptController::index
-* @see app/Http/Controllers/PromptController.php:21
+* @see app/Http/Controllers/PromptController.php:22
 * @route '/prompts'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +60,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\PromptController::index
-* @see app/Http/Controllers/PromptController.php:21
+* @see app/Http/Controllers/PromptController.php:22
 * @route '/prompts'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +69,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PromptController::index
-* @see app/Http/Controllers/PromptController.php:21
+* @see app/Http/Controllers/PromptController.php:22
 * @route '/prompts'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +79,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PromptController::index
-* @see app/Http/Controllers/PromptController.php:21
+* @see app/Http/Controllers/PromptController.php:22
 * @route '/prompts'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +89,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\PromptController::create
-* @see app/Http/Controllers/PromptController.php:41
+* @see app/Http/Controllers/PromptController.php:42
 * @route '/prompts/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -60,7 +104,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\PromptController::create
-* @see app/Http/Controllers/PromptController.php:41
+* @see app/Http/Controllers/PromptController.php:42
 * @route '/prompts/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -69,7 +113,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PromptController::create
-* @see app/Http/Controllers/PromptController.php:41
+* @see app/Http/Controllers/PromptController.php:42
 * @route '/prompts/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -79,7 +123,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PromptController::create
-* @see app/Http/Controllers/PromptController.php:41
+* @see app/Http/Controllers/PromptController.php:42
 * @route '/prompts/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -89,7 +133,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\PromptController::store
-* @see app/Http/Controllers/PromptController.php:46
+* @see app/Http/Controllers/PromptController.php:65
 * @route '/prompts'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -104,7 +148,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\PromptController::store
-* @see app/Http/Controllers/PromptController.php:46
+* @see app/Http/Controllers/PromptController.php:65
 * @route '/prompts'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -113,7 +157,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PromptController::store
-* @see app/Http/Controllers/PromptController.php:46
+* @see app/Http/Controllers/PromptController.php:65
 * @route '/prompts'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -123,7 +167,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\PromptController::show
-* @see app/Http/Controllers/PromptController.php:64
+* @see app/Http/Controllers/PromptController.php:83
 * @route '/prompts/{prompt}'
 */
 export const show = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -138,7 +182,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\PromptController::show
-* @see app/Http/Controllers/PromptController.php:64
+* @see app/Http/Controllers/PromptController.php:83
 * @route '/prompts/{prompt}'
 */
 show.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -171,7 +215,7 @@ show.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: 
 
 /**
 * @see \App\Http\Controllers\PromptController::show
-* @see app/Http/Controllers/PromptController.php:64
+* @see app/Http/Controllers/PromptController.php:83
 * @route '/prompts/{prompt}'
 */
 show.get = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -181,7 +225,7 @@ show.get = (args: { prompt: number | { id: number } } | [prompt: number | { id: 
 
 /**
 * @see \App\Http\Controllers\PromptController::show
-* @see app/Http/Controllers/PromptController.php:64
+* @see app/Http/Controllers/PromptController.php:83
 * @route '/prompts/{prompt}'
 */
 show.head = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -191,7 +235,7 @@ show.head = (args: { prompt: number | { id: number } } | [prompt: number | { id:
 
 /**
 * @see \App\Http\Controllers\PromptController::update
-* @see app/Http/Controllers/PromptController.php:142
+* @see app/Http/Controllers/PromptController.php:161
 * @route '/prompts/{prompt}'
 */
 export const update = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -206,7 +250,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\PromptController::update
-* @see app/Http/Controllers/PromptController.php:142
+* @see app/Http/Controllers/PromptController.php:161
 * @route '/prompts/{prompt}'
 */
 update.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -239,7 +283,7 @@ update.url = (args: { prompt: number | { id: number } } | [prompt: number | { id
 
 /**
 * @see \App\Http\Controllers\PromptController::update
-* @see app/Http/Controllers/PromptController.php:142
+* @see app/Http/Controllers/PromptController.php:161
 * @route '/prompts/{prompt}'
 */
 update.put = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -249,7 +293,7 @@ update.put = (args: { prompt: number | { id: number } } | [prompt: number | { id
 
 /**
 * @see \App\Http\Controllers\PromptController::update
-* @see app/Http/Controllers/PromptController.php:142
+* @see app/Http/Controllers/PromptController.php:161
 * @route '/prompts/{prompt}'
 */
 update.patch = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -259,7 +303,7 @@ update.patch = (args: { prompt: number | { id: number } } | [prompt: number | { 
 
 /**
 * @see \App\Http\Controllers\PromptController::destroy
-* @see app/Http/Controllers/PromptController.php:181
+* @see app/Http/Controllers/PromptController.php:200
 * @route '/prompts/{prompt}'
 */
 export const destroy = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -274,7 +318,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\PromptController::destroy
-* @see app/Http/Controllers/PromptController.php:181
+* @see app/Http/Controllers/PromptController.php:200
 * @route '/prompts/{prompt}'
 */
 destroy.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -307,7 +351,7 @@ destroy.url = (args: { prompt: number | { id: number } } | [prompt: number | { i
 
 /**
 * @see \App\Http\Controllers\PromptController::destroy
-* @see app/Http/Controllers/PromptController.php:181
+* @see app/Http/Controllers/PromptController.php:200
 * @route '/prompts/{prompt}'
 */
 destroy.delete = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -317,7 +361,7 @@ destroy.delete = (args: { prompt: number | { id: number } } | [prompt: number | 
 
 /**
 * @see \App\Http\Controllers\PromptController::playground
-* @see app/Http/Controllers/PromptController.php:93
+* @see app/Http/Controllers/PromptController.php:112
 * @route '/prompts/{prompt}/playground'
 */
 export const playground = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -332,7 +376,7 @@ playground.definition = {
 
 /**
 * @see \App\Http\Controllers\PromptController::playground
-* @see app/Http/Controllers/PromptController.php:93
+* @see app/Http/Controllers/PromptController.php:112
 * @route '/prompts/{prompt}/playground'
 */
 playground.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -365,7 +409,7 @@ playground.url = (args: { prompt: number | { id: number } } | [prompt: number | 
 
 /**
 * @see \App\Http\Controllers\PromptController::playground
-* @see app/Http/Controllers/PromptController.php:93
+* @see app/Http/Controllers/PromptController.php:112
 * @route '/prompts/{prompt}/playground'
 */
 playground.post = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -375,7 +419,7 @@ playground.post = (args: { prompt: number | { id: number } } | [prompt: number |
 
 /**
 * @see \App\Http\Controllers\PromptController::diff
-* @see app/Http/Controllers/PromptController.php:112
+* @see app/Http/Controllers/PromptController.php:131
 * @route '/prompts/{prompt}/diff'
 */
 export const diff = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -390,7 +434,7 @@ diff.definition = {
 
 /**
 * @see \App\Http\Controllers\PromptController::diff
-* @see app/Http/Controllers/PromptController.php:112
+* @see app/Http/Controllers/PromptController.php:131
 * @route '/prompts/{prompt}/diff'
 */
 diff.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -423,7 +467,7 @@ diff.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: 
 
 /**
 * @see \App\Http\Controllers\PromptController::diff
-* @see app/Http/Controllers/PromptController.php:112
+* @see app/Http/Controllers/PromptController.php:131
 * @route '/prompts/{prompt}/diff'
 */
 diff.get = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -433,7 +477,7 @@ diff.get = (args: { prompt: number | { id: number } } | [prompt: number | { id: 
 
 /**
 * @see \App\Http\Controllers\PromptController::diff
-* @see app/Http/Controllers/PromptController.php:112
+* @see app/Http/Controllers/PromptController.php:131
 * @route '/prompts/{prompt}/diff'
 */
 diff.head = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -443,7 +487,7 @@ diff.head = (args: { prompt: number | { id: number } } | [prompt: number | { id:
 
 /**
 * @see \App\Http\Controllers\PromptController::analytics
-* @see app/Http/Controllers/PromptController.php:198
+* @see app/Http/Controllers/PromptController.php:217
 * @route '/prompts/{prompt}/analytics'
 */
 export const analytics = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -458,7 +502,7 @@ analytics.definition = {
 
 /**
 * @see \App\Http\Controllers\PromptController::analytics
-* @see app/Http/Controllers/PromptController.php:198
+* @see app/Http/Controllers/PromptController.php:217
 * @route '/prompts/{prompt}/analytics'
 */
 analytics.url = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -491,7 +535,7 @@ analytics.url = (args: { prompt: number | { id: number } } | [prompt: number | {
 
 /**
 * @see \App\Http\Controllers\PromptController::analytics
-* @see app/Http/Controllers/PromptController.php:198
+* @see app/Http/Controllers/PromptController.php:217
 * @route '/prompts/{prompt}/analytics'
 */
 analytics.get = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -501,7 +545,7 @@ analytics.get = (args: { prompt: number | { id: number } } | [prompt: number | {
 
 /**
 * @see \App\Http\Controllers\PromptController::analytics
-* @see app/Http/Controllers/PromptController.php:198
+* @see app/Http/Controllers/PromptController.php:217
 * @route '/prompts/{prompt}/analytics'
 */
 analytics.head = (args: { prompt: number | { id: number } } | [prompt: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -511,7 +555,7 @@ analytics.head = (args: { prompt: number | { id: number } } | [prompt: number | 
 
 /**
 * @see \App\Http\Controllers\PromptController::restoreVersion
-* @see app/Http/Controllers/PromptController.php:164
+* @see app/Http/Controllers/PromptController.php:183
 * @route '/prompts/{prompt}/versions/{version}/restore'
 */
 export const restoreVersion = (args: { prompt: number | { id: number }, version: number | { id: number } } | [prompt: number | { id: number }, version: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -526,7 +570,7 @@ restoreVersion.definition = {
 
 /**
 * @see \App\Http\Controllers\PromptController::restoreVersion
-* @see app/Http/Controllers/PromptController.php:164
+* @see app/Http/Controllers/PromptController.php:183
 * @route '/prompts/{prompt}/versions/{version}/restore'
 */
 restoreVersion.url = (args: { prompt: number | { id: number }, version: number | { id: number } } | [prompt: number | { id: number }, version: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -556,7 +600,7 @@ restoreVersion.url = (args: { prompt: number | { id: number }, version: number |
 
 /**
 * @see \App\Http\Controllers\PromptController::restoreVersion
-* @see app/Http/Controllers/PromptController.php:164
+* @see app/Http/Controllers/PromptController.php:183
 * @route '/prompts/{prompt}/versions/{version}/restore'
 */
 restoreVersion.post = (args: { prompt: number | { id: number }, version: number | { id: number } } | [prompt: number | { id: number }, version: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -564,6 +608,6 @@ restoreVersion.post = (args: { prompt: number | { id: number }, version: number 
     method: 'post',
 })
 
-const PromptController = { index, create, store, show, update, destroy, playground, diff, analytics, restoreVersion }
+const PromptController = { templates, index, create, store, show, update, destroy, playground, diff, analytics, restoreVersion }
 
 export default PromptController

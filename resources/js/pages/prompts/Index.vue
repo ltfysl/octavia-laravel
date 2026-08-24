@@ -66,9 +66,14 @@ const exportCsv = () => {
                 <h1 class="display-hero mt-2 text-3xl tracking-tight text-ink-950">{{ t('prompts.title') }}</h1>
                 <p class="mt-1 max-w-xl text-sm leading-relaxed text-ink-500">{{ t('prompts.subtitle') }}</p>
             </div>
-            <Link href="/prompts/create" class="inline-flex items-center gap-1.5 rounded-md bg-ink-950 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-ink-700">
-                <span aria-hidden="true">+</span> {{ t('prompts.new') }}
-            </Link>
+            <div class="flex items-center gap-2">
+                <Link href="/prompts/templates" class="inline-flex items-center gap-1.5 rounded-md border border-ink-200 bg-card px-4 py-2 text-sm font-medium text-ink-600 transition-colors hover:bg-paper-50">
+                    {{ t('prompts.templates.title') }}
+                </Link>
+                <Link href="/prompts/create" class="inline-flex items-center gap-1.5 rounded-md bg-ink-950 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-ink-700">
+                    <span aria-hidden="true">+</span> {{ t('prompts.new') }}
+                </Link>
+            </div>
         </div>
         <!-- Metrics — denser than test, but clearer -->
         <div class="mt-6 grid grid-cols-3 gap-3">

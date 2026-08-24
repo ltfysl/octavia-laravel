@@ -126,6 +126,20 @@
             "fail": "Fail",
             "avgScore": "Avg. score"
         },
+        "templates": {
+            "title": "Templates",
+            "eyebrow": "Start from a template",
+            "searchPlaceholder": "Search templates…",
+            "empty": "No templates match your filters.",
+            "use": "Use template",
+            "categories": {
+                "all": "All",
+                "general": "General",
+                "marketing": "Marketing",
+                "support": "Support",
+                "coding": "Coding"
+            }
+        },
         "abTest": {
             "title": "A/B test",
             "hint": "Compare two prompt versions against the same benchmark.",

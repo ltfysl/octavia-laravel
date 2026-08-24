@@ -6,13 +6,23 @@ import OButton from '../../components/ui/OButton.vue';
 import OField from '../../components/ui/OField.vue';
 import OInput from '../../components/ui/OInput.vue';
 
+const props = defineProps<{
+    template: {
+        id: number;
+        name: string;
+        description: string | null;
+        body: string;
+        category: string;
+    } | null;
+}>();
+
 const { t } = useI18n();
 
 const form = useForm({
-    name: '',
-    description: '',
+    name: props?.template?.name ?? '',
+    description: props?.template?.description ?? '',
     visibility: 'private',
-    content: '',
+    content: props?.template?.body ?? '',
 });
 
 const submit = () => form.post('/prompts');

@@ -137,6 +137,20 @@
             "pass": "Bestanden",
             "fail": "Fehlgeschlagen",
             "avgScore": "Ø-Score"
+        },
+        "templates": {
+            "title": "Vorlagen",
+            "eyebrow": "Starte mit einer Vorlage",
+            "searchPlaceholder": "Vorlagen durchsuchen…",
+            "empty": "Keine Vorlagen passen zu deinen Filtern.",
+            "use": "Vorlage verwenden",
+            "categories": {
+                "all": "Alle",
+                "general": "Allgemein",
+                "marketing": "Marketing",
+                "support": "Support",
+                "coding": "Coding"
+            }
         }
     },
     "benchmarks": {

@@ -8,6 +8,7 @@ use App\Http\Requests\StorePromptRequest;
 use App\Http\Requests\UpdatePromptRequest;
 use App\Models\AuditLog;
 use App\Models\Prompt;
+use App\Models\PromptTemplate;
 use App\Models\PromptVersion;
 use App\Services\DiffService;
 use Illuminate\Http\JsonResponse;
@@ -38,9 +39,27 @@ class PromptController extends Controller
         return Inertia::render('prompts/Index', ['prompts' => $prompts]);
     }
 
-    public function create(): Response
+    public function create(Request $request): Response
     {
-        return Inertia::render('prompts/Create');
+        $template = null;
+        if ($request->filled('template')) {
+            $template = PromptTemplate::find($request->input('template'));
+        }
+
+        return Inertia::render('prompts/Create', [
+            'template' => $template ? [
+                'id' => $template->id,
+                'name' => $template->name,
+                'description' => $template->description,
+                'body' => $template->body,
+                'category' => $template->category,
+            ] : null,
+        ]);
+    }
+
+    public function templates(): Response
+    {
+        return Inertia::render('prompts/Templates');
     }
 
     public function store(StorePromptRequest $request): RedirectResponse

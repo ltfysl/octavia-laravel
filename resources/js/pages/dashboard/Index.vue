@@ -289,10 +289,12 @@ onMounted(() => {
                     </div>
                     <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.recentExpeditions') }}</h3>
                     <ul class="mt-4 space-y-2">
-                        <li v-for="(run, i) in recentRuns.slice(0, 4)" :key="run.id" class="flex items-center gap-3 rounded-2xl border border-transparent bg-paper-100/70 px-3 py-2.5 transition-all duration-300" :style="`animation-delay: ${i * 90}ms`">
-                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-card text-[11px] font-bold text-ink-700 shadow-sm">{{ String(i+1).padStart(2,'0') }}</span>
-                            <span class="min-w-0 flex-1 truncate text-sm font-medium text-ink-900">{{ run.name }}</span>
-                            <OBadge :tone="statusTone[run.status] ?? 'neutral'" class="!px-1.5 !py-0 text-[11px]">{{ run.status }}</OBadge>
+                        <li v-for="(run, i) in recentRuns.slice(0, 4)" :key="run.id" class="group flex items-center gap-3 rounded-2xl border border-transparent bg-paper-100/70 px-3 py-2.5 transition-all duration-300 hover:border-ink-200 hover:bg-paper-100 hover:shadow-sm" :style="`animation-delay: ${i * 90}ms`">
+                            <Link :href="`/runs/${run.id}`" class="flex w-full items-center gap-3">
+                                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-card text-[11px] font-bold text-ink-700 shadow-sm group-hover:bg-accent-100 group-hover:text-accent-800">{{ String(i+1).padStart(2,'0') }}</span>
+                                <span class="min-w-0 flex-1 truncate text-sm font-medium text-ink-900 group-hover:text-accent-700">{{ run.name }}</span>
+                                <OBadge :tone="statusTone[run.status] ?? 'neutral'" class="!px-1.5 !py-0 text-[11px]">{{ t(`runs.status.${run.status}`) }}</OBadge>
+                            </Link>
                         </li>
                         <li v-if="recentRuns.length===0" class="rounded-2xl border border-dashed border-ink-200 px-3 py-6 text-center text-sm text-ink-400">{{ t('dashboard.noExpeditions') }}</li>
                     </ul>

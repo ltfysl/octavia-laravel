@@ -33,7 +33,20 @@ PROMPT;
         ]);
 
         $json = $this->extractJson($response->content);
-        $decoded = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+
+        try {
+            $decoded = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        } catch (\Throwable) {
+            $decoded = null;
+        }
+
+        if (! is_array($decoded)) {
+            return [
+                'summary' => 'The model did not return a structured explanation.',
+                'changes' => [],
+                'recommendation' => 'Evaluate the new version against a benchmark.',
+            ];
+        }
 
         return [
             'summary' => $decoded['summary'] ?? 'No summary generated.',

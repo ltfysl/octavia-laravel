@@ -24,9 +24,7 @@ use Illuminate\Support\Str;
  * 4. Diagnosis mode (`[OCTAVIA-DIAGNOSIS]`): summarises the run context
  *    and returns a likely cause plus one concrete next step. Used for
  *    failed or cancelled run detail pages.
- * 5. Diff-explain mode (`[OCTAVIA-DIFF-EXPLAIN]`): explains changes between
- *    two prompt versions as structured JSON.
- * 6. Task mode (default): echoes the user input and repeats every explicit
+ * 5. Task mode (default): echoes the user input and repeats every explicit
  *    bullet / numbered requirement found in the system prompt.
  */
 class MockLlmProvider implements LlmProvider
@@ -49,7 +47,6 @@ class MockLlmProvider implements LlmProvider
             Str::contains($system, '[OCTAVIA-OPTIMIZER]') => $this->optimize($user),
             Str::contains($system, '[OCTAVIA-INSIGHT]') => $this->insight($user),
             Str::contains($system, '[OCTAVIA-DIAGNOSIS]') => $this->diagnosis($user),
-            Str::contains($system, '[OCTAVIA-DIFF-EXPLAIN]') => $this->diffExplain($user),
             default => $this->task($system, $user),
         };
     }
@@ -175,47 +172,6 @@ class MockLlmProvider implements LlmProvider
      *
      * @return list<string>
      */
-
-    /**
-     * Diff-explain branch for the [OCTAVIA-DIFF-EXPLAIN] system marker.
-     * Deterministic: returns a structured JSON summary of changes.
-     */
-    private function diffExplain(string $user): LlmResponse
-    {
-        $from = '';
-        $to = '';
-        if (preg_match('/---FROM---\s*(.*?)\s*---TO---/s', $user, $m)) {
-            $from = trim($m[1]);
-            $to = trim((string) preg_replace('/^.*?---TO---\s*/s', '', $user));
-        }
-
-        $fromWords = str_word_count($from);
-        $toWords = str_word_count($to);
-        $addedWords = max(0, $toWords - $fromWords);
-
-        $type = $addedWords > 5 ? 'major' : ($addedWords > 0 ? 'minor' : 'formatting');
-        $impact = $addedWords > 5 ? 'positive' : 'neutral';
-        $description = match ($type) {
-            'major' => 'The new version adds substantial instructions or constraints.',
-            'minor' => 'The new version includes small clarifications or formatting.',
-            default => 'Only whitespace or formatting changed.',
-        };
-
-        $recommendation = str_contains(mb_strtolower($to), 'json')
-            ? 'Test the new JSON requirement with nested and empty inputs.'
-            : 'Run an evaluation against the current benchmark to confirm the change helps.';
-
-        $json = json_encode([
-            'summary' => "Version comparison: from {$fromWords} to {$toWords} words.",
-            'changes' => [
-                ['type' => $type, 'description' => $description, 'impact' => $impact],
-            ],
-            'recommendation' => $recommendation,
-        ]);
-
-        return new LlmResponse((string) $json, 0, 0);
-    }
-
     private function extractRequirements(string $prompt): array
     {
         $lines = preg_split('/\r?\n/', $prompt) ?: [];

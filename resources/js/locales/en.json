@@ -518,7 +518,8 @@
     "public": "Public",
     "clearFilters": "Clear filters",
     "exportCsv": "Export CSV",
-    "total": "Total"
+    "total": "Total",
+    "copied": "Copied!"
   },
   "notifications": {
     "unreadCount": "{count} unread",

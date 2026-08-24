@@ -531,7 +531,8 @@
     "public": "Öffentlich",
     "clearFilters": "Filter löschen",
     "exportCsv": "CSV exportieren",
-    "total": "Gesamt"
+    "total": "Gesamt",
+    "copied": "Kopiert!"
   },
   "notifications": {
     "unreadCount": "{count} ungelesen",

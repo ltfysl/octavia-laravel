@@ -48,6 +48,17 @@ const dirty = computed(() => form.content !== (props.prompt.content ?? ''));
 
 const compareWith = ref<number | null>(null);
 const currentContent = computed(() => props.prompt.content ?? '');
+const copied = ref(false);
+const copyCurrent = async () => {
+    if (! currentContent.value) return;
+    try {
+        await navigator.clipboard.writeText(currentContent.value);
+        copied.value = true;
+        setTimeout(() => copied.value = false, 2000);
+    } catch {
+        // ignore
+    }
+};
 
 // Diff between ANY two historical versions — hits the backend LCS endpoint
 const diffFrom = ref<number | null>(null);
@@ -402,6 +413,11 @@ const runInsight = async () => {
         <!-- Editor tab -->
         <div v-if="tab === 'editor'" class="mt-6 grid gap-6 lg:grid-cols-[1fr_18rem]">
             <div>
+                <div class="mb-2 flex items-center justify-between">
+                    <OButton size="sm" variant="ghost" :disabled="!currentContent" @click="copyCurrent">
+                        {{ copied ? t('common.copied') : t('common.copy') }}
+                    </OButton>
+                </div>
                 <textarea
                     v-model="form.content"
                     rows="20"

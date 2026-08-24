@@ -20,6 +20,7 @@ class RunResource extends JsonResource
             'error' => $this->error,
             'prompt' => $this->whenLoaded('prompt', fn () => $this->prompt?->only(['id', 'name'])),
             'benchmark' => $this->whenLoaded('benchmark', fn () => $this->benchmark?->only(['id', 'name'])),
+            'regression_report' => $this->regression_report,
             'steps' => $this->whenLoaded('steps', fn () => $this->steps->map(fn ($step) => [
                 'number' => $step->number,
                 'phase' => $step->phase->value,

@@ -7,6 +7,7 @@ use App\Enums\RunStatus;
 use App\Observers\RunProgressObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[ObservedBy([RunProgressObserver::class])]
 class Run extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'prompt_id',
         'benchmark_id',
@@ -36,6 +39,7 @@ class Run extends Model
             'status' => RunStatus::class,
             'target_score' => 'float',
             'best_score' => 'float',
+            'regression_report' => 'array',
             'started_at' => 'datetime',
             'finished_at' => 'datetime',
             'cost_optimized' => 'boolean',

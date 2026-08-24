@@ -287,7 +287,18 @@
     "exportLeaderboard": "Leaderboard exportieren",
     "model": "Modell",
     "costOptimized": "Kostenoptimiert",
-    "costOptimizedHint": "Günstigeres Modell für Mutationen, ausgewähltes Modell für Evaluation."
+    "costOptimizedHint": "Günstigeres Modell für Mutationen, ausgewähltes Modell für Evaluation.",
+    "mode.regression": "Regression-Test",
+    "mode.regressionHint": "Vergleiche diesen Prompt mit einem vorherigen Run.",
+    "regression": {
+      "title": "Regression-Bericht",
+      "baseline": "Basisline",
+      "current": "Aktuell",
+      "cases": "Fälle",
+      "case": "Fall",
+      "previous": "Vorher",
+      "delta": "Delta"
+    }
   },
   "marketplace": {
     "title": "Marketplace",

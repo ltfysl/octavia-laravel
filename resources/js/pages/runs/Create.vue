@@ -22,7 +22,7 @@ const form = ref({
     prompt_id: '' as number | '',
     benchmark_id: '' as number | '',
     collection_id: '' as number | '',
-    mode: 'optimize' as 'evaluate' | 'optimize',
+    mode: 'optimize' as 'evaluate' | 'optimize' | 'regression',
     max_steps: 8,
     target_score: 0.95,
     cost_optimized: props.costOptimized,
@@ -81,13 +81,13 @@ const canSubmit = computed(() => !! form.value.prompt_id && (!! form.value.bench
             <OPanel :title="t('runs.mode.optimize')">
                 <div class="grid gap-3 sm:grid-cols-2">
                     <button
-                        v-for="mode in ['optimize', 'evaluate']"
+                        v-for="mode in ['optimize', 'evaluate', 'regression']"
                         :key="mode"
                         type="button"
                         class="rounded-lg border px-4 py-3 text-left transition-colors"
                         :class="form.mode === mode ? 'border-accent-500 bg-accent-50' : 'border-ink-200 hover:border-ink-300'"
                         :aria-pressed="form.mode === mode"
-                        @click="form.mode = mode as 'optimize' | 'evaluate'"
+                        @click="form.mode = mode as 'optimize' | 'evaluate' | 'regression'"
                     >
                         <span class="block text-sm font-medium text-ink-950">{{ t(`runs.mode.${mode}`) }}</span>
                     </button>

@@ -271,7 +271,7 @@ presets.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\TeamController::workspace
-* @see app/Http/Controllers/TeamController.php:26
+* @see app/Http/Controllers/TeamController.php:27
 * @route '/settings/workspace'
 */
 export const workspace = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -286,7 +286,7 @@ workspace.definition = {
 
 /**
 * @see \App\Http\Controllers\TeamController::workspace
-* @see app/Http/Controllers/TeamController.php:26
+* @see app/Http/Controllers/TeamController.php:27
 * @route '/settings/workspace'
 */
 workspace.url = (options?: RouteQueryOptions) => {
@@ -295,7 +295,7 @@ workspace.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\TeamController::workspace
-* @see app/Http/Controllers/TeamController.php:26
+* @see app/Http/Controllers/TeamController.php:27
 * @route '/settings/workspace'
 */
 workspace.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -305,7 +305,7 @@ workspace.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\TeamController::workspace
-* @see app/Http/Controllers/TeamController.php:26
+* @see app/Http/Controllers/TeamController.php:27
 * @route '/settings/workspace'
 */
 workspace.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({

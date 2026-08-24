@@ -38,6 +38,18 @@ const props = defineProps<{
         best_score: number | null;
         target_score: number;
         error: string | null;
+        regression_report: {
+            baseline_run_id: number;
+            baseline_run_name: string;
+            baseline_score: number;
+            current_score: number;
+            score_delta: number;
+            improved_cases: number;
+            degraded_cases: number;
+            unchanged_cases: number;
+            deltas: Array<{ case_id: number; current: number; previous: number | null; delta: number | null }>;
+        } | null;
+
         prompt?: { id: number; name: string } | null;
         benchmark?: { id: number; name: string } | null;
         steps: Step[];

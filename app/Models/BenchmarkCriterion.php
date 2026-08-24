@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use App\Enums\CriterionType;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BenchmarkCriterion extends Model
 {
+    /** @use HasFactory<BenchmarkCriterionFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'type',
         'label',

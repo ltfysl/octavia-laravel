@@ -287,7 +287,18 @@
     "exportLeaderboard": "Export leaderboard",
     "model": "Model",
     "costOptimized": "Cost optimized",
-    "costOptimizedHint": "Use a cheaper model for mutations and the selected model for evaluation."
+    "costOptimizedHint": "Use a cheaper model for mutations and the selected model for evaluation.",
+    "mode.regression": "Regression test",
+    "mode.regressionHint": "Compare this prompt against a previous run.",
+    "regression": {
+      "title": "Regression report",
+      "baseline": "Baseline",
+      "current": "Current",
+      "cases": "Cases",
+      "case": "Case",
+      "previous": "Previous",
+      "delta": "Delta"
+    }
   },
   "marketplace": {
     "title": "Marketplace",

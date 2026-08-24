@@ -336,14 +336,14 @@ onMounted(() => {
                     <p class="eyebrow !text-white/50">{{ t('dashboard.liveStatus') }}</p>
                     <h3 class="mt-2 font-display text-lg font-semibold tracking-tight">{{ t('dashboard.fieldActivity') }}</h3>
                     <div class="mt-4 flex-1 space-y-3">
-                        <div v-for="run in (liveRuns.length ? liveRuns : recentRuns.slice(0,2))" :key="run.id" class="flex items-center gap-3 rounded-2xl border border-white/10 bg-card/[0.06] px-3 py-2.5 backdrop-blur">
+                        <Link v-for="run in (liveRuns.length ? liveRuns : recentRuns.slice(0,2))" :key="run.id" :href="`/runs/${run.id}`" class="group flex items-center gap-3 rounded-2xl border border-white/10 bg-card/[0.06] px-3 py-2.5 backdrop-blur transition-colors hover:bg-white/[0.08]">
                             <span class="relative flex h-2.5 w-2.5">
                                 <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-40" />
                                 <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
                             </span>
-                            <span class="min-w-0 flex-1 truncate text-sm font-medium">{{ run.name }}</span>
+                            <span class="min-w-0 flex-1 truncate text-sm font-medium group-hover:text-white/90">{{ run.name }}</span>
                             <span class="font-mono text-xs text-white/60">{{ run.score !== null ? Math.round(run.score*100)+'%' : '…' }}</span>
-                        </div>
+                        </Link>
                         <div v-if="recentRuns.length===0" class="rounded-2xl border border-white/10 px-3 py-6 text-center text-sm text-white/60">{{ t('dashboard.idle') }}</div>
                     </div>
                     <div class="mt-4 flex items-center gap-2 rounded-full bg-card/10 px-3 py-2 text-xs">

@@ -42,6 +42,11 @@ const statusTone: Record<string, 'mint' | 'amber' | 'rose' | 'neutral' | 'accent
 // Typewriter for Command Input
 const prompts = ["Benchmark the new onboarding prompt...", "Evolve tagline writer against quality suite...", "Test 'Eco bottle' criteria edge cases...", "Optimize for 95% target..."];
 const typed = ref("");
+const commandQuery = ref("");
+const goSearch = () => {
+    const q = commandQuery.value.trim();
+    if (q) router.get('/search', { q });
+};
 const promptIndex = ref(0);
 const charIndex = ref(0);
 const isDeleting = ref(false);
@@ -296,21 +301,31 @@ onMounted(() => {
 
                 <!-- Command Input — Typewriter -->
                 <div class="relative overflow-hidden rounded-[2rem] border border-slate-200/60 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] md:col-span-4 flex flex-col" style="--index:1">
-                    <p class="eyebrow">Command input</p>
-                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">Ask Octavia</h3>
+                    <p class="eyebrow">{{ t('dashboard.commandInput') }}</p>
+                    <h3 class="mt-2 font-display text-lg font-semibold tracking-tight text-ink-950">{{ t('dashboard.askOctavia') }}</h3>
                     <div class="mt-4 flex-1 rounded-2xl border border-ink-100 bg-paper-50 p-4">
                         <div class="flex items-center gap-2 text-xs text-ink-400">
                             <span class="h-2 w-2 rounded-full bg-rose-400" /><span class="h-2 w-2 rounded-full bg-amber-400" /><span class="h-2 w-2 rounded-full bg-mint-400" />
                             <span class="ml-auto font-mono">octavia — zsh</span>
                         </div>
-                        <div class="mt-3 font-mono text-sm leading-relaxed text-ink-900">
-                            <span class="text-ink-300">$</span> {{ typed }}<span class="ml-0.5 inline-block h-4 w-2 translate-y-0.5 animate-pulse bg-ink-900" />
-                        </div>
+                        <form class="mt-3 font-mono text-sm leading-relaxed text-ink-900" @submit.prevent="goSearch">
+                            <label class="flex items-center gap-2">
+                                <span class="text-ink-300" aria-hidden="true">$</span>
+                                <input
+                                    v-model="commandQuery"
+                                    type="search"
+                                    :placeholder="typed"
+                                    :aria-label="t('dashboard.askOctavia')"
+                                    class="w-full bg-transparent font-mono text-sm text-ink-900 outline-none placeholder:text-ink-300"
+                                />
+                                <span class="ml-0.5 inline-block h-4 w-2 shrink-0 animate-pulse bg-ink-900" aria-hidden="true" />
+                            </label>
+                        </form>
                         <div class="mt-3 h-1 w-full overflow-hidden rounded-full bg-ink-100">
                             <div class="h-full w-2/3 animate-[shimmer_1.8s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-accent-400 to-transparent" />
                         </div>
                     </div>
-                    <Link href="/prompts/create" class="mt-4 inline-flex items-center gap-2 self-start rounded-full border border-ink-900 bg-ink-950 px-4 py-1.5 text-xs font-medium text-white hover:bg-ink-900">New prompt <span>↗</span></Link>
+                    <Link href="/prompts/create" class="mt-4 inline-flex items-center gap-2 self-start rounded-full border border-ink-900 bg-ink-950 px-4 py-1.5 text-xs font-medium text-white hover:bg-ink-900">{{ t('nav.newPrompt') }} <span aria-hidden="true">↗</span></Link>
                 </div>
 
                 <!-- Live Status — breathing -->

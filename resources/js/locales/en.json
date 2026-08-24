@@ -82,7 +82,9 @@
     },
     "noExpeditions": "No expeditions yet",
     "autoSorting": "auto-sorting · AI prioritized",
-    "idle": "Idle — no active expeditions"
+    "idle": "Idle — no active expeditions",
+    "commandInput": "Command input",
+    "askOctavia": "Ask Octavia"
   },
   "prompts": {
     "title": "Prompts",

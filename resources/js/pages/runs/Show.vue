@@ -70,6 +70,17 @@ const selectedStep = computed(() =>
 const isRunning = computed(() => ['pending', 'running'].includes(props.run.status));
 
 const scoreTrend = computed(() => evalSteps.value.map((s) => ({ n: s.number, score: s.score ?? 0 })));
+const copiedOutput = ref<string | null>(null);
+const copyOutput = async (text: string | null, key: string) => {
+    if (! text) return;
+    try {
+        await navigator.clipboard.writeText(text);
+        copiedOutput.value = key;
+        setTimeout(() => copiedOutput.value = null, 2000);
+    } catch {
+        // ignore
+    }
+};
 
 // Live progress — primary path is the Reverb WebSocket (RunProgress event),
 // a slow status poll stays as fallback so the page still completes when no
@@ -285,7 +296,7 @@ const runDiagnosis = async () => {
 
                 <OPanel v-if="selectedStep.phase === 'evaluate'" :title="t('runs.cases')">
                     <div class="space-y-4">
-                        <div v-for="c in selectedStep.cases" :key="c.id" class="rounded-lg border border-ink-100 p-4">
+                        <div v-for="(c, i) in selectedStep.cases" :key="c.id" class="rounded-lg border border-ink-100 p-4">
                             <div class="flex items-center gap-3">
                                 <span :class="c.passed ? 'text-mint-600' : 'text-rose-450'" :aria-label="c.passed ? t('runs.passed') : t('runs.failed')">
                                     <svg v-if="c.passed" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
@@ -303,7 +314,16 @@ const runDiagnosis = async () => {
                             </ul>
 
                             <details class="mt-3">
-                                <summary class="cursor-pointer text-xs font-medium text-accent-600 hover:text-accent-700">{{ t('runs.output') }}</summary>
+                                <summary class="flex cursor-pointer items-center justify-between text-xs font-medium text-accent-600 hover:text-accent-700">
+                                    <span>{{ t('runs.output') }}</span>
+                                    <button
+                                        type="button"
+                                        class="text-[11px] text-ink-400 hover:text-ink-600"
+                                        @click.stop="copyOutput(c.output, `${selectedStep.number}-${i}`)"
+                                    >
+                                        {{ copiedOutput === `${selectedStep.number}-${i}` ? t('common.copied') : t('common.copy') }}
+                                    </button>
+                                </summary>
                                 <pre class="mt-2 max-h-48 overflow-auto whitespace-pre-wrap rounded-lg bg-paper-100 p-3 font-mono text-xs leading-relaxed text-ink-700 scroll-thin">{{ c.output }}</pre>
                             </details>
                         </div>

@@ -446,7 +446,11 @@
     "export": "Export",
     "leaderboard": "Leaderboard",
     "clear": "Clear",
-    "manage": "Manage"
+    "manage": "Manage",
+    "searchPlaceholder": "Search navigation, prompts, benchmarks…",
+    "noResults": "No results — try “prompts” or “benchmarks”",
+    "pressEnter": "Press ↵ to navigate",
+    "help": "? for help · ⌘K to toggle"
   },
   "notifications": {
     "unreadCount": "{count} unread",
@@ -608,5 +612,11 @@
     "privacy": "Privacy policy",
     "terms": "Terms of service",
     "tagline": "The prompt laboratory. Benchmark, evolve and fine-tune prompts — not models."
+  },
+  "command": {
+    "searchPlaceholder": "Search navigation, prompts, benchmarks…",
+    "noResults": "No results — try “prompts” or “benchmarks”",
+    "pressEnter": "Press ↵ to navigate",
+    "help": "? for help · ⌘K to toggle"
   }
 }

@@ -459,7 +459,11 @@
     "leaderboard": "Rangliste",
     "clear": "Leeren",
     "copy": "Kopieren",
-    "manage": "Verwalten"
+    "manage": "Verwalten",
+    "searchPlaceholder": "Navigation, Prompts, Benchmarks durchsuchen…",
+    "noResults": "Keine Ergebnisse — versuche “prompts” oder “benchmarks”",
+    "pressEnter": "↵ zum Navigieren",
+    "help": "? für Hilfe · ⌘K zum Umschalten"
   },
   "notifications": {
     "unreadCount": "{count} ungelesen",
@@ -621,5 +625,11 @@
     "privacy": "Datenschutz",
     "terms": "Nutzungsbedingungen",
     "tagline": "Das Prompt-Laboratory. Benchmark, evaluiere und verfeinere Prompts — nicht Models."
+  },
+  "command": {
+    "searchPlaceholder": "Navigation, Prompts, Benchmarks durchsuchen…",
+    "noResults": "Keine Ergebnisse — versuche “prompts” oder “benchmarks”",
+    "pressEnter": "↵ zum Navigieren",
+    "help": "? für Hilfe · ⌘K zum Umschalten"
   }
 }

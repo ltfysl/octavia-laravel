@@ -241,7 +241,7 @@ if (typeof window !== 'undefined') {
                 <div class="mb-6 hidden items-center justify-between gap-4 lg:flex">
                     <Link href="/search" class="flex items-center gap-2 rounded-full border border-ink-200 bg-card px-3 py-1.5 text-sm text-ink-400 shadow-sm transition hover:border-ink-300 hover:bg-paper-100 hover:text-ink-600">
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
-                        <span>Search</span>
+                        <span>{{ t('nav.search') }}</span>
                         <span class="ml-2 hidden sm:inline-flex items-center gap-1 rounded bg-ink-100 px-1.5 py-0.5 font-mono text-xs text-ink-500">
                             <span>⌘</span><span>K</span>
                         </span>
@@ -259,7 +259,7 @@ if (typeof window !== 'undefined') {
                                 >{{ notifications.unread }}</span>
                             </summary>
                             <div class="absolute right-0 z-40 mt-2 w-80 rounded-card border border-ink-100 bg-card p-2 shadow-pop">
-                                <p class="px-2 pb-1 pt-1 text-xs font-semibold uppercase tracking-wide text-ink-300">Notifications</p>
+                                <p class="px-2 pb-1 pt-1 text-xs font-semibold uppercase tracking-wide text-ink-300">{{ t('nav.notifications') }}</p>
                                 <p v-if="notifications.items.length === 0" class="px-2 py-3 text-sm text-ink-300">—</p>
                                 <div
                                     v-for="item in notifications.items"
@@ -313,7 +313,7 @@ if (typeof window !== 'undefined') {
                     <input
                         id="command-input"
                         v-model="commandQuery"
-                        placeholder="Search navigation, prompts, benchmarks…"
+                        placeholder="{{ t('command.searchPlaceholder') }}"
                         class="flex-1 bg-transparent text-sm outline-none placeholder:text-ink-400"
                         @keydown.escape="closeCommand"
                     />
@@ -331,11 +331,11 @@ if (typeof window !== 'undefined') {
                         {{ item.label }}
                         <span class="ml-auto font-mono text-xs text-ink-300">{{ item.href }}</span>
                     </Link>
-                    <p v-if="filteredNav.length === 0" class="px-3 py-8 text-center text-sm text-ink-400">No results — try “prompts” or “benchmarks”</p>
+                    <p v-if="filteredNav.length === 0" class="px-3 py-8 text-center text-sm text-ink-400">{{ t('command.noResults') }}</p>
                 </div>
                 <div class="flex items-center justify-between border-t border-ink-100 bg-paper-50 px-4 py-2 text-xs text-ink-400">
-                    <span>Press <span class="rounded bg-card px-1 py-0.5 font-mono shadow-sm">↵</span> to navigate</span>
-                    <span class="hidden sm:inline"> <span class="rounded bg-card px-1 py-0.5 font-mono shadow-sm">?</span> for help · <span class="rounded bg-card px-1 py-0.5 font-mono shadow-sm">⌘K</span> to toggle</span>
+                    <span>{{ t('command.pressEnter') }}</span>
+                    <span class="hidden sm:inline">{{ t('command.help') }}</span>
                 </div>
             </div>
         </div>

@@ -241,4 +241,17 @@ class ProcessRunJob implements ShouldQueue
             'finished_at' => now(),
         ])->save();
     }
+
+    public function failed(Throwable $exception): void
+    {
+        $run = Run::find($this->runId);
+
+        if ($run && ! $run->isFinished()) {
+            $run->forceFill([
+                'status' => RunStatus::Failed,
+                'error' => mb_substr($exception->getMessage(), 0, 2000),
+                'finished_at' => now(),
+            ])->save();
+        }
+    }
 }

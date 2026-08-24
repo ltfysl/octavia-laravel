@@ -65,3 +65,22 @@ test('strangers cannot retry another user run', function () {
     $this->actingAs($stranger)->post("/runs/{$run->id}/retry")
         ->assertNotFound();
 });
+
+test('a failed job marks the run as failed', function () {
+    $user = User::factory()->create(['credits_balance' => 100]);
+    $prompt = Prompt::factory()->for($user)->withContent('Test.')->create();
+    $run = $user->runs()->create([
+        'prompt_id' => $prompt->id,
+        'name' => 'Run to fail',
+        'mode' => 'evaluate',
+        'status' => 'running',
+        'provider' => 'mock',
+    ]);
+
+    (new ProcessRunJob($run->id))->failed(new RuntimeException('Provider timeout'));
+
+    $run->refresh();
+    expect($run->status->value)->toBe('failed')
+        ->and($run->error)->toBe('Provider timeout')
+        ->and($run->finished_at)->not->toBeNull();
+});

@@ -5,7 +5,7 @@
 - [ ] Stripe integration (account + keys required; see docs/operations/billing.md)
 
 ## Next
-- [ ] Welcome mail polish (optional)
+- [x] Welcome mail polish (optional)
 - [ ] Billing tiers tied to token scopes (prerequisite done in round 21)
 
 ## Later

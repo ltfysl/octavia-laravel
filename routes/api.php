@@ -50,5 +50,7 @@ Route::prefix('v1')->group(function () {
             ->middleware('scope:runs:read')->name('api.runs.show');
         Route::post('/runs/{run}/cancel', [RunController::class, 'cancel'])
             ->middleware('scope:runs:write')->name('api.runs.cancel');
+        Route::post('/runs/{run}/retry', [RunController::class, 'retry'])
+            ->middleware('scope:runs:write')->name('api.runs.retry');
     });
 });

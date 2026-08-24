@@ -444,7 +444,17 @@
     "heroSubtitle": "Octavia ist das Prompt-Labor: Prompts gegen echte Benchmarks evaluieren, automatisch evolvieren lassen und jeden Optimierungsschritt nachvollziehen – wie Fine-Tuning, nur für Prompts.",
     "howTitle": "So funktioniert es",
     "featuresTitle": "Für ernsthafte Prompt-Arbeit gebaut",
-    "faqTitle": "Häufige Fragen"
+    "faqTitle": "Häufige Fragen",
+    "pricingEyebrow": "Preise",
+    "pricingTitle": "Kostenlos starten. Skalieren, wenn bewiesen.",
+    "pricingSubtitle": "Alle Pläne enthalten das Mock-Modell. Eigener API-Key, wann immer du bereit bist.",
+    "monthly": "Monatlich",
+    "yearly": "Jährlich",
+    "mostPopular": "BELIEBTESTE WAHL",
+    "capabilitiesEyebrow": "Funktionen",
+    "featuresSubtitle": "Sechs Bausteine, die Prompting von Folklore zu Wissenschaft machen.",
+    "howSubtitle": "Drei Schritte. Keine Blackbox. Jede Mutation gegen deine Definition von gut gemessen.",
+    "trustedBy": "Vertraut von Prompt-Teams"
   },
   "common": {
     "loading": "Wird geladen…",

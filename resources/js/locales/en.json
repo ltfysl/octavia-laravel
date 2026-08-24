@@ -431,7 +431,17 @@
     "heroSubtitle": "Octavia is the prompt laboratory: evaluate prompts against real benchmarks, evolve them automatically, and see every step of the optimization — like fine-tuning, but for prompts.",
     "howTitle": "How it works",
     "featuresTitle": "Built for serious prompt work",
-    "faqTitle": "Frequently asked questions"
+    "faqTitle": "Frequently asked questions",
+    "pricingEyebrow": "Pricing",
+    "pricingTitle": "Start free. Scale when proven.",
+    "pricingSubtitle": "All plans include the mock model. Bring your own API key when ready.",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "mostPopular": "MOST POPULAR",
+    "capabilitiesEyebrow": "Capabilities",
+    "featuresSubtitle": "Six primitives that turn prompting from folklore into science.",
+    "howSubtitle": "Three moves. No black boxes. Every mutation measured against your definition of good.",
+    "trustedBy": "Trusted by prompt teams"
   },
   "common": {
     "loading": "Loading…",

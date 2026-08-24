@@ -183,7 +183,7 @@ const yearly = ref(false);
                         <span class="h-3 w-px bg-white/10" />
                         <span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-white/60" /> Mock model included</span>
                         <span class="h-3 w-px bg-white/10 hidden sm:inline" />
-                        <span class="hidden sm:inline">Trusted by prompt teams</span>
+                        <span class="hidden sm:inline">{{ t('landing.trustedBy') }}</span>
                     </div>
 
                     <!-- social proof logos -->
@@ -254,9 +254,9 @@ const yearly = ref(false);
         <section id="features" class="bg-[#F8FAFC] py-16 md:py-24">
             <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl text-center">
-                    <p class="font-mono text-xs font-semibold uppercase tracking-widest text-[#22C55E]">Capabilities</p>
+                    <p class="font-mono text-xs font-semibold uppercase tracking-widest text-[#22C55E]">{{ t('landing.capabilitiesEyebrow') }}</p>
                     <h2 class="mt-2 font-display text-4xl font-bold tracking-tighter text-[#0F172A] md:text-5xl">{{ t('landing.featuresTitle') }}</h2>
-                    <p class="mt-4 text-base leading-relaxed text-slate-500">Six primitives that turn prompting from folklore into science.</p>
+                    <p class="mt-4 text-base leading-relaxed text-slate-500">{{ t('landing.featuresSubtitle') }}</p>
                 </div>
 
                 <div class="mt-12 grid gap-4 md:grid-cols-12">
@@ -303,7 +303,7 @@ const yearly = ref(false);
                 <div class="lg:sticky lg:top-24 lg:self-start">
                     <p class="font-mono text-xs font-semibold uppercase tracking-widest text-[#22C55E]">How it works</p>
                     <h2 class="mt-2 font-display text-4xl font-bold tracking-tighter text-[#0F172A] md:text-5xl">{{ t('landing.howTitle') }}</h2>
-                    <p class="mt-4 max-w-[42ch] text-sm leading-relaxed text-slate-500">Three moves. No black boxes. Every mutation measured against your definition of good.</p>
+                    <p class="mt-4 max-w-[42ch] text-sm leading-relaxed text-slate-500">{{ t('landing.howSubtitle') }}</p>
                     <div class="mt-6 hidden h-px w-full bg-gradient-to-r from-[#22C55E] to-transparent lg:block" />
                     <div class="mt-6 hidden items-center gap-3 lg:flex">
                         <span class="h-2 w-2 rounded-full bg-[#22C55E]" /> <span class="font-mono text-xs text-slate-400">01 → 02 → 03 · proven loop</span>
@@ -328,18 +328,18 @@ const yearly = ref(false);
         <section id="pricing" class="bg-[#0F172A] py-16 md:py-24">
             <div class="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl text-center">
-                    <p class="font-mono text-xs font-semibold uppercase tracking-widest text-[#22C55E]">Pricing</p>
-                    <h2 class="mt-2 font-display text-4xl font-bold tracking-tighter text-white md:text-5xl">Start free. Scale when proven.</h2>
-                    <p class="mt-4 text-slate-400">All plans include the mock model. Bring your own API key when ready.</p>
+                    <p class="font-mono text-xs font-semibold uppercase tracking-widest text-[#22C55E]">{{ t('landing.pricingEyebrow') }}</p>
+                    <h2 class="mt-2 font-display text-4xl font-bold tracking-tighter text-white md:text-5xl">{{ t('landing.pricingTitle') }}</h2>
+                    <p class="mt-4 text-slate-400">{{ t('landing.pricingSubtitle') }}</p>
                     <div class="mt-6 inline-flex rounded-full border border-white/10 bg-white/5 p-1 backdrop-blur">
-                        <button :class="['rounded-full px-4 py-1.5 text-xs font-medium transition', !yearly ? 'bg-white text-[#0F172A]' : 'text-white/60']" @click="yearly=false">Monthly</button>
-                        <button :class="['rounded-full px-4 py-1.5 text-xs font-medium transition', yearly ? 'bg-white text-[#0F172A]' : 'text-white/60']" @click="yearly=true">Yearly <span class="ml-1 rounded bg-[#22C55E] px-1.5 py-0.5 text-[10px] text-[#0F172A]">-20%</span></button>
+                        <button :class="['rounded-full px-4 py-1.5 text-xs font-medium transition', !yearly ? 'bg-white text-[#0F172A]' : 'text-white/60']" @click="yearly=false">{{ t('landing.monthly') }}</button>
+                        <button :class="['rounded-full px-4 py-1.5 text-xs font-medium transition', yearly ? 'bg-white text-[#0F172A]' : 'text-white/60']" @click="yearly=true">{{ t('landing.yearly') }} <span class="ml-1 rounded bg-[#22C55E] px-1.5 py-0.5 text-[10px] text-[#0F172A]">-20%</span></button>
                     </div>
                 </div>
 
                 <div class="mt-12 grid gap-6 md:grid-cols-3">
                     <div v-for="tier in pricing" :key="tier.name" :class="['relative flex flex-col rounded-[2rem] border p-8', tier.featured ? 'border-[#22C55E] bg-white text-[#0F172A] shadow-[0_24px_64px_rgba(34,197,94,0.18)] scale-[1.02]' : 'border-white/10 bg-[#1B2336] text-white']">
-                        <span v-if="tier.featured" class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#22C55E] px-3 py-1 text-xs font-bold text-[#0F172A]">MOST POPULAR</span>
+                        <span v-if="tier.featured" class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#22C55E] px-3 py-1 text-xs font-bold text-[#0F172A]">{{ t('landing.mostPopular') }}</span>
                         <h3 class="font-display text-lg font-semibold" :class="tier.featured ? 'text-[#0F172A]' : 'text-white'">{{ tier.name }}</h3>
                         <p class="mt-1 text-sm" :class="tier.featured ? 'text-slate-500' : 'text-slate-400'">{{ tier.desc }}</p>
                         <p class="mt-6 flex items-baseline gap-1">

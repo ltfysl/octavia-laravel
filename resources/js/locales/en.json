@@ -639,5 +639,9 @@
     "noResults": "No results — try “prompts” or “benchmarks”",
     "pressEnter": "Press ↵ to navigate",
     "help": "? for help · ⌘K to toggle"
+  },
+  "locales": {
+    "en": "English",
+    "de": "German"
   }
 }

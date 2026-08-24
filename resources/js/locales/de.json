@@ -652,5 +652,9 @@
     "noResults": "Keine Ergebnisse — versuche “prompts” oder “benchmarks”",
     "pressEnter": "↵ zum Navigieren",
     "help": "? für Hilfe · ⌘K zum Umschalten"
+  },
+  "locales": {
+    "en": "Englisch",
+    "de": "Deutsch"
   }
 }

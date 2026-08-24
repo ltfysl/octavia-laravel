@@ -56,8 +56,8 @@ const savePassword = () => passwordForm.patch('/settings/password', {
                     </OField>
                     <OField :label="t('settings.language')" for="locale">
                         <select id="locale" v-model="profileForm.locale" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500">
-                            <option value="en">English</option>
-                            <option value="de">Deutsch</option>
+                            <option value="en">{{ t('locales.en') }}</option>
+                            <option value="de">{{ t('locales.de') }}</option>
                         </select>
                     </OField>
                     <label class="flex cursor-pointer items-start gap-3">

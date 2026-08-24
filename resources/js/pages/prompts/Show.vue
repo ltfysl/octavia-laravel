@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import AppLayout from '../../layouts/AppLayout.vue';
@@ -341,6 +341,16 @@ const saveAsVersion = () => {
         },
     });
 };
+
+// Cmd/Ctrl+S saves the current content as a new version
+const onKeydown = (e: KeyboardEvent) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        if (dirty.value && ! form.processing) saveAsVersion();
+    }
+};
+onMounted(() => window.addEventListener('keydown', onKeydown));
+onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown));
 const insight = ref<string | null>(null);
 const insightLoading = ref(false);
 const insightError = ref('');

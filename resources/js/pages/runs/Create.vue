@@ -90,6 +90,7 @@ const canSubmit = computed(() => !! form.value.prompt_id && (!! form.value.bench
                         @click="form.mode = mode as 'optimize' | 'evaluate' | 'regression'"
                     >
                         <span class="block text-sm font-medium text-ink-950">{{ t(`runs.mode.${mode}`) }}</span>
+                        <span class="block text-xs text-ink-500">{{ t(`runs.mode.${mode}Hint`) }}</span>
                     </button>
                 </div>
 
@@ -102,12 +103,12 @@ const canSubmit = computed(() => !! form.value.prompt_id && (!! form.value.bench
                     </OField>
                 </div>
 
-                <div v-if="form.mode === 'optimize'" class="mt-5 space-y-4">
+                <div class="mt-5 space-y-4">
                     <OField :label="t('runs.model')" for="model">
                         <input id="model" v-model="form.model" type="text" :placeholder="defaultModel" class="w-full rounded-lg border border-ink-200 bg-card px-3 py-2 text-sm focus:border-accent-500" />
                     </OField>
 
-                    <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-ink-200 bg-card p-3 transition hover:border-ink-300">
+                    <label v-if="form.mode === 'optimize'" class="flex cursor-pointer items-center gap-3 rounded-lg border border-ink-200 bg-card p-3 transition hover:border-ink-300">
                         <input v-model="form.cost_optimized" type="checkbox" class="h-4 w-4 rounded border-ink-300 text-accent-600 focus:ring-accent-500" />
                         <div>
                             <p class="text-sm font-medium text-ink-900">{{ t('runs.costOptimized') }}</p>

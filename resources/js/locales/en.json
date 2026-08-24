@@ -298,7 +298,9 @@
       "case": "Case",
       "previous": "Previous",
       "delta": "Delta"
-    }
+    },
+    "mode.optimizeHint": "Improve the prompt through iterative mutation.",
+    "mode.evaluateHint": "Score the prompt once against a benchmark."
   },
   "marketplace": {
     "title": "Marketplace",

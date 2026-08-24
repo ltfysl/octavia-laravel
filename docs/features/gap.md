@@ -28,7 +28,7 @@
 - Activity timeline: global feed exists at /activity and /api/v1/activity ✓
 - Settings: **Provider Keys** ✓; no Workspace; **API key management + usage tracking** ✓
 - Export: prompt index CSV; **leaderboard CSV export with benchmark/run filters** ✓; dashboard export link ✓
-- Playground: **standalone chat playground at /playground** ✓; prompt detail still has ad-hoc single-input playground
+- Playground: **standalone chat playground at /playground** ✓; prompt detail now has **multi-turn chat playground** ✓
 - Version diff: works; **AI diff explanation** ✓
 - Prompt analytics: per-prompt runs, average/best score, score-over-time sparkline, per-benchmark breakdown — basic version on prompt detail
 

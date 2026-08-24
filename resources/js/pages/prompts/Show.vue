@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import AppLayout from '../../layouts/AppLayout.vue';
@@ -112,20 +112,28 @@ watch(() => props.prompt.versions, (versions: Array<{ id: number; version: numbe
     }
 }, { immediate: true });
 
-const playgroundHistory = ref<Array<{ input: string; output: string; at: string }>>([]);
+interface PlaygroundMessage {
+    role: 'user' | 'assistant';
+    content: string;
+}
 
-const playgroundInput = ref('');
-const playgroundOutput = ref<string | null>(null);
+const playgroundMessages = ref<PlaygroundMessage[]>([]);
+const playgroundDraft = ref('');
 const playgroundLoading = ref(false);
 const playgroundError = ref('');
+const playgroundBottom = ref<HTMLElement | null>(null);
 
-const runPlayground = async () => {
+const sendPlaygroundMessage = async () => {
+    const content = playgroundDraft.value.trim();
+    if (!content) return;
+
+    playgroundMessages.value.push({ role: 'user', content });
+    playgroundDraft.value = '';
     playgroundLoading.value = true;
     playgroundError.value = '';
-    playgroundOutput.value = null;
 
     try {
-        const res = await fetch(`/prompts/${props.prompt.id}/playground`, {
+        const res = await fetch(`/prompts/${props.prompt.id}/playground/chat`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -133,28 +141,35 @@ const runPlayground = async () => {
                 Accept: 'application/json',
             },
             body: JSON.stringify({
-                input: playgroundInput.value,
+                messages: playgroundMessages.value,
                 content: form.content,
             }),
         });
 
         if (!res.ok) {
             playgroundError.value = t('common.error');
+            playgroundMessages.value.pop();
             return;
         }
 
         const data: { output: string } = await res.json();
-        playgroundOutput.value = data.output;
-        playgroundHistory.value.unshift({ input: playgroundInput.value, output: data.output, at: new Date().toISOString() });
-        playgroundHistory.value = playgroundHistory.value.slice(0, 5);
+        playgroundMessages.value.push({ role: 'assistant', content: data.output });
     } catch {
         playgroundError.value = t('common.error');
+        playgroundMessages.value.pop();
     } finally {
         playgroundLoading.value = false;
+        nextTick(() => playgroundBottom.value?.scrollIntoView({ behavior: 'smooth', block: 'end' }));
     }
 };
-const copyOutput = () => {
-    if (playgroundOutput.value) window.navigator.clipboard.writeText(playgroundOutput.value);
+
+const clearPlayground = () => {
+    playgroundMessages.value = [];
+    playgroundError.value = '';
+};
+
+const copyPlaygroundMessage = (text: string) => {
+    window.navigator.clipboard.writeText(text);
 };
 
 const selectedBenchmarkId = ref<number | ''>('');
@@ -412,52 +427,50 @@ const runInsight = async () => {
                     </Link>
                 </OPanel>
 
-                <!-- Playground: test the (possibly unsaved) prompt on one input — glass + shimmer -->
+                <!-- Playground: multi-turn chat with the current draft -->
                 <OPanel :title="t('prompts.playground')" class="glass">
-                    <p class="mb-3 text-xs leading-relaxed text-ink-500">Test your current draft against a single input before committing a version.</p>
-                    <textarea
-                        v-model="playgroundInput"
-                        rows="4"
-                        :placeholder="t('benchmarks.wizard.caseInput')"
-                        class="w-full rounded-xl border border-ink-200 bg-card px-3 py-2.5 text-sm shadow-sm transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
-                    />
-                    <OButton
-                        variant="secondary"
-                        size="sm"
-                        class="mt-3 w-full hover-glow-emerald"
-                        :class="playgroundLoading ? 'shimmer' : ''"
-                        :disabled="playgroundLoading || playgroundInput.trim() === ''"
-                        @click="runPlayground"
-                    >
-                        <span v-if="playgroundLoading" class="icon-pulse">●</span>
-                        <span v-else>▶</span> {{ playgroundLoading ? t('common.loading') : t('prompts.playground') }}
-                    </OButton>
-                    <div v-if="playgroundLoading" class="mt-3 space-y-2">
-                        <div class="h-3 w-full rounded bg-ink-100 shimmer" />
-                        <div class="h-3 w-5/6 rounded bg-ink-100 shimmer" />
-                        <div class="h-3 w-3/4 rounded bg-ink-100 shimmer" />
+                    <div class="mb-3 flex items-center justify-between">
+                        <p class="text-xs leading-relaxed text-ink-500">{{ t('prompts.playgroundChatHint') }}</p>
+                        <button v-if="playgroundMessages.length" type="button" class="text-[11px] text-ink-400 underline hover:text-ink-600" @click="clearPlayground">{{ t('common.clear') }}</button>
                     </div>
-                    <div v-else-if="playgroundOutput !== null" class="relative mt-3">
-                        <pre class="max-h-56 overflow-auto whitespace-pre-wrap rounded-xl pinned-dark p-4 font-mono text-xs leading-relaxed text-emerald-100 shadow-inner">{{ playgroundOutput }}</pre>
-                        <button type="button" class="absolute right-2 top-2 rounded-md bg-card/10 px-2 py-1 font-mono text-xs text-white backdrop-blur hover:bg-card/20" @click="copyOutput">Copy</button>
+                    <div class="h-56 overflow-y-auto rounded-xl border border-ink-100 bg-paper-50 p-3 scroll-thin" ref="playgroundScroll">
+                        <div v-if="playgroundMessages.length === 0" class="flex h-full items-center justify-center text-xs text-ink-400">
+                            {{ t('prompts.playgroundEmpty') }}
+                        </div>
+                        <div v-for="(msg, idx) in playgroundMessages" :key="idx" class="mb-3" data-testid="playground-message">
+                            <div :class="msg.role === 'user' ? 'ml-8 flex justify-end' : 'mr-8'">
+                                <div :class="msg.role === 'user' ? 'rounded-2xl rounded-br-sm bg-ink-900 px-3 py-2 text-white' : 'rounded-2xl rounded-bl-sm bg-card border border-ink-100 px-3 py-2 text-ink-800'">
+                                    <p class="whitespace-pre-wrap text-sm leading-relaxed">{{ msg.content }}</p>
+                                    <button v-if="msg.role === 'assistant'" type="button" class="mt-1 text-[10px] text-ink-400 hover:text-ink-600" @click="copyPlaygroundMessage(msg.content)">{{ t('common.copy') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div ref="playgroundBottom" />
+                    </div>
+                    <div class="mt-3 flex gap-2">
+                        <textarea
+                            v-model="playgroundDraft"
+                            data-testid="playground-input"
+                            rows="2"
+                            :placeholder="t('prompts.playgroundInput')"
+                            class="min-h-[3rem] flex-1 resize-none rounded-xl border border-ink-200 bg-card px-3 py-2.5 text-sm shadow-sm transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
+                            @keydown.enter.exact.prevent="sendPlaygroundMessage"
+                        />
+                        <OButton
+                            data-testid="playground-send"
+                            :aria-label="t('prompts.playground')"
+                            variant="secondary"
+                            size="sm"
+                            class="self-end hover-glow-emerald"
+                            :class="playgroundLoading ? 'shimmer' : ''"
+                            :disabled="playgroundLoading || playgroundDraft.trim() === ''"
+                            @click="sendPlaygroundMessage"
+                        >
+                            <span v-if="playgroundLoading" class="icon-pulse">●</span>
+                            <span v-else>▶</span>
+                        </OButton>
                     </div>
                     <p v-if="playgroundError" class="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ playgroundError }}</p>
-                    <div v-if="playgroundHistory.length > 0" class="mt-4 border-t border-dashed border-ink-100 pt-3">
-                        <p class="eyebrow mb-2">{{ t('prompts.playgroundHistory', { n: playgroundHistory.length }) }}</p>
-                        <ul class="space-y-1.5">
-                            <li v-for="(h, hi) in playgroundHistory" :key="hi">
-                                <button
-                                    type="button"
-                                    class="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left transition hover:bg-paper-200/60"
-                                    @click="playgroundInput = h.input; playgroundOutput = h.output"
-                                >
-                                    <span class="font-mono text-[10px] text-ink-300">{{ new Date(h.at).toLocaleTimeString() }}</span>
-                                    <span class="min-w-0 flex-1 truncate text-xs text-ink-600">{{ h.input }}</span>
-                                    <svg class="h-3 w-3 shrink-0 text-ink-300" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992V4.356m0 4.992c-1.11-3.036-4.047-5.198-7.5-5.198-4.008 0-7.26 3.09-7.5 7.02m19.5 0a8.188 8.188 0 01-1.56 4.86m-17.94-4.86a8.188 8.188 0 001.56 4.86" /></svg>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
                 </OPanel>
 
                 <!-- AI Insights — on-demand prompt review -->

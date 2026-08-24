@@ -170,7 +170,10 @@
         "support": "Support",
         "coding": "Coding"
       }
-    }
+    },
+    "playgroundChatHint": "Chat mit dem aktuellen Entwurf. Die letzte Nachricht wird zusammen mit dem Prompt als Systemkontext gesendet.",
+    "playgroundEmpty": "Starte das Gespräch…",
+    "playgroundInput": "Nachricht eingeben und Enter drücken…"
   },
   "benchmarks": {
     "title": "Benchmarks",
@@ -425,7 +428,9 @@
     "activate": "Aktivieren",
     "deactivate": "Deaktivieren",
     "export": "Exportieren",
-    "leaderboard": "Rangliste"
+    "leaderboard": "Rangliste",
+    "clear": "Leeren",
+    "copy": "Kopieren"
   },
   "notifications": {
     "unreadCount": "{count} ungelesen",

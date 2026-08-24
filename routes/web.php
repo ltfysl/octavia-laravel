@@ -108,6 +108,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/prompts/templates/list', [PromptTemplateController::class, 'index'])->name('prompts.templates.index');
     Route::get('/prompts/templates/{template}', [PromptTemplateController::class, 'show'])->name('prompts.templates.show');
     Route::post('/prompts/{prompt}/playground', [PromptController::class, 'playground'])->name('prompts.playground');
+    Route::post('/prompts/{prompt}/playground/chat', [PromptController::class, 'playgroundChat'])->name('prompts.playground-chat');
     Route::get('/prompts/{prompt}/diff', [PromptController::class, 'diff'])->name('prompts.diff');
     Route::post('/prompts/{prompt}/diff-explain', PromptDiffExplainController::class)->middleware('throttle:assistant')->name('prompts.diff-explain');
     Route::get('/prompts/{prompt}/analytics', [PromptController::class, 'analytics'])->name('prompts.analytics');

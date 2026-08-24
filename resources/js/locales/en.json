@@ -170,7 +170,10 @@
       "run": "Run A/B test",
       "winner": "Winner",
       "tie": "Tie"
-    }
+    },
+    "playgroundChatHint": "Chat against the current draft. The last message is sent to the model with the prompt as system context.",
+    "playgroundEmpty": "Start the conversation…",
+    "playgroundInput": "Type a message and press Enter…"
   },
   "benchmarks": {
     "title": "Benchmarks",
@@ -413,7 +416,8 @@
     "activate": "Activate",
     "deactivate": "Deactivate",
     "export": "Export",
-    "leaderboard": "Leaderboard"
+    "leaderboard": "Leaderboard",
+    "clear": "Clear"
   },
   "notifications": {
     "unreadCount": "{count} unread",

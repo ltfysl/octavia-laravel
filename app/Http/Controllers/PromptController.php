@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\RunPlayground;
+use App\Actions\RunPlaygroundChat;
 use App\Enums\RunStatus;
 use App\Http\Requests\StorePromptRequest;
 use App\Http\Requests\UpdatePromptRequest;
@@ -121,6 +122,27 @@ class PromptController extends Controller
         return response()->json($runPlayground(
             $prompt,
             $validated['input'],
+            $validated['content'] ?? null,
+        ));
+    }
+
+    /**
+     * Multi-turn chat playground for a prompt, no persistence.
+     */
+    public function playgroundChat(Request $request, Prompt $prompt, RunPlaygroundChat $chat): JsonResponse
+    {
+        $this->authorize('view', $prompt);
+
+        $validated = $request->validate([
+            'messages' => ['required', 'array', 'min:1'],
+            'messages.*.role' => ['required', 'in:user,assistant'],
+            'messages.*.content' => ['required', 'string', 'max:20000'],
+            'content' => ['nullable', 'string', 'max:100000'],
+        ]);
+
+        return response()->json($chat(
+            $prompt,
+            $validated['messages'],
             $validated['content'] ?? null,
         ));
     }

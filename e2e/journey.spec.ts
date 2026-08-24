@@ -43,17 +43,17 @@ test.describe.serial('authenticated journey', () => {
         await expect(page.locator('nav[aria-label="Run steps"] button').first()).toBeVisible();
     });
 
-    test('playground returns model output without leaving the page', async ({ page }) => {
+    test('playground chat returns model output without leaving the page', async ({ page }) => {
         await page.goto('/prompts');
         await page.locator('a[href^="/prompts/"]:has(h2)').first().click();
         await page.waitForURL(/\/prompts\/\d+$/);
 
-        const playground = page.locator('textarea[placeholder]').last();
-        await playground.fill('A solar-powered lamp, brand Solux');
-        await page.getByRole('button', { name: /Playground/i }).click();
+        const input = page.getByTestId('playground-input');
+        await input.fill('A solar-powered lamp, brand Solux');
+        await page.getByTestId('playground-send').click();
 
         await expect(
-            page.locator('pre').filter({ hasText: /.+/ }).first(),
+            page.locator('[data-testid="playground-message"]').filter({ hasText: /tagline|Solux/i }).first(),
         ).toBeVisible({ timeout: 30_000 });
     });
 

@@ -1,0 +1,8 @@
+fix: Escape LIKE wildcards in search queries
+
+- Escape % _ \\ in user search terms before wrapping with %...%
+- Applies to SearchController and MarketplaceController LIKE filters
+
+Fixes #1
+
+Signed-off-by: Vedant Madane <6527493+VedantMadane@users.noreply.github.com>

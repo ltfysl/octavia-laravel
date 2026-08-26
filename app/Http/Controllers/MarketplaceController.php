@@ -39,8 +39,8 @@ class MarketplaceController extends Controller
             ->when(in_array($type, ['prompt', 'benchmark'], true), fn ($q) => $q->where('item_type', $type))
             ->when($search !== '', function ($q) use ($search) {
                 $q->where(fn ($w) => $w
-                    ->where('title', 'like', "%{$search}%")
-                    ->orWhere('summary', 'like', "%{$search}%"));
+                    ->where('title', 'like', '%'.addcslashes($search, '%_\').'%')
+                    ->orWhere('summary', 'like', '%'.addcslashes($search, '%_\').'%'));
             })
             ->orderByDesc('featured')
             ->paginate(12)

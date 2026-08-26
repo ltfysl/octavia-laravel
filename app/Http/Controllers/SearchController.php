@@ -23,7 +23,7 @@ class SearchController extends Controller
         $runs = collect();
 
         if ($q !== '') {
-            $like = "%{$q}%";
+            $like = '%'.addcslashes($q, '%_\\').'%';
 
             $prompts = Prompt::visibleTo($user)
                 ->with('currentVersion:id,prompt_id,version')
